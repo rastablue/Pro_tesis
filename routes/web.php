@@ -1,0 +1,139 @@
+<?php
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+
+Route::get('/', function () {
+    return view('welcome');
+});
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::middleware(['auth'])->group(function(){
+
+    //Roles
+
+    Route::post('roles/store', 'RoleController@store')->name('roles.store')
+                   ->middleware('can:roles.create');
+
+    Route::get('roles', 'RoleController@index')->name('roles.index')
+                   ->middleware('can:roles.index');
+
+    Route::get('roles/create', 'RoleController@create')->name('roles.create')
+                   ->middleware('can:roles.create');
+
+    Route::put('roles/{role}', 'RoleController@update')->name('roles.update')
+                   ->middleware('can:roles.edit');
+
+    Route::get('roles/{role}', 'RoleController@show')->name('roles.show')
+                   ->middleware('can:roles.show');
+
+    Route::delete('roles/{role}', 'RoleController@destroy')->name('roles.destroy')
+                   ->middleware('can:roles.destroy');
+
+    Route::get('roles/{role}/edit', 'RoleController@edit')->name('roles.edit')
+                   ->middleware('can:roles.edit');
+
+    //Users
+
+    Route::post('users/store', 'UserController@store')->name('users.store')
+                   ->middleware('can:users.create');
+
+    Route::get('users', 'UserController@index')->name('users.index')
+                   ->middleware('can:users.index');
+
+    Route::get('users/create', 'UserController@create')->name('users.create')
+                   ->middleware('can:users.create');
+
+    Route::put('users/{user}', 'UserController@update')->name('users.update')
+                   ->middleware('can:users.edit');
+
+    Route::get('users/{user}', 'UserController@show')->name('users.show')
+                   ->middleware('can:users.show');
+
+    Route::delete('users/{user}', 'UserController@destroy')->name('users.destroy')
+                   ->middleware('can:users.destroy');
+
+    Route::get('users/{user}/edit', 'UserController@edit')->name('users.edit')
+                   ->middleware('can:users.edit');
+
+    //Mantenimientos
+
+    Route::post('mantenimientos/store', 'MantenimientoController@store')->name('mantenimientos.store')
+                   ->middleware('can:mantenimientos.create');
+
+    Route::get('mantenimientos', 'MantenimientoController@index')->name('mantenimientos.index')
+                   ->middleware('can:mantenimientos.index');
+
+    Route::get('mantenimientos/create', 'MantenimientoController@create')->name('mantenimientos.create')
+                   ->middleware('can:mantenimientos.create');
+
+    Route::put('mantenimientos/{mantenimiento}', 'MantenimientoController@update')->name('mantenimientos.update')
+                   ->middleware('can:mantenimientos.edit');
+
+    Route::get('mantenimientos/{mantenimiento}', 'MantenimientoController@show')->name('mantenimientos.show')
+                   ->middleware('can:mantenimientos.show');
+
+    Route::delete('mantenimientos/{mantenimiento}', 'MantenimientoController@destroy')->name('mantenimientos.destroy')
+                   ->middleware('can:mantenimientos.destroy');
+
+    Route::get('mantenimientos/{mantenimiento}/edit', 'MantenimientoController@edit')->name('mantenimientos.edit')
+                   ->middleware('can:mantenimientos.edit');
+
+    //Vehiculos
+
+    Route::post('vehiculos/store', 'VehiculoController@store')->name('vehiculos.store')
+                   ->middleware('can:vehiculos.create');
+
+    Route::get('vehiculos', 'VehiculoController@index')->name('vehiculos.index')
+                   ->middleware('can:vehiculos.index');
+
+    Route::get('vehiculos/create', 'VehiculoController@create')->name('vehiculos.create')
+                   ->middleware('can:vehiculos.create');
+
+    Route::put('vehiculos/{vehiculo}', 'VehiculoController@update')->name('vehiculos.update')
+                   ->middleware('can:vehiculos.edit');
+
+    Route::get('vehiculos/{vehiculo}', 'VehiculoController@show')->name('vehiculos.show')
+                   ->middleware('can:vehiculos.show');
+
+    Route::delete('vehiculos/{vehiculo}', 'VehiculoController@destroy')->name('vehiculos.destroy')
+                   ->middleware('can:vehiculos.destroy');
+
+    Route::get('vehiculos/{vehiculo}/edit', 'VehiculoController@edit')->name('vehiculos.edit')
+                   ->middleware('can:vehiculos.edit');
+
+    //Trabajos
+
+    Route::post('trabajos/store', 'TrabajoController@store')->name('trabajos.store')
+                   ->middleware('can:trabajos.create');
+
+    Route::get('trabajos', 'TrabajoController@index')->name('trabajos.index')
+                   ->middleware('can:trabajos.index');
+
+    Route::get('trabajos/create', 'TrabajoController@create')->name('trabajos.create')
+                   ->middleware('can:trabajos.create');
+
+    Route::put('trabajos/{trabajo}', 'TrabajoController@update')->name('trabajos.update')
+                   ->middleware('can:trabajos.edit');
+
+    Route::get('trabajos/{trabajo}', 'TrabajoController@show')->name('trabajos.show')
+                   ->middleware('can:trabajos.show');
+
+    Route::delete('trabajos/{trabajo}', 'TrabajoController@destroy')->name('trabajos.destroy')
+                   ->middleware('can:trabajos.destroy');
+
+    Route::get('trabajos/{trabajo}/edit', 'TrabajoController@edit')->name('trabajos.edit')
+                   ->middleware('can:trabajos.edit');
+
+});
