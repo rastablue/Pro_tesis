@@ -71,6 +71,52 @@ Route::middleware(['auth'])->group(function(){
     Route::get('users/{user}/edit', 'UserController@edit')->name('users.edit')
                    ->middleware('can:users.edit');
 
+    //Clientes
+
+    Route::post('clientes/store', 'ClienteController@store')->name('clientes.store')
+                   ->middleware('can:clientes.create');
+
+    Route::get('clientes', 'ClienteController@index')->name('clientes.index')
+                   ->middleware('can:clientes.index');
+
+    Route::get('clientes/create', 'ClienteController@create')->name('clientes.create')
+                   ->middleware('can:clientes.create');
+
+    Route::put('clientes/{user}', 'ClienteController@update')->name('clientes.update')
+                   ->middleware('can:clientes.edit');
+
+    Route::get('clientes/{user}', 'ClienteController@show')->name('clientes.show')
+                   ->middleware('can:clientes.show');
+
+    Route::delete('clientes/{user}', 'ClienteController@destroy')->name('clientes.destroy')
+                   ->middleware('can:clientes.destroy');
+
+    Route::get('clientes/{user}/edit', 'ClienteController@edit')->name('clientes.edit')
+                   ->middleware('can:clientes.edit');
+
+    //Empleados
+
+    Route::post('empleados/store', 'EmpleadoController@store')->name('empleados.store')
+                   ->middleware('can:empleados.create');
+
+    Route::get('empleados', 'EmpleadoController@index')->name('empleados.index')
+                   ->middleware('can:Empleados.index');
+
+    Route::get('empleados/create', 'EmpleadoController@create')->name('empleados.create')
+                   ->middleware('can:empleados.create');
+
+    Route::put('empleados/{user}', 'EmpleadoController@update')->name('empleados.update')
+                   ->middleware('can:empleados.edit');
+
+    Route::get('empleados/{user}', 'EmpleadoController@show')->name('empleados.show')
+                   ->middleware('can:empleados.show');
+
+    Route::delete('empleados/{user}', 'EmpleadoController@destroy')->name('empleados.destroy')
+                   ->middleware('can:empleados.destroy');
+
+    Route::get('empleados/{user}/edit', 'EmpleadoController@edit')->name('empleados.edit')
+                   ->middleware('can:empleados.edit');
+
     //Mantenimientos
 
     Route::post('mantenimientos/store', 'MantenimientoController@store')->name('mantenimientos.store')

@@ -4,11 +4,7 @@ namespace App\Http\Controllers;
 
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
-use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
 use Caffeinated\Shinobi\Models\Role;
 use Caffeinated\Shinobi\Models\Permission;
 
@@ -33,7 +29,9 @@ class RoleController extends Controller
      */
     public function create()
     {
-        return view('roles.create');
+        $permissions = Permission::get();
+
+        return view('roles.create', compact('permissions'));
     }
 
     /**
@@ -44,19 +42,13 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        role::create([
-            'cedula' => $request['cedula'],
-            'name' => $request['name'],
-            'apellido_pater' => $request['apellido_pater'],
-            'apellido_mater' => $request['apellido_mater'],
-            'direc' => $request['direc'],
-            'tlf' => $request['tlf'],
-            'email' => $request['email'],
-            'password' => Hash::make($request['password']),
-        ]);
+
+        $role = Role::create($request->all());
+
+        $role->permissions()->sync($request->get('permissions'));
 
         return redirect()->route('roles.index')
-                ->with('info', 'Usuario creado con exito');
+                ->with('info', 'Role creado con exito');
     }
 
     /**
@@ -67,7 +59,9 @@ class RoleController extends Controller
      */
     public function show(Role $role)
     {
-        return view('roles.show', compact('role'));
+        $permissions = Permission::get();
+
+        return view('roles.show', compact('role', 'permissions'));
     }
 
     public function search(Request $request)
@@ -86,6 +80,7 @@ class RoleController extends Controller
     public function edit(Role $role)
     {
         $permissions = Permission::get();
+
         return view('roles.edit', compact('role', 'permissions'));
     }
 
@@ -99,10 +94,10 @@ class RoleController extends Controller
     public function update(Request $request, Role $role)
     {
         //$role->update($request->all());
-        //actualiza usuario
+        //actualiza role
         $role->update($request->all());
 
-        //actualiza roles de ese usuario
+        //actualiza permisos
         $role->permissions()->sync($request->get('permissions'));
 
         return redirect()->route('roles.index')

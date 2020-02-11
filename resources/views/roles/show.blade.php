@@ -29,6 +29,30 @@
                             </tr>
                         </tbody>
                     </table>
+                    {!! Form::model($role, ['route' => ['roles.show', $role->id]]) !!}
+                    <hr>
+                    <h3>Permisos Especiales</h3>
+                    <div class="form-group">
+                        <label>{{ Form::radio('special', 'all-access', null, ['disabled' => 'true']) }} Acceso Total</label>
+                        <label>{{ Form::radio('special', 'no-access', null, ['disabled' => 'true']) }} Ningun Acceso</label>
+                    </div>
+                        <hr>
+                        <h3>Lista de Permisos</h3>
+                        <div class="form-group">
+                            <ul class="list-unstyled">
+                                @foreach ($permissions as $permission)
+                                    <li>
+                                        <label>
+                                            {{ Form::checkbox('permissions[]', $permission->id, null, ['disabled' => 'true']) }}
+                                            {{ $permission->name }}
+                                            <em>({{ $permission->description ?: 'N/A' }})</em>
+                                        </label>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </div>
+                    {!! Form::close() !!}
                 </div>
             </div>
         </div>

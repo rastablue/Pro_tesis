@@ -73,7 +73,7 @@
                                     <div class="sidebar-menu">
                                         <ul>
                                             <li class="header-menu">
-                                            <span>Indices</span>
+                                                <span>Indices</span>
                                             </li>
 
                                             <!-- Menu Usuarios  -->
@@ -119,71 +119,71 @@
                                                     </li>
                                                 @endcan
                                             <!-- Menu Mantenimientos  -->
-                                                <li class="sidebar-dropdown">
-                                                    <a href="#">
-                                                        <img class="img-responsive img-rounded" src="{{ asset('images/reparar.png') }}">
-                                                        <span>Mantenimientos</span>
-                                                    </a>
-                                                    <div class="sidebar-submenu">
-                                                        <ul>
-                                                            <li>
-                                                                <a href="/mantenimientos">Consultar Mantenimientos</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="">Agregar Mantenimientos</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#">Actualizar Mantenimientos</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="">Asignar Empleados</a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </li>
-
+                                                @can('mantenimientos.index')
+                                                    <li class="sidebar-dropdown">
+                                                        <a href="#">
+                                                            <img class="img-responsive img-rounded" src="{{ asset('images/reparar.png') }}">
+                                                            <span>Mantenimientos</span>
+                                                        </a>
+                                                        <div class="sidebar-submenu">
+                                                            <ul>
+                                                                <li>
+                                                                    <a href="{{ route('mantenimientos.index') }}">Consultar Mantenimientos</a>
+                                                                </li>
+                                                                @can('mantenimientos.create')
+                                                                    <li>
+                                                                        <a href="">Agregar Mantenimientos</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="">Asignar Empleados</a>
+                                                                    </li>
+                                                                @endcan
+                                                            </ul>
+                                                        </div>
+                                                    </li>
+                                                @endcan
                                             <!-- Menu Empleados  -->
-                                                <li class="sidebar-dropdown">
-                                                    <a href="#">
-                                                        <img class="img-responsive img-rounded" src="{{ asset('images/empleado.png') }}">
-                                                        <span>Empleados</span>
-                                                    </a>
-                                                    <div class="sidebar-submenu">
-                                                        <ul>
-                                                            <li>
-                                                                <a href="/empleados">Consultar Empleados</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="">Agregar Empleados</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="/busqueda/empleados">Actualizar Empleados</a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </li>
-
+                                                @can('empleados.index')
+                                                    <li class="sidebar-dropdown">
+                                                        <a href="#">
+                                                            <img class="img-responsive img-rounded" src="{{ asset('images/empleado.png') }}">
+                                                            <span>Empleados</span>
+                                                        </a>
+                                                        <div class="sidebar-submenu">
+                                                            <ul>
+                                                                <li>
+                                                                    <a href="{{ route('empleados.index') }}">Consultar Empleados</a>
+                                                                </li>
+                                                                @can('empleados.create')
+                                                                    <li>
+                                                                        <a href="{{ route('empleados.create') }}">Agregar Empleados</a>
+                                                                    </li>
+                                                                @endcan
+                                                            </ul>
+                                                        </div>
+                                                    </li>
+                                                @endcan
                                             <!-- Menu Roles  -->
-                                            <li class="sidebar-dropdown">
-                                                <a href="#">
-                                                    <img class="img-responsive img-rounded" src="{{ asset('images/permisos.png') }}">
-                                                    <span>Permisos</span>
-                                                </a>
-                                                <div class="sidebar-submenu">
-                                                    <ul>
-                                                        <li>
-                                                            <a href="{{ route('roles.index') }}">Consultar Permisos</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="">Agregar Permisos</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="/busqueda/empleados">Actualizar Permisos</a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </li>
-
+                                                @can('roles.index')
+                                                    <li class="sidebar-dropdown">
+                                                        <a href="#">
+                                                            <img class="img-responsive img-rounded" src="{{ asset('images/permisos.png') }}">
+                                                            <span>Permisos</span>
+                                                        </a>
+                                                        <div class="sidebar-submenu">
+                                                            <ul>
+                                                                <li>
+                                                                    <a href="{{ route('roles.index') }}">Consultar Permisos</a>
+                                                                </li>
+                                                                @can('roles.create')
+                                                                    <li>
+                                                                        <a href="{{ route('roles.create') }}">Agregar Permisos</a>
+                                                                    </li>
+                                                                @endcan
+                                                            </ul>
+                                                        </div>
+                                                    </li>
+                                                @endcan
                                         </ul>
                                     </div>
                             </li>

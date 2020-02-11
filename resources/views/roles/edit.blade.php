@@ -16,7 +16,7 @@
                         @method('PUT')
                         @csrf
 
-                        @include('roles.partials.form')
+                        @include('roles.partials.formEdit')
 
                         {{-- btn --}}
                         <div class="form-group row mb-0">
