@@ -45,7 +45,7 @@
                                 <td><div class="text-center">{{ $item->description }}</div></td>
                                 <td>
 
-                                    @can('users.show')
+                                    @can('roles.show')
                                         <a href="{{ route('roles.show', $item) }}">
                                             <img class="img-responsive img-rounded float-left" src="{{ asset('images/ver.png') }}">
                                         </a>

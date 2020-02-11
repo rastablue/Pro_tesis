@@ -50,6 +50,82 @@ class PermissionsTableSeeder extends Seeder
             'description'  =>  'Eliminar cualquier usuario del sistema',
         ]);
 
+        //Clientes
+
+        Permission::create([
+            'name'  =>  'Navegar clientes',
+            'slug'  =>  'clientes.index',
+            'description'  =>  'Lista y navega todos los clientes del sistema',
+        ]);
+
+        Permission::create([
+            'name'  =>  'Ver detalle de cliente',
+            'slug'  =>  'clientes.show',
+            'description'  =>  'Ver en detalle cada cliente del sistema',
+        ]);
+
+        Permission::create([
+            'name'  =>  'Creacion de clientes',
+            'slug'  =>  'clientes.create',
+            'description'   =>  'Crea clientes en el sistema',
+        ]);
+
+        Permission::create([
+            'name'  =>  'Edicion de clientes',
+            'slug'  =>  'clientes.edit',
+            'description'  =>  'Editar cualquier dato de un cliente del sistema',
+        ]);
+
+        Permission::create([
+            'name'  =>  'Consultar clientes',
+            'slug'  =>  'clientes.search',
+            'description'  =>  'Consulta de un cliente especifico del sistema',
+        ]);
+
+        Permission::create([
+            'name'  =>  'Eliminar clientes',
+            'slug'  =>  'clientes.destroy',
+            'description'  =>  'Eliminar cualquier usuario del sistema',
+        ]);
+
+        //Empleados
+
+        Permission::create([
+            'name'  =>  'Navegar empleados',
+            'slug'  =>  'empleados.index',
+            'description'  =>  'Lista y navega todos los empleados del sistema',
+        ]);
+
+        Permission::create([
+            'name'  =>  'Ver detalle de empleado',
+            'slug'  =>  'empleados.show',
+            'description'  =>  'Ver en detalle cada empleado del sistema',
+        ]);
+
+        Permission::create([
+            'name'  =>  'Creacion de empleados',
+            'slug'  =>  'empleados.create',
+            'description'   =>  'Crea empleados en el sistema',
+        ]);
+
+        Permission::create([
+            'name'  =>  'Edicion de empleados',
+            'slug'  =>  'empleados.edit',
+            'description'  =>  'Editar cualquier dato de un empleado del sistema',
+        ]);
+
+        Permission::create([
+            'name'  =>  'Consultar empleados',
+            'slug'  =>  'empleados.search',
+            'description'  =>  'Consulta de un empleado especifico del sistema',
+        ]);
+
+        Permission::create([
+            'name'  =>  'Eliminar empleados',
+            'slug'  =>  'empleados.destroy',
+            'description'  =>  'Eliminar cualquier empleado del sistema',
+        ]);
+
         //Roles
 
         Permission::create([
