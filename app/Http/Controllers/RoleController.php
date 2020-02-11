@@ -10,9 +10,9 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Caffeinated\Shinobi\Models\Role;
-use App\User;
+use Caffeinated\Shinobi\Models\Permission;
 
-class UserController extends Controller
+class RoleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,9 +21,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        $user = User::paginate(8);
+        $role = role::paginate(8);
 
-        return view('users.index', compact('user'));
+        return view('roles.index', compact('role'));
     }
 
     /**
@@ -33,7 +33,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('users.create');
+        return view('roles.create');
     }
 
     /**
@@ -44,7 +44,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        User::create([
+        role::create([
             'cedula' => $request['cedula'],
             'name' => $request['name'],
             'apellido_pater' => $request['apellido_pater'],
@@ -55,81 +55,70 @@ class UserController extends Controller
             'password' => Hash::make($request['password']),
         ]);
 
-        return redirect()->route('users.index')
+        return redirect()->route('roles.index')
                 ->with('info', 'Usuario creado con exito');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\User  $user
+     * @param  \App\role  $role
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show(Role $role)
     {
-        return view('users.show', compact('user'));
+        return view('roles.show', compact('role'));
     }
 
     public function search(Request $request)
     {
-        $user = User::where('cedula', 'LIKE', "%$request->search%");
+        $role = role::where('cedula', 'LIKE', "%$request->search%");
 
-        return view('users.search', compact('user'));
+        return view('roles.search', compact('role'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\User  $user
+     * @param  \App\role  $role
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit(Role $role)
     {
-        $roles = Role::get();
-        return view('users.edit', compact('user', 'roles'));
+        $permissions = Permission::get();
+        return view('roles.edit', compact('role', 'permissions'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\User  $user
+     * @param  \App\role  $role
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Role $role)
     {
-        //$user->update($request->all());
+        //$role->update($request->all());
         //actualiza usuario
-        $users = User::findOrFail($id);
-
-        $users->cedula = $request->cedula;
-        $users->name = $request->name;
-        $users->apellido_pater = $request->apellido_pater;
-        $users->apellido_mater = $request->apellido_mater;
-        $users->direc = $request->direc;
-        $users->tlf = $request->tlf;
-        $users->email = $request->email;
-        $users->password = Hash::make($request->password);
-
-        $users->save();
+        $role->update($request->all());
 
         //actualiza roles de ese usuario
-        $users->roles()->sync($request->get('roles'));
+        $role->permissions()->sync($request->get('permissions'));
 
-        return redirect()->route('users.index')
-                ->with('info', 'Usuario actualizado con exito');
+        return redirect()->route('roles.index')
+                ->with('info', 'Role actualizado con exito');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\User  $user
+     * @param  \App\role  $role
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy(Role $role)
     {
-        $user->delete();
+        $role->delete();
 
-        return back()->with('info', 'Usuario eliminado');
+        return back()->with('info', 'Role eliminado');
     }
 }

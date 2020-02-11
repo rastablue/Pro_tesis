@@ -19,6 +19,10 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('users/search', 'UserController@search')->name('users.search');
+
+Route::get('roles/search', 'RoleController@search')->name('roles.search');
+
 Route::middleware(['auth'])->group(function(){
 
     //Roles

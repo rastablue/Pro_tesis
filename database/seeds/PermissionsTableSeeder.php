@@ -39,6 +39,12 @@ class PermissionsTableSeeder extends Seeder
         ]);
 
         Permission::create([
+            'name'  =>  'Consultar usuarios',
+            'slug'  =>  'users.search',
+            'description'  =>  'Consulta de un usuario especifico del sistema',
+        ]);
+
+        Permission::create([
             'name'  =>  'Eliminar usuarios',
             'slug'  =>  'users.destroy',
             'description'  =>  'Eliminar cualquier usuario del sistema',
@@ -68,6 +74,12 @@ class PermissionsTableSeeder extends Seeder
             'name'  =>  'Editar roles',
             'slug'  =>  'roles.edit',
             'description'   =>  'Edita roles del sistema',
+        ]);
+
+        Permission::create([
+            'name'  =>  'Consultar roles',
+            'slug'  =>  'roles.search',
+            'description'  =>  'Consulta de un rol especifico del sistema',
         ]);
 
         Permission::create([
@@ -103,6 +115,12 @@ class PermissionsTableSeeder extends Seeder
         ]);
 
         Permission::create([
+            'name'  =>  'Consultar vehiculos',
+            'slug'  =>  'vehiculos.search',
+            'description'  =>  'Consulta de un vehiculo especifico del sistema',
+        ]);
+
+        Permission::create([
             'name'  =>  'Eliminar vehiculos',
             'slug'  =>  'vehiculos.destroy',
             'description'   =>  'Eliminar vehiculos del sistema',
@@ -135,6 +153,12 @@ class PermissionsTableSeeder extends Seeder
         ]);
 
         Permission::create([
+            'name'  =>  'Consultar mantenimientos',
+            'slug'  =>  'mantenimientos.search',
+            'description'  =>  'Consulta de un mantenimiento especifico del sistema',
+        ]);
+
+        Permission::create([
             'name'  =>  'Eliminar mantenimientos',
             'slug'  =>  'mantenimientos.destroy',
             'description'   =>  'Eliminar mantenimientos del sistema',
@@ -164,6 +188,12 @@ class PermissionsTableSeeder extends Seeder
             'name'  =>  'Editar trabajos',
             'slug'  =>  'trabajos.edit',
             'description'   =>  'Edita trabajos del sistema',
+        ]);
+
+        Permission::create([
+            'name'  =>  'Consultar trabajos',
+            'slug'  =>  'trabajos.search',
+            'description'  =>  'Consulta de un trabajo especifico del sistema',
         ]);
 
         Permission::create([

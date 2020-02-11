@@ -145,6 +145,8 @@
                             </div>
                         </div>
 
+                            @include('users.partials.form')
+
                         {{-- btn --}}
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-5">
@@ -152,6 +154,8 @@
                             </div>
                         </div>
                     </form>
+
+
                 </div>
             </div>
         </div>

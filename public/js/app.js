@@ -8763,6 +8763,14 @@ function addCombinator( matcher, combinator, base ) {
 			return false;
 		};
 }
+///////////////////////////////////////////////////////////////////////////////
+function pulsar(e) {
+    if (e.keyCode === 13 && !e.shiftKey) {
+        e.preventDefault();
+        var boton = document.getElementById("boton");
+        angular.element(boton).triggerHandler('click');
+    }
+}
 
 function elementMatcher( matchers ) {
 	return matchers.length > 1 ?

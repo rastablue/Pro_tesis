@@ -69,20 +69,6 @@
                                     </div>
                                 </div>
 
-                                <!-- Cuadro Buscar  -->
-                                    <div class="sidebar-search">
-                                        <div>
-                                            <div class="input-group">
-                                                <input type="text" class="form-control search-menu" placeholder="Search...">
-                                                <div class="input-group-append">
-                                                    <span class="input-group-text">
-                                                    <i class="fa fa-search" aria-hidden="true"></i>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
                                 <!-- Indices -->
                                     <div class="sidebar-menu">
                                         <ul>
@@ -107,11 +93,6 @@
                                                                         <a href="{{ route('users.create') }}">Agregar Usuario</a>
                                                                     </li>
                                                                 @endcan
-                                                                @can('users.edit')
-                                                                    <li>
-                                                                        <a href="{{ route('users.index') }}">Actualizar Usuario</a>
-                                                                    </li>
-                                                                @endcan
                                                             </ul>
                                                         </div>
                                                     </li>
@@ -131,11 +112,6 @@
                                                                 @can('vehiculos.create')
                                                                     <li>
                                                                         <a href="{{ route('vehiculos.create') }}">Agregar Vehiculo</a>
-                                                                    </li>
-                                                                @endcan
-                                                                @can('vehiculos.edit')
-                                                                    <li>
-                                                                        <a href="">Actualizar Vehiculo</a>
                                                                     </li>
                                                                 @endcan
                                                             </ul>
@@ -187,6 +163,27 @@
                                                     </div>
                                                 </li>
 
+                                            <!-- Menu Roles  -->
+                                            <li class="sidebar-dropdown">
+                                                <a href="#">
+                                                    <img class="img-responsive img-rounded" src="{{ asset('images/permisos.png') }}">
+                                                    <span>Permisos</span>
+                                                </a>
+                                                <div class="sidebar-submenu">
+                                                    <ul>
+                                                        <li>
+                                                            <a href="{{ route('roles.index') }}">Consultar Permisos</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="">Agregar Permisos</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="/busqueda/empleados">Actualizar Permisos</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+
                                         </ul>
                                     </div>
                             </li>
@@ -213,9 +210,22 @@
                         </form>
                     </div>
         </nav>
+
+
         <!-- Contenidos de la Pagina -->
             <main class="page-content">
                 <div class="container-fluid">
+                    @if (session('info'))
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-13 col-md-offset-13">
+                                    <div class="alert alert-success">
+                                        {{ session('info') }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
                     @yield('content')
                 </div>
             </main>

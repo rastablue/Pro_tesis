@@ -42,50 +42,54 @@
 </div>
 
 <!-- Tabla de los Vehiculos -->
-@foreach (App\User::findOrFail($user->id)->clientes->vehiculos as $item)
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header d-flex justify-content-between align-users-center">
-                        <span><h4><b>Detalles del Vehiculo: </b><i>{{ $loop->iteration}}</i></h4></span>
-                    </div>
+@if (@App\User::findOrFail($user->id)->clientes->vehiculos)
+    @foreach (App\User::findOrFail($user->id)->clientes->vehiculos as $item)
+        <div class="container mt-5">
+            <div class="row justify-content-center">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-users-center">
+                            <span><h4><b>Detalles del Vehiculo: </b><i>{{ $loop->iteration}}</i></h4></span>
+                        </div>
 
-                    <div class="card-body">
+                        <div class="card-body">
 
-                        <table class="table table">
-                            <thead>
-                            <tr class="table-secondary">
-                                <th scope="col"><div class="text-center">Placa</div></th>
-                                <th scope="col"><div class="text-center">Marca</div></th>
-                                <th scope="col"><div class="text-center">Modelo</div></th>
-                                <th scope="col"><div class="text-center">Color</div></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th><div class="text-center"> {{ $item->placa }} </th>
-                                    <td><div class="text-center"> {{ $item->marca }} </td>
-                                    <td><div class="text-center"> {{ $item->modelo }} </td>
-                                    <td><div class="text-center"> {{ $item->color }} </td>
-
+                            <table class="table table">
+                                <thead>
+                                <tr class="table-secondary">
+                                    <th scope="col"><div class="text-center">Placa</div></th>
+                                    <th scope="col"><div class="text-center">Marca</div></th>
+                                    <th scope="col"><div class="text-center">Modelo</div></th>
+                                    <th scope="col"><div class="text-center">Color</div></th>
                                 </tr>
-                                    <thead>
-                                        <tr class="table-info">
-                                            <th scope="col" colspan="5">Observaciones:</th>
-                                        </tr>
-                                    </thead>
-                                <tr>
-                                    <td colspan="5"> {{ $item->observacion }} </td>
-                                </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th><div class="text-center"> {{ $item->placa }} </th>
+                                        <td><div class="text-center"> {{ $item->marca }} </td>
+                                        <td><div class="text-center"> {{ $item->modelo }} </td>
+                                        <td><div class="text-center"> {{ $item->color }} </td>
 
-                            </tbody>
-                        </table>
+                                    </tr>
+                                        <thead>
+                                            <tr class="table-info">
+                                                <th scope="col" colspan="5">Observaciones:</th>
+                                            </tr>
+                                        </thead>
+                                    <tr>
+                                        <td colspan="5"> {{ $item->observacion }} </td>
+                                    </tr>
 
+                                </tbody>
+                            </table>
+
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-@endforeach
+    @endforeach
+@endif
+
+
 @endsection

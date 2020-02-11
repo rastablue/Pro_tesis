@@ -1,26 +1,12 @@
 @extends('layouts.app')
 @section('content')
-
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-13">
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <span><h4><b>Lista de Clientes</b></h4></span>
-                    <!-- Cuadro Buscar  -->
-                    @can('users.show')
-                        <div class="sidebar-search">
-                            <div>
-                                <div class="input-group">
-                                    <form action="{{ route('users.search') }}">
-                                        <div class="form-group">
-                                            <input id="search" name="search" type="text" class="form-control search-menu" placeholder="Search..." onkeypress="pulsar(event)">
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    @endcan
+                    <a href="javascript:history.back()" class="btn btn-primary btn-sm">Volver</a>
                 </div>
 
                 <div class="card-body">
@@ -40,7 +26,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($user as $item)
+                            @foreach ($user->get() as $item)
                             <tr>
                                 <th scope="row"><i>{{ $loop->iteration }}</i></th>
                                 <th scope="row"><div class="text-center">{{ $item->cedula }}</div></th>
@@ -79,7 +65,6 @@
                             @endforeach
                         </tbody>
                     </table>
-                    {{ $user->links() }}
                 {{-- fin card body --}}
                 </div>
             </div>
