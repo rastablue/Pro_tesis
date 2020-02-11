@@ -23,6 +23,8 @@ Route::get('users/search', 'UserController@search')->name('users.search');
 
 Route::get('roles/search', 'RoleController@search')->name('roles.search');
 
+Route::get('vehiculos/search', 'VehiculoController@search')->name('vehiculos.search');
+
 Route::middleware(['auth'])->group(function(){
 
     //Roles

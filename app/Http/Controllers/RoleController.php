@@ -66,7 +66,8 @@ class RoleController extends Controller
 
     public function search(Request $request)
     {
-        $role = role::where('cedula', 'LIKE', "%$request->search%");
+
+        $role = Role::where('name', 'LIKE', "%$request->search%");
 
         return view('roles.search', compact('role'));
     }
