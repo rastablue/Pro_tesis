@@ -3,7 +3,7 @@
 @section('content')
 
 <!-- Tabla de Mantenimientos -->
-    <div class="container mt-5">
+    <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
@@ -17,10 +17,9 @@
                             <thead>
                                 <tr class="table-secondary">
                                     <th scope="col"><div class="text-center">Nro. Ficha</div></th>
-                                    <th scope="col"><div class="text-center">Fecha de Ingreso</div></th>
-                                    <th scope="col"><div class="text-center">Decha de Egreso</div></th>
+                                    <th scope="col" width="210px"><div class="text-center">Fecha de Ingreso</div></th>
+                                    <th scope="col" width="210px"><div class="text-center">Decha de Egreso</div></th>
                                     <th scope="col" width="210px"><div class="text-center">Estado</div></th>
-                                    <th scope="col"><div class="text-center">Tipo</div></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -29,7 +28,6 @@
                                     <td><div class="text-center">{{ $mantenimiento->fecha_ingreso }}</div></td>
                                     <td><div class="text-center">{{ $mantenimiento->fecha_egreso }}</div></td>
                                     <td><div class="text-center">{{ $mantenimiento->estado }}</div></td>
-                                    <td><div class="text-center">{{ $mantenimiento->tipo }}</div></td>
                                 </tr>
                                 <thead>
                                     <tr class="table-info">
@@ -98,7 +96,7 @@
         </div>
     @endforeach
 
-<!-- Tabla de los Vehiculos -->
+<!-- Tabla de los Trabajos -->
     @foreach (App\Mantenimiento::findOrFail($mantenimiento->id)->trabajos as $trabajo)
         <div class="container mt-5">
             <div class="row justify-content-center">
@@ -129,6 +127,10 @@
                                     <tr>
                                         <td scope="col" class="bg-info"><div><h5><b>Estado:</b></h5></div></td>
                                         <td width="600px"><div> {{ $trabajo->estado }} </td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="col" class="bg-info"><div><h5><b>Tipo de Trabajo:</b></h5></div></td>
+                                        <td width="600px"><div> {{ $trabajo->tipo }} </td>
                                     </tr>
                                     <tr>
                                         <td scope="col" class="bg-info"><div><h5><b>Empleado Encargado:</b></h5></div></td>

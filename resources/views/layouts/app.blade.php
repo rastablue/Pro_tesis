@@ -132,10 +132,10 @@
                                                                 </li>
                                                                 @can('mantenimientos.create')
                                                                     <li>
-                                                                        <a href="">Agregar Mantenimientos</a>
+                                                                        <a href="{{ route('mantenimientos.create') }}">Agregar Mantenimientos</a>
                                                                     </li>
                                                                     <li>
-                                                                        <a href="">Asignar Empleados</a>
+                                                                        <a href="">Asignar Trabajos</a>
                                                                     </li>
                                                                 @endcan
                                                             </ul>

@@ -9,6 +9,8 @@ use App\Providers\RouteServiceProvider;
 use App\Mantenimiento;
 use App\Trabajo;
 use App\User;
+use App\Vehiculo;
+use Carbon\Carbon;
 
 class MantenimientoController extends Controller
 {
@@ -42,19 +44,22 @@ class MantenimientoController extends Controller
      */
     public function store(Request $request)
     {
-        Mantenimiento::create([
-            'cedula' => $request['cedula'],
-            'name' => $request['name'],
-            'apellido_pater' => $request['apellido_pater'],
-            'apellido_mater' => $request['apellido_mater'],
-            'direc' => $request['direc'],
-            'tlf' => $request['tlf'],
-            'email' => $request['email'],
-            'password' => Hash::make($request['password']),
-        ]);
+        $date = Carbon::now();
 
-        return redirect()->route('users.index')
-                ->with('info', 'Usuario creado con exito');
+        $vehi_id = Vehiculo::where('placa', $request->placa)->first();
+
+        $mantenimiento = new Mantenimiento();
+        $mantenimiento->nro_ficha = $request->ficha;
+        $mantenimiento->fecha_ingreso = $date;
+        $mantenimiento->observacion = $request->observacion;
+        $mantenimiento->vehiculo_id = $vehi_id->id;
+        $mantenimiento->estado = 'activo';
+        $mantenimiento->diagnostico = $request->diagnostico;
+
+        $mantenimiento->save();
+
+        return redirect()->route('mantenimientos.index')
+                ->with('info', 'Mantenimiento agregado');
     }
 
     /**
@@ -65,16 +70,12 @@ class MantenimientoController extends Controller
      */
     public function show(Mantenimiento $mantenimiento)
     {
-        $trabajo = Mantenimiento::findOrFail($mantenimiento->id)->trabajos->first();
-        $empleado = Trabajo::findOrFail($trabajo->id)->where('id', $trabajo->empleado_id);
-        $user = User::get()->where('id', $empleado);
-
-        return view('mantenimientos.show', compact('mantenimiento', 'user'));
+        return view('mantenimientos.show', compact('mantenimiento'));
     }
 
     public function search(Request $request)
     {
-        $mantenimiento = Mantenimiento::where('cedula', 'LIKE', "%$request->search%");
+        $mantenimiento = Mantenimiento::where('nro_ficha', 'LIKE', "%$request->search%");
 
         return view('mantenimientos.search', compact('mantenimiento'));
     }
@@ -87,8 +88,7 @@ class MantenimientoController extends Controller
      */
     public function edit(Mantenimiento $mantenimiento)
     {
-        $roles = Role::get();
-        return view('mantenimientos.edit', compact('mantenimiento', 'roles'));
+        return view('mantenimientos.edit', compact('mantenimiento'));
     }
 
     /**
@@ -102,24 +102,22 @@ class MantenimientoController extends Controller
     {
         //$mantenimiento->update($request->all());
         //actualiza usuario
-        $users = User::findOrFail($id);
+        $vehi_id = Vehiculo::where('placa', $request->placa)->first();
+        $date = Carbon::now();
 
-        $users->cedula = $request->cedula;
-        $users->name = $request->name;
-        $users->apellido_pater = $request->apellido_pater;
-        $users->apellido_mater = $request->apellido_mater;
-        $users->direc = $request->direc;
-        $users->tlf = $request->tlf;
-        $users->email = $request->email;
-        $users->password = Hash::make($request->password);
+        $mantenimiento = Mantenimiento::findOrFail($id);
 
-        $users->save();
+        $mantenimiento->nro_ficha = $request->ficha;
+        $mantenimiento->fecha_egreso = $date;
+        $mantenimiento->observacion = $request->observacion;
+        $mantenimiento->vehiculo_id = $vehi_id->id;
+        $mantenimiento->estado = $request->estado;
+        $mantenimiento->diagnostico = $request->diagnostico;
 
-        //actualiza roles de ese usuario
-        $mantenimientos->roles()->sync($request->get('roles'));
+        $mantenimiento->save();
 
         return redirect()->route('mantenimientos.index')
-                ->with('info', 'Usuario actualizado con exito');
+                ->with('info', 'Mantenimiento actualizado');
     }
 
     /**
