@@ -14,6 +14,6 @@ class Mantenimiento extends Model
 
     public function vehiculos()
     {
-        return $this->belongsTo(Vehiculo::class);
+        return $this->belongsTo(Vehiculo::class, 'vehiculo_id');
     }
 }

@@ -8,7 +8,7 @@ class Trabajo extends Model
 {
     public function empleados()
     {
-        return $this->belongsTo(Empleado::class);
+        return $this->belongsTo(Empleado::class, 'empleado_id');
     }
 
     public function mantenimientos()

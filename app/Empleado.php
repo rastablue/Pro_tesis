@@ -8,7 +8,7 @@ class Empleado extends Model
 {
     public function users()
     {
-        return $this->hasOne(User::class);
+        return $this->hasOne(User::class, 'id', 'user_id');
     }
 
     public function trabajos()

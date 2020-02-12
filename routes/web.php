@@ -25,6 +25,8 @@ Route::get('roles/search', 'RoleController@search')->name('roles.search');
 
 Route::get('vehiculos/search', 'VehiculoController@search')->name('vehiculos.search');
 
+Route::get('mantenimientos/search', 'mantenimientoController@search')->name('mantenimientos.search');
+
 Route::middleware(['auth'])->group(function(){
 
     //Roles
