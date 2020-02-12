@@ -36,7 +36,7 @@
                                 <div class="col-md-6">
 
                                     <select id="marca" class="form-control" name="marca">
-                                        <option disabled="true">Seleccione Marca</option>
+                                        <option disabled="true" selected='true'>Seleccione Marca</option>
                                         @foreach(App\Vehiculo::getEnumValues('vehiculos', 'marca') as $marcas)
                                             <option value="{{ $marcas }}">  {{ $marcas}}  </option>
                                         @endforeach

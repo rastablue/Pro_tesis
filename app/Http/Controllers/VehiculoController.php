@@ -78,7 +78,7 @@ class VehiculoController extends Controller
 
     public function search(Request $request)
     {
-        $vehiculo = Vehiculo::where('cedula', 'LIKE', "%$request->search%");
+        $vehiculo = Vehiculo::where('placa', 'LIKE', "%$request->search%");
 
         return view('vehiculos.search', compact('vehiculo'));
     }
@@ -91,8 +91,10 @@ class VehiculoController extends Controller
      */
     public function edit(Vehiculo $vehiculo)
     {
-        $roles = Role::get();
-        return view('vehiculos.edit', compact('vehiculo', 'roles'));
+        $cliente = Vehiculo::findOrFail($vehiculo->id)->clientes->user_id;
+        $user = User::get()->where('id', $cliente);
+
+        return view('vehiculos.edit', compact('vehiculo', 'user'));
     }
 
     /**
@@ -104,23 +106,20 @@ class VehiculoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //$user->update($request->all());
-        //actualiza usuario
-        $vehiculos = Vehiculo::findOrFail($id);
 
-        $users->cedula = $request->cedula;
-        $users->name = $request->name;
-        $users->apellido_pater = $request->apellido_pater;
-        $users->apellido_mater = $request->apellido_mater;
-        $users->direc = $request->direc;
-        $users->tlf = $request->tlf;
-        $users->email = $request->email;
-        $users->password = Hash::make($request->password);
+        $ced = $request->user_id;
+        $id_users = User::where('cedula', $ced)->first()->id;
+        $id_clie = Cliente::where('user_id', $id_users)->first()->id;
 
-        $users->save();
+        $vehiculo = Vehiculo::findOrFail($id);
+        $vehiculo->placa = $request->placa;
+        $vehiculo->marca = $request->marca;
+        $vehiculo->modelo = $request->modelo;
+        $vehiculo->color = $request->color;
+        $vehiculo->observacion = $request->observa;
+        $vehiculo->cliente_id = $id_clie;
 
-        //actualiza roles de ese usuario
-        $users->roles()->sync($request->get('roles'));
+        $vehiculo->save();
 
         return redirect()->route('vehiculos.index')
                 ->with('info', 'Usuario actualizado con exito');
