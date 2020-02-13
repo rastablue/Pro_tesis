@@ -134,9 +134,6 @@
                                                                     <li>
                                                                         <a href="{{ route('mantenimientos.create') }}">Agregar Mantenimientos</a>
                                                                     </li>
-                                                                    <li>
-                                                                        <a href="">Asignar Trabajos</a>
-                                                                    </li>
                                                                 @endcan
                                                             </ul>
                                                         </div>

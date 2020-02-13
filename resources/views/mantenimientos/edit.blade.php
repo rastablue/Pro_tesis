@@ -20,7 +20,7 @@
                                     <label for="ficha" class="col-md-4 col-form-label text-md-right">{{ __('Numero de Ficha') }}</label>
 
                                     <div class="col-md-6">
-                                        <input id="ficha" type="text" placeholder="{{ $mantenimiento->nro_ficha }}" pattern="[0-9]{7}" class="form-control @error('ficha') is-invalid @enderror" name="ficha" value="{{ old('ficha') }}" required autocomplete="ficha" autofocus>
+                                        <input id="ficha" type="text" placeholder="{{ $mantenimiento->nro_ficha }}" pattern="[0-9]{7}" class="form-control @error('ficha') is-invalid @enderror" name="ficha" value="{{ $mantenimiento->nro_ficha }}" required autocomplete="ficha" autofocus>
 
                                         @error('ficha')
                                             <span class="invalid-feedback" role="alert">
@@ -36,7 +36,7 @@
                                     <label for="placa" class="col-md-4 col-form-label text-md-right">{{ __('Placa') }}</label>
 
                                     <div class="col-md-6">
-                                        <input id="placa" type="text" placeholder="{{ $mantenimiento->vehiculos->placa }}" class="form-control @error('placa') is-invalid @enderror" name="placa" value="{{ old('placa') }}" required autocomplete="placa" autofocus>
+                                        <input id="placa" type="text" placeholder="{{ $mantenimiento->vehiculos->placa }}" class="form-control @error('placa') is-invalid @enderror" name="placa" value="{{ $mantenimiento->vehiculos->placa }}" required autocomplete="placa" autofocus>
 
                                         @error('placa')
                                             <span class="invalid-feedback" role="alert">
@@ -67,7 +67,7 @@
                                     <label for="observacion" class="col-md-4 col-form-label text-md-right">{{ __('Observacion') }}</label>
 
                                     <div class="col-md-6">
-                                        <textarea id="observacion" placeholder="{{ $mantenimiento->observacion }}" type="text" class="form-control @error('observacion') is-invalid @enderror" name="observacion" value="{{ old('observacion') }}" required autocomplete="observacion" autofocus></textarea>
+                                        <textarea id="observacion" placeholder="{{ $mantenimiento->observacion }}" type="text" class="form-control @error('observacion') is-invalid @enderror" name="observacion" value="{{ old('observacion') }}" required autocomplete="observacion" autofocus>{{ $mantenimiento->observacion }}</textarea>
 
                                         @error('observacion')
                                             <span class="invalid-feedback" role="alert">
@@ -82,7 +82,7 @@
                                     <label for="diagnostico" class="col-md-4 col-form-label text-md-right">{{ __('Diagnostico') }}</label>
 
                                     <div class="col-md-6">
-                                        <textarea id="diagnostico" placeholder="{{ $mantenimiento->diagnostico }}" type="text" class="form-control @error('diagnostico') is-invalid @enderror" name="diagnostico" value="{{ old('diagnostico') }}" required autocomplete="diagnostico" autofocus></textarea>
+                                        <textarea id="diagnostico" placeholder="{{ $mantenimiento->diagnostico }}" type="text" class="form-control @error('diagnostico') is-invalid @enderror" name="diagnostico" value="{{ old('diagnostico') }}" required autocomplete="diagnostico" autofocus>{{ $mantenimiento->diagnostico }}</textarea>
 
                                         @error('diagnostico')
                                             <span class="invalid-feedback" role="alert">

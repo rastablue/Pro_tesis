@@ -9,7 +9,9 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <span><h4><b>Detalles del Mantenimiento:</b><i> {{ $mantenimiento->nro_ficha }}</i></h4></span>
-                        <a href="javascript:history.back()" class="btn btn-primary btn-sm">Volver</a>
+                        <a href="{{ route('mantenimientos.index') }}">
+                            <img class="img-responsive img-rounded float-left" src="{{ asset('images/retroceder.png') }}">
+                        </a>
                     </div>
                     <div class="card-body">
 
@@ -104,6 +106,17 @@
                     <div class="card">
                         <div class="card-header d-flex justify-content-between align-users-center">
                             <span><h4><b>Detalles del Trabajo: </b><i>{{ $loop->iteration}}</i></h4></span>
+                            @can('trabajos.edit')
+                                <a href="{{ route('trabajos.edit', $trabajo->id) }}">
+                                    <img class="img-responsive img-rounded float-right" src="{{ asset('images/actualizar.png') }}">
+                                </a>
+                            @endcan
+                            @can('trabajos.destroy')
+                                {!! Form::open(['route' => ['trabajos.destroy', $trabajo->id],
+                                'method' => 'DELETE']) !!}
+                                    <input type=image src="{{ asset('images/basura.png') }}">
+                                {!! Form::close() !!}
+                            @endcan
                         </div>
                         <div class="card-body">
                             <table class="table table">

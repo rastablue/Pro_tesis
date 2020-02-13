@@ -63,17 +63,14 @@
                                             <img class="img-responsive img-rounded float-right" src="{{ asset('images/actualizar.png') }}">
                                         </a>
                                     @endcan
-
                                 </td>
                                 <td>
-
                                     @can('users.destroy')
                                         {!! Form::open(['route' => ['users.destroy', $item->id],
                                         'method' => 'DELETE']) !!}
                                             <input type=image src="{{ asset('images/basura.png') }}">
                                         {!! Form::close() !!}
                                     @endcan
-
                                 </td>
                             </tr>
                             @endforeach

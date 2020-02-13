@@ -7,7 +7,9 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <span><h4><b>Lista de Vehiculos</b></h4></span>
-                    <a href="javascript:history.back()" class="btn btn-primary btn-sm">Volver</a>
+                    <a href="javascript:history.back()">
+                        <img class="img-responsive img-rounded float-left" src="{{ asset('images/retroceder.png') }}">
+                    </a>
                 </div>
 
                 <div class="card-body">

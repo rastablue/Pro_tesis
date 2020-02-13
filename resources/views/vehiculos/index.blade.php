@@ -46,32 +46,26 @@
                                 <td><div class="text-center">{{ $item->modelo }}</div></td>
                                 <td><div class="text-center">{{ $item->color }}</div></td>
                                 <td>
-
                                     @can('vehiculos.show')
                                         <a href="{{ route('vehiculos.show', $item) }}">
                                             <img class="img-responsive img-rounded float-left" src="{{ asset('images/ver.png') }}">
                                         </a>
                                     @endcan
-
                                 </td>
                                 <td>
-
                                     @can('vehiculos.edit')
                                         <a href="{{ route('vehiculos.edit', $item) }}">
                                             <img class="img-responsive img-rounded float-right" src="{{ asset('images/actualizar.png') }}">
                                         </a>
                                     @endcan
-
                                 </td>
                                 <td>
-
                                     @can('vehiculos.destroy')
                                         {!! Form::open(['route' => ['vehiculos.destroy', $item->id],
                                         'method' => 'DELETE']) !!}
                                             <input type=image src="{{ asset('images/basura.png') }}">
                                         {!! Form::close() !!}
                                     @endcan
-
                                 </td>
                             </tr>
                             @endforeach

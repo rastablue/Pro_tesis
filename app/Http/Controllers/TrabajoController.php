@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use App\Trabajo;
 use App\Mantenimiento;
 use App\User;
 use App\Empleado;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Providers\RouteServiceProvider;
 
 class TrabajoController extends Controller
 {
@@ -63,9 +66,10 @@ class TrabajoController extends Controller
      * @param  \App\Trabajo  $trabajo
      * @return \Illuminate\Http\Response
      */
-    public function show(Trabajo $trabajo)
+
+    public function show($trabajo)
     {
-        $mantenimiento = Mantenimiento::findOrFail($trabajo->id);
+        $mantenimiento = Mantenimiento::findOrFail($trabajo);
         return view('trabajos.create', compact('mantenimiento'));
     }
 
@@ -77,7 +81,8 @@ class TrabajoController extends Controller
      */
     public function edit(Trabajo $trabajo)
     {
-        //
+        $mantenimiento = Mantenimiento::where('id', $trabajo->mantenimiento_id)->first();
+        return view('trabajos.edit', compact('trabajo', 'mantenimiento'));
     }
 
     /**
@@ -87,9 +92,26 @@ class TrabajoController extends Controller
      * @param  \App\Trabajo  $trabajo
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Trabajo $trabajo)
+    public function update(Request $request, $trabajo)
     {
-        //
+        $id_users = User::where('cedula', $request->cedula)->first()->id;
+        $id_empleado = Empleado::where('user_id', $id_users)->first()->id;
+
+        $trabajos = Trabajo::findOrFail($trabajo);
+
+        $trabajos->manobra = $request->manobra;
+        $trabajos->repuestos = $request->repuestos;
+        $trabajos->costo_repuestos = $request->costo_repuestos;
+        $trabajos->costo_manobra = $request->costo_manobra;
+        $trabajos->estado = $request->estado;
+        $trabajos->tipo = $request->tipo;
+        $trabajos->mantenimiento_id = $request->id_mante;
+        $trabajos->empleado_id = $id_empleado;
+
+        $trabajos->save();
+
+        return redirect()->route('mantenimientos.index')
+                ->with('info', 'Trabajo actualizado');
     }
 
     /**
@@ -100,6 +122,8 @@ class TrabajoController extends Controller
      */
     public function destroy(Trabajo $trabajo)
     {
-        //
+        $trabajo->delete();
+
+        return back()->with('info', 'Trabajo eliminado');
     }
 }

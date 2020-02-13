@@ -8,7 +8,9 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <span><h4><b>Actualizar Vehiculo: </b></h4><i>{{ $vehiculo->placa }}</i></span>
-                        <a href="javascript:history.back()" class="btn btn-primary btn-sm">Volver</a>
+                        <a href="javascript:history.back()">
+                            <img class="img-responsive img-rounded float-left" src="{{ asset('images/retroceder.png') }}">
+                        </a>
                     </div>
 
                     <div class="card-body">
@@ -21,7 +23,7 @@
                                     <label for="placa" class="col-md-4 col-form-label text-md-right">{{ __('Numero de Placa') }}</label>
 
                                     <div class="col-md-6">
-                                        <input id="placa" placeholder="{{ $vehiculo->placa }}" type="text" class="form-control @error('placa') is-invalid @enderror" name="placa" value="{{ old('placa') }}" required autocomplete="placa" autofocus>
+                                        <input id="placa" placeholder="{{ $vehiculo->placa }}" type="text" class="form-control @error('placa') is-invalid @enderror" name="placa" value="{{ $vehiculo->placa }}" required autocomplete="placa" autofocus>
 
                                         @error('placa')
                                             <span class="invalid-feedback" role="alert">
@@ -52,7 +54,7 @@
                                     <label for="modelo" class="col-md-4 col-form-label text-md-right">{{ __('Modelo') }}</label>
 
                                     <div class="col-md-6">
-                                        <input id="modelo" placeholder="{{ $vehiculo->modelo }}" type="text" class="form-control @error('modelo') is-invalid @enderror" name="modelo" value="{{ old('modelo') }}" required autocomplete="modelo" autofocus>
+                                        <input id="modelo" placeholder="{{ $vehiculo->modelo }}" type="text" class="form-control @error('modelo') is-invalid @enderror" name="modelo" value="{{ $vehiculo->modelo }}" required autocomplete="modelo" autofocus>
 
                                         @error('modelo')
                                             <span class="invalid-feedback" role="alert">
@@ -68,7 +70,7 @@
                                     <label for="color" class="col-md-4 col-form-label text-md-right">{{ __('Color') }}</label>
 
                                     <div class="col-md-6">
-                                        <input id="color" placeholder="{{ $vehiculo->color }}" type="text" class="form-control @error('color') is-invalid @enderror" name="color" value="{{ old('color') }}" required autocomplete="color" autofocus>
+                                        <input id="color" placeholder="{{ $vehiculo->color }}" type="text" class="form-control @error('color') is-invalid @enderror" name="color" value="{{ $vehiculo->color }}" required autocomplete="color" autofocus>
 
                                         @error('color')
                                             <span class="invalid-feedback" role="alert">
@@ -83,7 +85,7 @@
                                     <label for="observa" class="col-md-4 col-form-label text-md-right">{{ __('Observaciones') }}</label>
 
                                     <div class="col-md-6">
-                                        <input id="observa" placeholder="{{ $vehiculo->observacion }}" type="text" class="form-control @error('observa') is-invalid @enderror" name="observa" value="{{ old('observa') }}" required autocomplete="observaciones" autofocus>
+                                        <input id="observa" placeholder="{{ $vehiculo->observacion }}" type="text" class="form-control @error('observa') is-invalid @enderror" name="observa" value="{{ $vehiculo->observacion }}" required autocomplete="observaciones" autofocus>
 
                                         @error('observa')
                                             <span class="invalid-feedback" role="alert">
@@ -98,7 +100,7 @@
                                     <label for="user_id" class="col-md-4 col-form-label text-md-right">{{ __('Cedula del Cliente') }}</label>
                                     @foreach ($user as $users)
                                         <div class="col-md-6">
-                                            <input id="user_id" placeholder="{{ $users->cedula }}" type="text"  class="form-control @error('user_id') is-invalid @enderror" name="user_id" value="{{ old('user_id') }}" required autocomplete="user_id" autofocus>
+                                            <input id="user_id" placeholder="{{ $users->cedula }}" type="text"  class="form-control @error('user_id') is-invalid @enderror" name="user_id" value="{{ $users->cedula }}" required autocomplete="user_id" autofocus>
 
                                             @error('user_id')
                                                 <span class="invalid-feedback" role="alert">
