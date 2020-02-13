@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Empleado;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class EmpleadoController extends Controller
 {
@@ -14,7 +16,8 @@ class EmpleadoController extends Controller
      */
     public function index()
     {
-        //
+        $empleados = Empleado::paginate(8);
+        return view('empleados.index', compact('empleados'));
     }
 
     /**
