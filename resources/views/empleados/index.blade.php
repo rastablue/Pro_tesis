@@ -7,20 +7,7 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <span><h4><b>Lista de Empleados</b></h4></span>
-                    <!-- Cuadro Buscar  -->
-                    @can('users.show')
-                        <div class="sidebar-search">
-                            <div>
-                                <div class="input-group">
-                                    <form action="{{ route('users.search') }}">
-                                        <div class="form-group">
-                                            <input id="search" name="search" type="text" class="form-control search-menu" placeholder="Search..." onkeypress="pulsar(event)">
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    @endcan
+
                 </div>
 
                 <div class="card-body">

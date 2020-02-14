@@ -27,7 +27,7 @@ class EmpleadoController extends Controller
      */
     public function create()
     {
-        //
+        return view('empleados.create');
     }
 
     /**
@@ -38,7 +38,15 @@ class EmpleadoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = User::where('cedula', 'LIKE', "%$request->cedula%")->first();
+
+        $empleados = new Empleado();
+        $empleados->user_id = $user->id;
+
+        $empleados->save();
+
+        return redirect()->route('empleados.index')
+                ->with('info', 'Empleado Creado');
     }
 
     /**
@@ -50,6 +58,12 @@ class EmpleadoController extends Controller
     public function show(Empleado $empleado)
     {
         //
+    }
+
+    public function search(Request $request)
+    {
+        $empleado = User::where('id', 'LIKE', "%$request->search%")->get();
+        return view('empleados.search', compact('empleado'));
     }
 
     /**
