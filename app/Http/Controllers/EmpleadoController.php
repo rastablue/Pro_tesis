@@ -60,7 +60,7 @@ class EmpleadoController extends Controller
      */
     public function edit(Empleado $empleado)
     {
-        //
+        return view('empleados.edit', compact('empleado'));
     }
 
     /**
@@ -72,7 +72,10 @@ class EmpleadoController extends Controller
      */
     public function update(Request $request, Empleado $empleado)
     {
-        //
+        $empleado->update($request->all());
+
+        return redirect()->route('empleados.index')
+                ->with('info', 'Empleado Actualizado');
     }
 
     /**

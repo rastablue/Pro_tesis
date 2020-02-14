@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Caffeinated\Shinobi\Models\Role;
 use App\User;
+use App\Empleado;
 
 class UserController extends Controller
 {
@@ -109,7 +110,6 @@ class UserController extends Controller
         $users->direc = $request->direc;
         $users->tlf = $request->tlf;
         $users->email = $request->email;
-        $users->password = Hash::make($request->password);
 
         $users->save();
 

@@ -123,8 +123,6 @@
                                 </div>
                             </div>
 
-
-
                         {{-- Permisos --}}
                             <div class="form-group row">
                                 <label for="roles" class="col-md-4 col-form-label text-md-right">{{ __('Roles') }}</label>
