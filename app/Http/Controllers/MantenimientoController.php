@@ -48,18 +48,23 @@ class MantenimientoController extends Controller
 
         $vehi_id = Vehiculo::where('placa', $request->placa)->first();
 
-        $mantenimiento = new Mantenimiento();
-        $mantenimiento->nro_ficha = $request->ficha;
-        $mantenimiento->fecha_ingreso = $date;
-        $mantenimiento->observacion = $request->observacion;
-        $mantenimiento->vehiculo_id = $vehi_id->id;
-        $mantenimiento->estado = 'activo';
-        $mantenimiento->diagnostico = $request->diagnostico;
+        if ($vehi_id) {
+            $mantenimiento = new Mantenimiento();
+            $mantenimiento->nro_ficha = $request->ficha;
+            $mantenimiento->fecha_ingreso = $date;
+            $mantenimiento->observacion = $request->observacion;
+            $mantenimiento->vehiculo_id = $vehi_id->id;
+            $mantenimiento->estado = 'activo';
+            $mantenimiento->diagnostico = $request->diagnostico;
 
-        $mantenimiento->save();
+            $mantenimiento->save();
 
-        return redirect()->route('mantenimientos.index')
-                ->with('info', 'Mantenimiento agregado');
+            return redirect()->route('mantenimientos.index')
+                    ->with('info', 'Mantenimiento agregado');
+        } else {
+            return abort(404);
+        }
+
     }
 
     /**

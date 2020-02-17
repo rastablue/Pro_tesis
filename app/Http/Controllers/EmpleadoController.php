@@ -40,13 +40,20 @@ class EmpleadoController extends Controller
     {
         $user = User::where('cedula', 'LIKE', "%$request->cedula%")->first();
 
-        $empleados = new Empleado();
-        $empleados->user_id = $user->id;
+        if ($user) {
+            $empleados = new Empleado();
+            $empleados->user_id = $user->id;
 
-        $empleados->save();
+            $empleados->save();
 
-        return redirect()->route('empleados.index')
-                ->with('info', 'Empleado Creado');
+            return redirect()->route('empleados.index')
+                    ->with('info', 'Empleado Creado');
+        }
+        else{
+            return abort(404);
+        }
+
+
     }
 
     /**

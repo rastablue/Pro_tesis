@@ -46,20 +46,27 @@ class VehiculoController extends Controller
     public function store(Request $request)
     {
         $ced = $request->user_id;
-        $id_users = User::where('cedula', $ced)->first()->id;
-        $id_clie = Cliente::where('user_id', $id_users)->first()->id;
 
-        $vehiculo = new Vehiculo();
-        $vehiculo->placa = $request->placa;
-        $vehiculo->marca = $request->marca;
-        $vehiculo->modelo = $request->modelo;
-        $vehiculo->color = $request->color;
-        $vehiculo->observacion = $request->observa;
-        $vehiculo->cliente_id = $id_clie;
-        $vehiculo->save();
+        if ($id_users = User::where('cedula', $ced)->first()) {
 
-        return redirect()->route('vehiculos.index')
-                ->with('info', 'Vehiculo creado con exito');
+            $id_users = User::where('cedula', $ced)->first()->id;
+            $id_clie = Cliente::where('user_id', $id_users)->first()->id;
+
+            $vehiculo = new Vehiculo();
+            $vehiculo->placa = $request->placa;
+            $vehiculo->marca = $request->marca;
+            $vehiculo->modelo = $request->modelo;
+            $vehiculo->color = $request->color;
+            $vehiculo->observacion = $request->observa;
+            $vehiculo->cliente_id = $id_clie;
+            $vehiculo->save();
+
+            return redirect()->route('vehiculos.index')
+                    ->with('info', 'Vehiculo creado con exito');
+        } else {
+            return abort(404);
+        }
+
     }
 
     /**

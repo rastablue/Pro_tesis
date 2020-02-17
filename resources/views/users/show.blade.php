@@ -52,6 +52,11 @@
                         <div class="card">
                             <div class="card-header d-flex justify-content-between align-users-center">
                                 <span><h4><b>Detalles del Vehiculo: </b><i>{{ $loop->iteration}}</i></h4></span>
+                                @can('vehiculos.show')
+                                    <a href="{{ route('vehiculos.show', $item) }}">
+                                        <img class="img-responsive img-rounded float-left" src="{{ asset('images/ver.png') }}">
+                                    </a>
+                                @endcan
                             </div>
 
                             <div class="card-body">

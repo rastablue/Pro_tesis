@@ -98,7 +98,7 @@
                                 <label for="user_id" class="col-md-4 col-form-label text-md-right">{{ __('Cedula del Cliente') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="user_id" type="text"  class="form-control @error('user_id') is-invalid @enderror" name="user_id" value="{{ old('user_id') }}" required autocomplete="user_id" autofocus>
+                                    <input id="user_id" type="text" pattern="[0-9]{10}" class="form-control @error('user_id') is-invalid @enderror" name="user_id" value="{{ old('user_id') }}" required autocomplete="user_id" autofocus>
 
                                     @error('user_id')
                                         <span class="invalid-feedback" role="alert">

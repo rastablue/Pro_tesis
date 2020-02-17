@@ -41,23 +41,30 @@ class TrabajoController extends Controller
      */
     public function store(Request $request)
     {
-        $id_users = User::where('cedula', $request->cedula)->first()->id;
-        $id_empleado = Empleado::where('user_id', $id_users)->first()->id;
 
-        $trabajo = new Trabajo();
-        $trabajo->manobra = $request->manobra;
-        $trabajo->repuestos = $request->repuestos;
-        $trabajo->costo_repuestos = $request->costo_repuestos;
-        $trabajo->costo_manobra = $request->costo_manobra;
-        $trabajo->estado = 'activo';
-        $trabajo->tipo = $request->tipo;
-        $trabajo->mantenimiento_id = $request->id_mante;
-        $trabajo->empleado_id = $id_empleado;
+        if ($id_users = User::where('cedula', $request->cedula)->first()) {
 
-        $trabajo->save();
+            $id_users = User::where('cedula', $request->cedula)->first()->id;
+            $id_empleado = Empleado::where('user_id', $id_users)->first()->id;
 
-        return redirect()->route('mantenimientos.index')
-                ->with('info', 'Trabajo agregado');
+            $trabajo = new Trabajo();
+            $trabajo->manobra = $request->manobra;
+            $trabajo->repuestos = $request->repuestos;
+            $trabajo->costo_repuestos = $request->costo_repuestos;
+            $trabajo->costo_manobra = $request->costo_manobra;
+            $trabajo->estado = 'activo';
+            $trabajo->tipo = $request->tipo;
+            $trabajo->mantenimiento_id = $request->id_mante;
+            $trabajo->empleado_id = $id_empleado;
+
+            $trabajo->save();
+
+            return redirect()->route('mantenimientos.index')
+                    ->with('info', 'Trabajo agregado');
+        } else {
+            return abort(404);
+        }
+
     }
 
     /**

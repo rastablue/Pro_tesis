@@ -55,6 +55,11 @@
                     <div class="card">
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <span><h4><b>Detalles del Cliente:</b></h4></span>
+                            @can('users.show')
+                                <a href="{{ route('users.show', $item) }}">
+                                    <img class="img-responsive img-rounded float-left" src="{{ asset('images/ver.png') }}">
+                                </a>
+                            @endcan
                         </div>
                         <div class="card-body">
 
@@ -97,6 +102,11 @@
                     <div class="card">
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <span><h4><b>Detalles del Mantenimiento:</b><i> {{ $loop->iteration }}</i></h4></span>
+                            @can('users.show')
+                                <a href="{{ route('mantenimientos.show', $item) }}">
+                                    <img class="img-responsive img-rounded float-left" src="{{ asset('images/ver.png') }}">
+                                </a>
+                            @endcan
                         </div>
                         <div class="card-body">
 
