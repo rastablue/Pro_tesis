@@ -31,9 +31,9 @@
                                 <th scope="col"><div class="text-center">Nombre</div></th>
                                 <th scope="col"><div class="text-center">Slug</div></th>
                                 <th scope="col" width="400px"><div class="text-center">Descripcion</div></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
+                                <th width="50px"></th>
+                                <th width="50px"></th>
+                                <th width="50px"></th>
                             </tr>
                         </thead>
                         <tbody>

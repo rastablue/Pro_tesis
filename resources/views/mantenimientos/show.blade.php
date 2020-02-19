@@ -7,7 +7,7 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header d-flex justify-content-between align-items-center">
+                    <div class="card-header d-flex justify-content-between align-items-center bg-secondary">
                         <span><h4><b>Detalles del Mantenimiento:</b><i> {{ $mantenimiento->nro_ficha }}</i></h4></span>
                         <a href="{{ route('mantenimientos.index') }}">
                             <img class="img-responsive img-rounded float-left" src="{{ asset('images/retroceder.png') }}">
@@ -63,7 +63,7 @@
             <div class="row justify-content-center">
                 <div class="col-md-12">
                     <div class="card">
-                        <div class="card-header d-flex justify-content-between align-users-center">
+                        <div class="card-header d-flex justify-content-between align-users-center bg-warning">
                             <span><h4><b>Detalles del Vehiculo: </b><i>{{ $vehiculo->placa}}</i></h4></span>
                             @can('vehiculos.show')
                                         <a href="{{ route('vehiculos.show', $vehiculo) }}">
@@ -84,7 +84,7 @@
                                 <tbody>
                                     <tr>
                                         <th><div class="text-center"> {{ $vehiculo->placa }} </th>
-                                        <td><div class="text-center"> {{ $vehiculo->marca }} </td>
+                                        <td><div class="text-center"> {{ $vehiculo->marcas->marca }} </td>
                                         <td><div class="text-center"> {{ $vehiculo->modelo }} </td>
                                         <td><div class="text-center"> {{ $vehiculo->color }} </td>
                                     </tr>
@@ -110,8 +110,8 @@
         <div class="container mt-5">
             <div class="row justify-content-center">
                 <div class="col-md-8">
-                    <div class="card">
-                        <div class="card-header d-flex justify-content-between align-users-center">
+                    <div class="card ">
+                        <div class="card-header d-flex justify-content-between align-users-center bg-success">
                             <span><h4><b>Detalles del Trabajo: </b><i>{{ $loop->iteration}}</i></h4></span>
                             @can('trabajos.edit')
                                 <a href="{{ route('trabajos.edit', $trabajo->id) }}">
@@ -129,31 +129,31 @@
                             <table class="table table">
                                 <tbody>
                                     <tr>
-                                        <td scope="col" class="bg-info"  width="260px"><div><h5><b>Mano de Obra:</b></h5></div></td>
+                                        <td scope="col" width="260px"><div><h5><b>Mano de Obra:</b></h5></div></td>
                                         <td width="600px"><div> {{ $trabajo->manobra }} </td>
                                     </tr>
                                     <tr>
-                                        <td scope="col" class="bg-info"><div><h5><b>Repuestos:</b></h5></div></td>
-                                        <td width="600px"><div> {{ $trabajo->repuestos }} </td>
+                                        <td scope="col" class="table-secondary"><div><h5><b>Repuestos:</b></h5></div></td>
+                                        <td width="600px" class="table-secondary"><div> {{ $trabajo->repuestos }} </td>
                                     </tr>
                                     <tr>
-                                        <td scope="col" class="bg-info"><div><h5><b>Costo de Repuestos:</b></h5></div></td>
+                                        <td scope="col"><div><h5><b>Costo de Repuestos:</b></h5></div></td>
                                         <td width="600px"><div> {{ $trabajo->costo_repuestos }} </td>
                                     </tr>
                                     <tr>
-                                        <td scope="col" class="bg-info"><div><h5><b>Costo de Mano de Obra:</b></h5></div></td>
-                                        <td width="600px"><div> {{ $trabajo->costo_manobra }} </td>
+                                        <td scope="col" class="table-secondary"><div><h5><b>Costo de Mano de Obra:</b></h5></div></td>
+                                        <td width="600px" class="table-secondary"><div> {{ $trabajo->costo_manobra }} </td>
                                     </tr>
                                     <tr>
-                                        <td scope="col" class="bg-info"><div><h5><b>Estado:</b></h5></div></td>
+                                        <td scope="col"><div><h5><b>Estado:</b></h5></div></td>
                                         <td width="600px"><div> {{ $trabajo->estado }} </td>
                                     </tr>
                                     <tr>
-                                        <td scope="col" class="bg-info"><div><h5><b>Tipo de Trabajo:</b></h5></div></td>
-                                        <td width="600px"><div> {{ $trabajo->tipo }} </td>
+                                        <td scope="col" class="table-secondary"><div><h5><b>Tipo de Trabajo:</b></h5></div></td>
+                                        <td width="600px" class="table-secondary"><div> {{ $trabajo->tipo }} </td>
                                     </tr>
                                     <tr>
-                                        <td scope="col" class="bg-info"><div><h5><b>Empleado Encargado:</b></h5></div></td>
+                                        <td scope="col"><div><h5><b>Empleado Encargado:</b></h5></div></td>
                                         <td width="600px"><div> {{ $trabajo->empleados->users->name }}  {{ $trabajo->empleados->users->apellido_pater }}</td>
                                     </tr>
                                 </tbody>

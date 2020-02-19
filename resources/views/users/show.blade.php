@@ -7,7 +7,7 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header d-flex justify-content-between align-items-center">
+                    <div class="card-header d-flex justify-content-between align-items-center bg-info">
                         <span><h4><b>Detalles del Usuario:</b><i> {{ $user->name }}    {{ $user->apellido_pater }}</i></h4></span>
                         <a href="javascript:history.back()">
                             <img class="img-responsive img-rounded float-left" src="{{ asset('images/retroceder.png') }}">
@@ -45,57 +45,68 @@
 
 <!-- Tabla de los Vehiculos -->
     @if (@App\User::findOrFail($user->id)->clientes->vehiculos)
-        @foreach (App\User::findOrFail($user->id)->clientes->vehiculos as $item)
             <div class="container mt-5">
                 <div class="row justify-content-center">
                     <div class="col-md-12">
                         <div class="card">
-                            <div class="card-header d-flex justify-content-between align-users-center">
-                                <span><h4><b>Detalles del Vehiculo: </b><i>{{ $loop->iteration}}</i></h4></span>
-                                @can('vehiculos.show')
-                                    <a href="{{ route('vehiculos.show', $item) }}">
-                                        <img class="img-responsive img-rounded float-left" src="{{ asset('images/ver.png') }}">
-                                    </a>
-                                @endcan
+                            <div class="card-header d-flex justify-content-between align-items-center bg-warning">
+                                <span><h4><b>Lista de Vehiculos</b></h4></span>
                             </div>
 
                             <div class="card-body">
-
-                                <table class="table table">
+                                <table class="table">
                                     <thead>
-                                    <tr class="table-secondary">
-                                        <th scope="col"><div class="text-center">Placa</div></th>
-                                        <th scope="col"><div class="text-center">Marca</div></th>
-                                        <th scope="col"><div class="text-center">Modelo</div></th>
-                                        <th scope="col"><div class="text-center">Color</div></th>
-                                    </tr>
+                                        <tr class="table-secondary">
+                                            <th></th>
+                                            <th scope="col" width="150px"><div class="text-center">Placa</div></th>
+                                            <th scope="col"><div class="text-center">Marca</div></th>
+                                            <th scope="col" width="300px"><div class="text-center">Modelo</div></th>
+                                            <th scope="col"><div class="text-center">Color</div></th>
+                                            <th width="50px"></th>
+                                            <th width="50px"></th>
+                                            <th width="50px"></th>
+                                        </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <th><div class="text-center"> {{ $item->placa }} </th>
-                                            <td><div class="text-center"> {{ $item->marca }} </td>
-                                            <td><div class="text-center"> {{ $item->modelo }} </td>
-                                            <td><div class="text-center"> {{ $item->color }} </td>
-
-                                        </tr>
-                                            <thead>
-                                                <tr class="table-info">
-                                                    <th scope="col" colspan="5">Observaciones:</th>
-                                                </tr>
-                                            </thead>
-                                        <tr>
-                                            <td colspan="5"> {{ $item->observacion }} </td>
-                                        </tr>
-
+                                        @foreach (App\User::findOrFail($user->id)->clientes->vehiculos as $item)
+                                            <tr>
+                                                <th scope="row"><i>{{ $loop->iteration }}</i></th>
+                                                <th scope="row"><div class="text-center">{{ $item->placa }}</div></th>
+                                                <td><div class="text-center">{{ $item->marcas->marca }}</div></td>
+                                                <td><div class="text-center">{{ $item->modelo }}</div></td>
+                                                <td><div class="text-center">{{ $item->color }}</div></td>
+                                                <td>
+                                                    @can('vehiculos.show')
+                                                        <a href="{{ route('vehiculos.show', $item) }}">
+                                                            <img class="img-responsive img-rounded float-left" src="{{ asset('images/ver.png') }}">
+                                                        </a>
+                                                    @endcan
+                                                </td>
+                                                <td>
+                                                    @can('vehiculos.edit')
+                                                        <a href="{{ route('vehiculos.edit', $item) }}">
+                                                            <img class="img-responsive img-rounded float-right" src="{{ asset('images/actualizar.png') }}">
+                                                        </a>
+                                                    @endcan
+                                                </td>
+                                                <td>
+                                                    @can('vehiculos.destroy')
+                                                        {!! Form::open(['route' => ['vehiculos.destroy', $item->id],
+                                                        'method' => 'DELETE']) !!}
+                                                            <input type=image src="{{ asset('images/basura.png') }}">
+                                                        {!! Form::close() !!}
+                                                    @endcan
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
-
+                            {{-- fin card body --}}
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        @endforeach
     @endif
 
 

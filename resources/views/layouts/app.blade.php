@@ -97,6 +97,51 @@
                                                         </div>
                                                     </li>
                                                 @endcan
+
+                                            <!-- Menu Clientes  -->
+                                                @can('clientes.index')
+                                                    <li class="sidebar-dropdown">
+                                                        <a href="#">
+                                                            <img class="img-responsive img-rounded" src="{{ asset('images/cliente.png') }}">
+                                                            <span>Clientes</span>
+                                                        </a>
+                                                        <div class="sidebar-submenu">
+                                                            <ul>
+                                                                <li>
+                                                                    <a href="{{ route('clientes.index') }}">Consultar Clientes</a>
+                                                                </li>
+                                                                @can('clientes.create')
+                                                                    <li>
+                                                                        <a href="{{ route('clientes.create') }}">Agregar Clientes</a>
+                                                                    </li>
+                                                                @endcan
+                                                            </ul>
+                                                        </div>
+                                                    </li>
+                                                @endcan
+
+                                            <!-- Menu Empleados  -->
+                                                @can('empleados.index')
+                                                    <li class="sidebar-dropdown">
+                                                        <a href="#">
+                                                            <img class="img-responsive img-rounded" src="{{ asset('images/empleado.png') }}">
+                                                            <span>Empleados</span>
+                                                        </a>
+                                                        <div class="sidebar-submenu">
+                                                            <ul>
+                                                                <li>
+                                                                    <a href="{{ route('empleados.index') }}">Consultar Empleados</a>
+                                                                </li>
+                                                                @can('empleados.create')
+                                                                    <li>
+                                                                        <a href="{{ route('empleados.create') }}">Agregar Empleados</a>
+                                                                    </li>
+                                                                @endcan
+                                                            </ul>
+                                                        </div>
+                                                    </li>
+                                                @endcan
+
                                             <!-- Menu Vehiculos  -->
                                                 @can('vehiculos.index')
                                                     <li class="sidebar-dropdown">
@@ -144,27 +189,7 @@
                                                         </div>
                                                     </li>
                                                 @endcan
-                                            <!-- Menu Empleados  -->
-                                                @can('empleados.index')
-                                                    <li class="sidebar-dropdown">
-                                                        <a href="#">
-                                                            <img class="img-responsive img-rounded" src="{{ asset('images/empleado.png') }}">
-                                                            <span>Empleados</span>
-                                                        </a>
-                                                        <div class="sidebar-submenu">
-                                                            <ul>
-                                                                <li>
-                                                                    <a href="{{ route('empleados.index') }}">Consultar Empleados</a>
-                                                                </li>
-                                                                @can('empleados.create')
-                                                                    <li>
-                                                                        <a href="{{ route('empleados.create') }}">Agregar Empleados</a>
-                                                                    </li>
-                                                                @endcan
-                                                            </ul>
-                                                        </div>
-                                                    </li>
-                                                @endcan
+
                                             <!-- Menu Roles  -->
                                                 @can('roles.index')
                                                     <li class="sidebar-dropdown">
