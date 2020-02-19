@@ -19,6 +19,11 @@ class Vehiculo extends Model
         return $this->belongsTo(Cliente::class, 'cliente_id');
     }
 
+    public function marcas()
+    {
+        return $this->belongsTo(MarcaVehiculo::class, 'marca_vehiculo_id');
+    }
+
     public static function getEnumValues($table, $column) {
         $type = DB::select(DB::raw("SHOW COLUMNS FROM $table WHERE Field = '{$column}'"))[0]->Type ;
         preg_match('/^enum\((.*)\)$/', $type, $matches);

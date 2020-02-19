@@ -169,6 +169,29 @@ Route::middleware(['auth'])->group(function(){
     Route::get('vehiculos/{vehiculo}/edit', 'VehiculoController@edit')->name('vehiculos.edit')
                    ->middleware('can:vehiculos.edit');
 
+    //MarcaVehiculos
+
+    Route::post('marcas/store', 'MarcaVehiculoController@store')->name('marcas.store')
+                   ->middleware('can:marcas.create');
+
+    Route::get('marcas', 'MarcaVehiculoController@index')->name('marcas.index')
+                   ->middleware('can:marcas.index');
+
+    Route::get('marcas/create', 'MarcaVehiculoController@create')->name('marcas.create')
+                   ->middleware('can:marcas.create');
+
+    Route::put('marcas/{vehiculo}', 'MarcaVehiculoController@update')->name('marcas.update')
+                   ->middleware('can:marcas.edit');
+
+    Route::get('marcas/{vehiculo}', 'VehiculoController@show')->name('marcas.show')
+                   ->middleware('can:marcas.show');
+
+    Route::delete('marcas/{vehiculo}', 'MarcaVehiculoController@destroy')->name('marcas.destroy')
+                   ->middleware('can:marcas.destroy');
+
+    Route::get('marcas/{vehiculo}/edit', 'MarcaVehiculoController@edit')->name('marcas.edit')
+                   ->middleware('can:marcas.edit');
+
     //Trabajos
 
     Route::post('trabajos/store', 'TrabajoController@store')->name('trabajos.store')

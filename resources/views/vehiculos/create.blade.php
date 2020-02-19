@@ -17,107 +17,107 @@
                         <form method="POST" action="{{ route('vehiculos.store') }}">
                             @csrf
                             {{-- Placa --}}
-                            <div class="form-group row">
-                                <label for="placa" class="col-md-4 col-form-label text-md-right">{{ __('Numero de Placa') }}</label>
+                                <div class="form-group row">
+                                    <label for="placa" class="col-md-4 col-form-label text-md-right">{{ __('Numero de Placa') }}</label>
 
-                                <div class="col-md-6">
-                                    <input id="placa" type="text" class="form-control @error('placa') is-invalid @enderror" name="placa" value="{{ old('placa') }}" required autocomplete="placa" autofocus>
+                                    <div class="col-md-6">
+                                        <input id="placa" type="text" class="form-control @error('placa') is-invalid @enderror" name="placa" value="{{ old('placa') }}" required autocomplete="placa" autofocus>
 
-                                    @error('placa')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
+                                        @error('placa')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
                                 </div>
-                            </div>
 
                             {{-- Marca --}}
-                            <div class="form-group row">
-                                <label for="tipovehis_id" class="col-md-4 col-form-label text-md-right">{{ __('Marca de Vehiculo') }}</label>
+                                <div class="form-group row">
+                                    <label for="tipovehis_id" class="col-md-4 col-form-label text-md-right">{{ __('Marca de Vehiculo') }}</label>
 
-                                <div class="col-md-6">
+                                    <div class="col-md-6">
 
-                                    <select id="marca" class="form-control" name="marca">
-                                        <option disabled="true" selected='true'>Seleccione Marca</option>
-                                        @foreach(App\Vehiculo::getEnumValues('vehiculos', 'marca') as $marcas)
-                                            <option value="{{ $marcas }}">  {{ $marcas}}  </option>
-                                        @endforeach
-                                    </select>
+                                        <select id="marca" class="form-control" name="marca">
+                                            <option disabled="true" selected='true'>Seleccione Marca</option>
+                                            @foreach(App\MarcaVehiculo::all() as $marcas)
+                                                <option value="{{ $marcas->id }}">  {{ $marcas->marca}}  </option>
+                                            @endforeach
+                                        </select>
 
+                                    </div>
                                 </div>
-                            </div>
 
                             {{-- Modelo --}}
-                            <div class="form-group row">
-                                <label for="modelo" class="col-md-4 col-form-label text-md-right">{{ __('Modelo') }}</label>
+                                <div class="form-group row">
+                                    <label for="modelo" class="col-md-4 col-form-label text-md-right">{{ __('Modelo') }}</label>
 
-                                <div class="col-md-6">
-                                    <input id="modelo" type="text" class="form-control @error('modelo') is-invalid @enderror" name="modelo" value="{{ old('modelo') }}" required autocomplete="modelo" autofocus>
+                                    <div class="col-md-6">
+                                        <input id="modelo" type="text" class="form-control @error('modelo') is-invalid @enderror" name="modelo" value="{{ old('modelo') }}" required autocomplete="modelo" autofocus>
 
-                                    @error('modelo')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
+                                        @error('modelo')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
                                 </div>
-                            </div>
 
                             {{-- Color --}}
-                            <div class="form-group row">
+                                <div class="form-group row">
 
-                                <label for="color" class="col-md-4 col-form-label text-md-right">{{ __('Color') }}</label>
+                                    <label for="color" class="col-md-4 col-form-label text-md-right">{{ __('Color') }}</label>
 
-                                <div class="col-md-6">
-                                    <input id="color" type="text" class="form-control @error('color') is-invalid @enderror" name="color" value="{{ old('color') }}" required autocomplete="color" autofocus>
+                                    <div class="col-md-6">
+                                        <input id="color" type="text" class="form-control @error('color') is-invalid @enderror" name="color" value="{{ old('color') }}" required autocomplete="color" autofocus>
 
-                                    @error('color')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
+                                        @error('color')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
                                 </div>
-                            </div>
 
                             {{-- Observaciones --}}
-                            <div class="form-group row">
-                                <label for="observa" class="col-md-4 col-form-label text-md-right">{{ __('Observaciones') }}</label>
+                                <div class="form-group row">
+                                    <label for="observa" class="col-md-4 col-form-label text-md-right">{{ __('Observaciones') }}</label>
 
-                                <div class="col-md-6">
-                                    <input id="observa" type="text" class="form-control @error('observa') is-invalid @enderror" name="observa" value="{{ old('observa') }}" required autocomplete="observaciones" autofocus>
+                                    <div class="col-md-6">
+                                        <input id="observa" type="text" class="form-control @error('observa') is-invalid @enderror" name="observa" value="{{ old('observa') }}" required autocomplete="observaciones" autofocus>
 
-                                    @error('observa')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
+                                        @error('observa')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
                                 </div>
-                            </div>
 
                             {{-- Cedula del cliente --}}
-                            <div class="form-group row">
-                                <label for="user_id" class="col-md-4 col-form-label text-md-right">{{ __('Cedula del Cliente') }}</label>
+                                <div class="form-group row">
+                                    <label for="user_id" class="col-md-4 col-form-label text-md-right">{{ __('Cedula del Cliente') }}</label>
 
-                                <div class="col-md-6">
-                                    <input id="user_id" type="text" pattern="[0-9]{10}" class="form-control @error('user_id') is-invalid @enderror" name="user_id" value="{{ old('user_id') }}" required autocomplete="user_id" autofocus>
+                                    <div class="col-md-6">
+                                        <input id="user_id" type="text" pattern="[0-9]{10}" class="form-control @error('user_id') is-invalid @enderror" name="user_id" value="{{ old('user_id') }}" required autocomplete="user_id" autofocus>
 
-                                    @error('user_id')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
+                                        @error('user_id')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
                                 </div>
-                            </div>
 
 
 
                             {{-- btn --}}
-                            <div class="form-group row mb-0">
-                                <div class="col-md-6 offset-md-5">
-                                    <button type="submit" class="btn btn-primary">
-                                        {{ __('Registrar') }}
-                                    </button>
+                                <div class="form-group row mb-0">
+                                    <div class="col-md-6 offset-md-5">
+                                        <button type="submit" class="btn btn-primary">
+                                            {{ __('Registrar') }}
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
                         </form>
                     </div>
                 </div>

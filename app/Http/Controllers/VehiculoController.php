@@ -54,7 +54,7 @@ class VehiculoController extends Controller
 
             $vehiculo = new Vehiculo();
             $vehiculo->placa = $request->placa;
-            $vehiculo->marca = $request->marca;
+            $vehiculo->marca_vehiculo_id = $request->marca;
             $vehiculo->modelo = $request->modelo;
             $vehiculo->color = $request->color;
             $vehiculo->observacion = $request->observa;
@@ -120,7 +120,7 @@ class VehiculoController extends Controller
 
         $vehiculo = Vehiculo::findOrFail($id);
         $vehiculo->placa = $request->placa;
-        $vehiculo->marca = $request->marca;
+        $vehiculo->marca_vehiculo_id = $request->marca;
         $vehiculo->modelo = $request->modelo;
         $vehiculo->color = $request->color;
         $vehiculo->observacion = $request->observa;

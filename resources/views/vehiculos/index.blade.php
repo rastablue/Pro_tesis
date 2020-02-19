@@ -42,7 +42,7 @@
                             <tr>
                                 <th scope="row"><i>{{ $loop->iteration }}</i></th>
                                 <th scope="row"><div class="text-center">{{ $item->placa }}</div></th>
-                                <td><div class="text-center">{{ $item->marca }}</div></td>
+                                <td><div class="text-center">{{ $item->marcas->marca }}</div></td>
                                 <td><div class="text-center">{{ $item->modelo }}</div></td>
                                 <td><div class="text-center">{{ $item->color }}</div></td>
                                 <td>

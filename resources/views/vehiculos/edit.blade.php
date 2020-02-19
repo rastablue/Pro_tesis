@@ -40,15 +40,15 @@
                                     <div class="col-md-6">
 
                                         <select id="marca" class="form-control" name="marca">
-                                            <option selected='true'>{{ $vehiculo->marca }}</option>
-                                            @foreach(App\Vehiculo::getEnumValues('vehiculos', 'marca') as $marcas)
-                                                <option value="{{ $marcas }}">  {{ $marcas}}  </option>
+                                            <option disabled="true" selected='true'>Seleccione Marca</option>
+                                            @foreach(App\MarcaVehiculo::all() as $marcas)
+                                                <option value="{{ $marcas->id }}">  {{ $marcas->marca}}  </option>
                                             @endforeach
                                         </select>
 
                                     </div>
                                 </div>
-
+                                
                             {{-- Modelo --}}
                                 <div class="form-group row">
                                     <label for="modelo" class="col-md-4 col-form-label text-md-right">{{ __('Modelo') }}</label>
