@@ -113,6 +113,9 @@
                                                                     <li>
                                                                         <a href="{{ route('vehiculos.create') }}">Agregar Vehiculo</a>
                                                                     </li>
+                                                                    <li>
+                                                                        <a href="{{ route('vehiculos.create') }}">Marcas de Vehiculos</a>
+                                                                    </li>
                                                                 @endcan
                                                             </ul>
                                                         </div>

@@ -46,6 +46,21 @@
                                     </div>
                                 </div>
 
+                            {{-- Kilometraje --}}
+                                <div class="form-group row">
+                                    <label for="kilometraje" class="col-md-4 col-form-label text-md-right">{{ __('Kilometraje') }}</label>
+
+                                    <div class="col-md-6">
+                                        <input id="kilometraje" type="text" placeholder="{{ $mantenimiento->kilometraje }}" pattern="[0-9]" class="form-control @error('kilometraje') is-invalid @enderror" name="kilometraje" value="{{ $mantenimiento->kilometraje }}" required autocomplete="kilometraje" autofocus>
+
+                                        @error('kilometraje')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
                             {{-- Estado --}}
                                 <div class="form-group row">
                                     <label for="estado" class="col-md-4 col-form-label text-md-right">{{ __('Estado del Mantenimiento') }}</label>
@@ -85,6 +100,21 @@
                                         <textarea id="diagnostico" placeholder="{{ $mantenimiento->diagnostico }}" type="text" class="form-control @error('diagnostico') is-invalid @enderror" name="diagnostico" value="{{ old('diagnostico') }}" required autocomplete="diagnostico" autofocus>{{ $mantenimiento->diagnostico }}</textarea>
 
                                         @error('diagnostico')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                            {{-- Total a Pagar --}}
+                                <div class="form-group row">
+                                    <label for="valor" class="col-md-4 col-form-label text-md-right">{{ __('Valor Total') }}</label>
+
+                                    <div class="col-md-6">
+                                        <input id="valor" type="text" placeholder="{{ $mantenimiento->valor_total }}" pattern="[0-9]" class="form-control @error('valor') is-invalid @enderror" name="valor" value="{{ $mantenimiento->valor_total }}" required autocomplete="valor" autofocus>
+
+                                        @error('valor')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>

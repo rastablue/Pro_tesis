@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
@@ -56,6 +56,7 @@ class MantenimientoController extends Controller
             $mantenimiento->vehiculo_id = $vehi_id->id;
             $mantenimiento->estado = 'activo';
             $mantenimiento->diagnostico = $request->diagnostico;
+            $mantenimiento->kilometraje = $request->kilometraje;
 
             $mantenimiento->save();
 
@@ -75,7 +76,9 @@ class MantenimientoController extends Controller
      */
     public function show(Mantenimiento $mantenimiento)
     {
-        return view('mantenimientos.show', compact('mantenimiento'));
+        $valor = DB::table('trabajos')
+                    ->selectRaw('val_total(9)')->get();
+        return view('mantenimientos.show', compact('mantenimiento', 'valor'));
     }
 
     public function search(Request $request)
@@ -118,6 +121,7 @@ class MantenimientoController extends Controller
         $mantenimiento->vehiculo_id = $vehi_id->id;
         $mantenimiento->estado = $request->estado;
         $mantenimiento->diagnostico = $request->diagnostico;
+        $mantenimiento->kilometraje = $request->kilometraje;
 
         $mantenimiento->save();
 

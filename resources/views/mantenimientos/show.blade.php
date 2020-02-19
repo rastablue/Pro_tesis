@@ -20,7 +20,8 @@
                                 <tr class="table-secondary">
                                     <th scope="col"><div class="text-center">Nro. Ficha</div></th>
                                     <th scope="col" width="210px"><div class="text-center">Fecha de Ingreso</div></th>
-                                    <th scope="col" width="210px"><div class="text-center">Decha de Egreso</div></th>
+                                    <th scope="col" width="210px"><div class="text-center">Fecha de Egreso</div></th>
+                                    <th scope="col" width="210px"><div class="text-center">Valor Total</div></th>
                                     <th scope="col" width="210px"><div class="text-center">Estado</div></th>
                                 </tr>
                             </thead>
@@ -29,6 +30,7 @@
                                     <th scope="row"><div class="text-center">{{ $mantenimiento->nro_ficha }}</div></th>
                                     <td><div class="text-center">{{ $mantenimiento->fecha_ingreso }}</div></td>
                                     <td><div class="text-center">{{ $mantenimiento->fecha_egreso }}</div></td>
+                                    <td><div class="text-center">{{ $valor }}</div></td>
                                     <td><div class="text-center">{{ $mantenimiento->estado }}</div></td>
                                 </tr>
                                 <thead>
