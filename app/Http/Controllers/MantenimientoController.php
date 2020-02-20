@@ -116,12 +116,14 @@ class MantenimientoController extends Controller
         $mantenimiento = Mantenimiento::findOrFail($id);
 
         $mantenimiento->nro_ficha = $request->ficha;
-        $mantenimiento->fecha_egreso = $date;
         $mantenimiento->observacion = $request->observacion;
         $mantenimiento->vehiculo_id = $vehi_id->id;
         $mantenimiento->estado = $request->estado;
         $mantenimiento->diagnostico = $request->diagnostico;
         $mantenimiento->kilometraje = $request->kilometraje;
+        if ($request->estado == 'Finalizado') {
+            $mantenimiento->fecha_egreso = $date;
+        }
 
         $mantenimiento->save();
 

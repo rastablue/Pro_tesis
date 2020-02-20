@@ -17,10 +17,12 @@
                         <thead>
                             <tr class="table-secondary">
                                 <th></th>
-                                <th scope="col"><div class="text-center">Nro. Ficha</div></th>
-                                <th scope="col" width="210px"><div class="text-center">Fecha de Ingreso</div></th>
-                                <th scope="col" width="210px"><div class="text-center">Fecha de Egreso</div></th>
-                                <th scope="col" width="210px"><div class="text-center">Estado</div></th>
+                                <th scope="col" width="100px"><div class="text-center">Nro. Ficha</div></th>
+                                <th scope="col" width="200px"><div class="text-center">Fecha de Ingreso</div></th>
+                                <th scope="col" width="200px"><div class="text-center">Fecha de Egreso</div></th>
+                                <th scope="col" width="100px"><div class="text-center">Estado</div></th>
+                                <th scope="col" width="150px"><div class="text-center">Valor Total</div></th>
+                                <th></th>
                                 <th></th>
                                 <th></th>
                                 <th></th>
@@ -34,31 +36,35 @@
                                 <td><div class="text-center">{{ $item->fecha_ingreso }}</div></td>
                                 <td><div class="text-center">{{ $item->fecha_egreso }}</div></td>
                                 <td><div class="text-center">{{ $item->estado }}</div></td>
+                                <td><div class="text-center">{{ $item->valor_total }}</div></td>
                                 <td>
-
                                     @can('mantenimientos.show')
                                         <a href="{{ route('mantenimientos.show', $item) }}">
-                                            <img class="img-responsive img-rounded float-left" src="{{ asset('images/ver.png') }}">
+                                            <img class="img-responsive img-rounded float-left" src="{{ asset('images/ver.png') }}" title="Ver Detalle">
+                                        </a>
+                                    @endcan
+                                </td>
+                                <td>
+                                    @can('trabajos.create')
+                                        <a href="{{ route('trabajos.show', $item) }}">
+                                            <img class="img-responsive img-rounded float-right" src="{{ asset('images/trabajos.png') }}" title="Agregar Trabajo">
                                         </a>
                                     @endcan
                                 </td>
                                 <td>
                                     @can('mantenimientos.edit')
                                         <a href="{{ route('mantenimientos.edit', $item) }}">
-                                            <img class="img-responsive img-rounded float-right" src="{{ asset('images/actualizar.png') }}">
+                                            <img class="img-responsive img-rounded float-right" src="{{ asset('images/actualizar.png') }}" title="Actualizar">
                                         </a>
                                     @endcan
-
                                 </td>
                                 <td>
-
                                     @can('mantenimientos.destroy')
                                         {!! Form::open(['route' => ['mantenimientos.destroy', $item->id],
                                         'method' => 'DELETE']) !!}
-                                            <input type=image src="{{ asset('images/basura.png') }}">
+                                            <input type=image src="{{ asset('images/basura.png') }}" title="Eliminar">
                                         {!! Form::close() !!}
                                     @endcan
-
                                 </td>
                             </tr>
                             @endforeach

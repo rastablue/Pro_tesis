@@ -51,21 +51,21 @@
                                 <td>
                                     @can('mantenimientos.show')
                                         <a href="{{ route('mantenimientos.show', $item) }}">
-                                            <img class="img-responsive img-rounded float-left" src="{{ asset('images/ver.png') }}">
+                                            <img class="img-responsive img-rounded float-left" src="{{ asset('images/ver.png') }}" title="Ver Detalles">
                                         </a>
                                     @endcan
                                 </td>
                                 <td>
                                     @can('trabajos.create')
                                         <a href="{{ route('trabajos.show', $item) }}">
-                                            <img class="img-responsive img-rounded float-right" src="{{ asset('images/trabajos.png') }}">
+                                            <img class="img-responsive img-rounded float-right" src="{{ asset('images/trabajos.png') }}" title="Agregar Trabajo">
                                         </a>
                                     @endcan
                                 </td>
                                 <td>
                                     @can('mantenimientos.edit')
                                         <a href="{{ route('mantenimientos.edit', $item) }}">
-                                            <img class="img-responsive img-rounded float-right" src="{{ asset('images/actualizar.png') }}">
+                                            <img class="img-responsive img-rounded float-right" src="{{ asset('images/actualizar.png') }}" title="Actualizar">
                                         </a>
                                     @endcan
                                 </td>
@@ -73,7 +73,7 @@
                                     @can('mantenimientos.destroy')
                                         {!! Form::open(['route' => ['mantenimientos.destroy', $item->id],
                                         'method' => 'DELETE']) !!}
-                                            <input type=image src="{{ asset('images/basura.png') }}">
+                                            <input type=image src="{{ asset('images/basura.png') }}" title="Eliminar">
                                         {!! Form::close() !!}
                                     @endcan
                                 </td>

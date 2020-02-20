@@ -47,14 +47,14 @@
 
                                     @can('roles.show')
                                         <a href="{{ route('roles.show', $item) }}">
-                                            <img class="img-responsive img-rounded float-left" src="{{ asset('images/ver.png') }}">
+                                            <img class="img-responsive img-rounded float-left" src="{{ asset('images/ver.png') }}" title="Ver Detalles">
                                         </a>
                                     @endcan
                                 </td>
                                 <td>
                                     @can('roles.edit')
                                         <a href="{{ route('roles.edit', $item) }}">
-                                            <img class="img-responsive img-rounded float-right" src="{{ asset('images/actualizar.png') }}">
+                                            <img class="img-responsive img-rounded float-right" src="{{ asset('images/actualizar.png') }}" title="Actualizar">
                                         </a>
                                     @endcan
 
@@ -64,7 +64,7 @@
                                     @can('roles.destroy')
                                         {!! Form::open(['route' => ['roles.destroy', $item->id],
                                         'method' => 'DELETE']) !!}
-                                            <input type=image src="{{ asset('images/basura.png') }}">
+                                            <input type=image src="{{ asset('images/basura.png') }}" title="Eliminar">
                                         {!! Form::close() !!}
                                     @endcan
 

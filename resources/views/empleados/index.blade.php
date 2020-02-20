@@ -37,16 +37,16 @@
                                             <td><div class="text-center">{{ $item->tlf }}</div></td>
                                             <td><div class="text-center">{{ $item->email }}</div></td>
                                             <td>
-                                                @can('empleados.show')
+                                                @can('users.show')
                                                     <a href="{{ route('users.show', $item) }}">
-                                                        <img class="img-responsive img-rounded float-left" src="{{ asset('images/ver.png') }}">
+                                                        <img class="img-responsive img-rounded float-left" src="{{ asset('images/ver.png') }}" title="Ver Detalles">
                                                     </a>
                                                 @endcan
                                             </td>
                                             <td>
                                                 @can('empleados.edit')
                                                     <a href="{{ route('users.edit', $item) }}">
-                                                        <img class="img-responsive img-rounded float-right" src="{{ asset('images/actualizar.png') }}">
+                                                        <img class="img-responsive img-rounded float-right" src="{{ asset('images/actualizar.png') }}" title="Actualizar">
                                                     </a>
                                                 @endcan
                                             </td>

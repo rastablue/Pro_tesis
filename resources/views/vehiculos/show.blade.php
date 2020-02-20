@@ -9,6 +9,11 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-users-center bg-warning">
                         <span><h4><b>Detalles del Vehiculo: </b><i>{{ $vehiculo->placa}}</i></h4></span>
+                        @can('vehiculos.edit')
+                            <a href="{{ route('vehiculos.edit', $vehiculo) }}">
+                                <img class="img-responsive img-rounded float-right" src="{{ asset('images/actualiza.png') }}" title="Actualizar">
+                            </a>
+                        @endcan
                         <a href="javascript:history.back()">
                             <img class="img-responsive img-rounded float-left" src="{{ asset('images/retroceder.png') }}">
                         </a>
@@ -57,7 +62,7 @@
                             <span><h4><b>Detalles del Cliente:</b><i> {{ $item->name }}    {{ $item->apellido_pater }} </i></h4></span>
                             @can('users.show')
                                 <a href="{{ route('users.show', $item) }}">
-                                    <img class="img-responsive img-rounded float-left" src="{{ asset('images/ver.png') }}">
+                                    <img class="img-responsive img-rounded float-left" src="{{ asset('images/ver.png') }}" title="Ver Detalles">
                                 </a>
                             @endcan
                         </div>
@@ -129,21 +134,21 @@
                                     <td>
                                         @can('mantenimientos.show')
                                             <a href="{{ route('mantenimientos.show', $item) }}">
-                                                <img class="img-responsive img-rounded float-left" src="{{ asset('images/ver.png') }}">
+                                                <img class="img-responsive img-rounded float-left" src="{{ asset('images/ver.png') }}"  title="Ver Detalles">
                                             </a>
                                         @endcan
                                     </td>
                                     <td>
                                         @can('trabajos.create')
                                             <a href="{{ route('trabajos.show', $item) }}">
-                                                <img class="img-responsive img-rounded float-right" src="{{ asset('images/trabajos.png') }}">
+                                                <img class="img-responsive img-rounded float-right" src="{{ asset('images/trabajos.png') }}" title="Agregar Trabajo">
                                             </a>
                                         @endcan
                                     </td>
                                     <td>
                                         @can('mantenimientos.edit')
                                             <a href="{{ route('mantenimientos.edit', $item) }}">
-                                                <img class="img-responsive img-rounded float-right" src="{{ asset('images/actualizar.png') }}">
+                                                <img class="img-responsive img-rounded float-right" src="{{ asset('images/actualizar.png') }}" title="Actualizar">
                                             </a>
                                         @endcan
                                     </td>
@@ -151,7 +156,7 @@
                                         @can('mantenimientos.destroy')
                                             {!! Form::open(['route' => ['mantenimientos.destroy', $item->id],
                                             'method' => 'DELETE']) !!}
-                                                <input type=image src="{{ asset('images/basura.png') }}">
+                                                <input type=image src="{{ asset('images/basura.png') }}" title="Eliminar">
                                             {!! Form::close() !!}
                                         @endcan
                                     </td>

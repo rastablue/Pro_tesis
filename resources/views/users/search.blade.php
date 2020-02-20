@@ -41,14 +41,14 @@
 
                                     @can('users.show')
                                         <a href="{{ route('users.show', $item) }}">
-                                            <img class="img-responsive img-rounded float-left" src="{{ asset('images/ver.png') }}">
+                                            <img class="img-responsive img-rounded float-left" src="{{ asset('images/ver.png') }}" title="Ver Detalles">
                                         </a>
                                     @endcan
                                 </td>
                                 <td>
                                     @can('users.edit')
                                         <a href="{{ route('users.edit', $item) }}">
-                                            <img class="img-responsive img-rounded float-right" src="{{ asset('images/actualizar.png') }}">
+                                            <img class="img-responsive img-rounded float-right" src="{{ asset('images/actualizar.png') }}" title="Actualizar">
                                         </a>
                                     @endcan
 
@@ -58,7 +58,7 @@
                                     @can('users.destroy')
                                         {!! Form::open(['route' => ['users.destroy', $item->id],
                                         'method' => 'DELETE']) !!}
-                                            <input type=image src="{{ asset('images/basura.png') }}">
+                                            <input type=image src="{{ asset('images/basura.png') }}" title="Eliminar">
                                         {!! Form::close() !!}
                                     @endcan
 

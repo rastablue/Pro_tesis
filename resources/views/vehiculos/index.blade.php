@@ -8,19 +8,19 @@
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <span><h4><b>Lista de Vehiculos</b></h4></span>
                     <!-- Cuadro Buscar  -->
-                    @can('vehiculos.show')
-                        <div class="sidebar-search">
-                            <div>
-                                <div class="input-group">
-                                    <form action="{{ route('vehiculos.search') }}">
-                                        <div class="form-group">
-                                            <input id="search" name="search" type="text" class="form-control search-menu" placeholder="Search..." onkeypress="pulsar(event)">
-                                        </div>
-                                    </form>
+                        @can('vehiculos.show')
+                            <div class="sidebar-search">
+                                <div>
+                                    <div class="input-group">
+                                        <form action="{{ route('vehiculos.search') }}">
+                                            <div class="form-group">
+                                                <input id="search" name="search" type="text" class="form-control search-menu" placeholder="Search..." onkeypress="pulsar(event)">
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    @endcan
+                        @endcan
                 </div>
 
                 <div class="card-body">
@@ -48,14 +48,14 @@
                                 <td>
                                     @can('vehiculos.show')
                                         <a href="{{ route('vehiculos.show', $item) }}">
-                                            <img class="img-responsive img-rounded float-left" src="{{ asset('images/ver.png') }}">
+                                            <img class="img-responsive img-rounded float-left" src="{{ asset('images/ver.png') }}" title="Ver Detalles">
                                         </a>
                                     @endcan
                                 </td>
                                 <td>
                                     @can('vehiculos.edit')
                                         <a href="{{ route('vehiculos.edit', $item) }}">
-                                            <img class="img-responsive img-rounded float-right" src="{{ asset('images/actualizar.png') }}">
+                                            <img class="img-responsive img-rounded float-right" src="{{ asset('images/actualizar.png') }}" title="Actualizar">
                                         </a>
                                     @endcan
                                 </td>
@@ -63,7 +63,7 @@
                                     @can('vehiculos.destroy')
                                         {!! Form::open(['route' => ['vehiculos.destroy', $item->id],
                                         'method' => 'DELETE']) !!}
-                                            <input type=image src="{{ asset('images/basura.png') }}">
+                                            <input type=image src="{{ asset('images/basura.png') }}" title="Eliminar">
                                         {!! Form::close() !!}
                                     @endcan
                                 </td>

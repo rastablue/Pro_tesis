@@ -232,7 +232,7 @@
                         <a href="{{ route('logout') }}"
                             onclick="event.preventDefault();
                                 document.getElementById('logout-form').submit();">
-                            <img class="img-responsive img-rounded" src="{{ asset('images/powerOff.png') }}">
+                            <img class="img-responsive img-rounded" src="{{ asset('images/powerOff.png') }}"  title="Salir">
                         </a>
 
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

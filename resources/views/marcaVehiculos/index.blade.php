@@ -37,7 +37,7 @@
                                 <td>
                                     @can('marcas.edit')
                                         <a href="{{ route('marcas.edit', $item) }}">
-                                            <img class="img-responsive img-rounded float-right" src="{{ asset('images/actualizar.png') }}">
+                                            <img class="img-responsive img-rounded float-right" src="{{ asset('images/actualizar.png') }}" title="Actualizar">
                                         </a>
                                     @endcan
                                 </td>
@@ -45,7 +45,7 @@
                                     @can('marcas.destroy')
                                         {!! Form::open(['route' => ['marcas.destroy', $item->id],
                                         'method' => 'DELETE']) !!}
-                                            <input type=image src="{{ asset('images/basura.png') }}">
+                                            <input type=image src="{{ asset('images/basura.png') }}" title="Eliminar">
                                         {!! Form::close() !!}
                                     @endcan
                                 </td>

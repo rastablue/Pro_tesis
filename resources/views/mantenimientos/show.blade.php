@@ -11,12 +11,12 @@
                         <span><h4><b>Detalles del Mantenimiento:</b><i> {{ $mantenimiento->nro_ficha }}</i></h4></span>
                         @can('trabajos.create')
                             <a href="{{ route('trabajos.show', $mantenimiento) }}">
-                                <img class="img-responsive img-rounded float-right" src="{{ asset('images/trabajos.png') }}">
+                                <img class="img-responsive img-rounded float-right" src="{{ asset('images/trabajos.png') }}" title="Agregar Trabajo">
                             </a>
                         @endcan
                         @can('mantenimientos.edit')
                             <a href="{{ route('mantenimientos.edit', $mantenimiento) }}">
-                                <img class="img-responsive img-rounded float-right" src="{{ asset('images/actualizar.png') }}">
+                                <img class="img-responsive img-rounded float-right" src="{{ asset('images/actualizar.png') }}" title="Actualizar">
                             </a>
                         @endcan
                         <a href="{{ route('mantenimientos.index') }}">
@@ -79,7 +79,7 @@
                             <span><h4><b>Detalles del Vehiculo: </b><i>{{ $vehiculo->placa}}</i></h4></span>
                             @can('vehiculos.show')
                                         <a href="{{ route('vehiculos.show', $vehiculo) }}">
-                                            <img class="img-responsive img-rounded float-left" src="{{ asset('images/ver.png') }}">
+                                            <img class="img-responsive img-rounded float-left" src="{{ asset('images/ver.png') }}" title="Ver Detalles">
                                         </a>
                             @endcan
                         </div>
@@ -127,13 +127,13 @@
                             <span><h4><b>Detalles del Trabajo: </b><i>{{ $loop->iteration}}</i></h4></span>
                             @can('trabajos.edit')
                                 <a href="{{ route('trabajos.edit', $trabajo->id) }}">
-                                    <img class="img-responsive img-rounded float-right" src="{{ asset('images/actualizar.png') }}">
+                                    <img class="img-responsive img-rounded float-right" src="{{ asset('images/actualizar.png') }}" title="Actualizar">
                                 </a>
                             @endcan
                             @can('trabajos.destroy')
                                 {!! Form::open(['route' => ['trabajos.destroy', $trabajo->id],
                                 'method' => 'DELETE']) !!}
-                                    <input type=image src="{{ asset('images/basura.png') }}">
+                                    <input type=image src="{{ asset('images/basura.png') }}" title="Eliminar">
                                 {!! Form::close() !!}
                             @endcan
                         </div>

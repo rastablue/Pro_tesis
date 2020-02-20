@@ -9,6 +9,11 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center bg-info">
                         <span><h4><b>Detalles del Usuario:</b><i> {{ $user->name }}    {{ $user->apellido_pater }}</i></h4></span>
+                        @can('users.edit')
+                            <a href="{{ route('users.edit', $user) }}">
+                                <img class="img-responsive img-rounded float-left" src="{{ asset('images/actualizar.png') }}" title="Actualizar">
+                            </a>
+                        @endcan
                         <a href="javascript:history.back()">
                             <img class="img-responsive img-rounded float-left" src="{{ asset('images/retroceder.png') }}">
                         </a>
@@ -44,7 +49,7 @@
     </div>
 
 <!-- Tabla de los Vehiculos -->
-    @if (App\User::findOrFail($user->id)->clientes->vehiculos)
+    @if (@App\User::findOrFail($user->id)->clientes->vehiculos)
         <div class="container mt-5">
             <div class="row justify-content-center">
                 <div class="col-md-12">
@@ -78,14 +83,14 @@
                                             <td>
                                                 @can('vehiculos.show')
                                                     <a href="{{ route('vehiculos.show', $item) }}">
-                                                        <img class="img-responsive img-rounded float-left" src="{{ asset('images/ver.png') }}">
+                                                        <img class="img-responsive img-rounded float-left" src="{{ asset('images/ver.png') }}" title="Ver Detalles">
                                                     </a>
                                                 @endcan
                                             </td>
                                             <td>
                                                 @can('vehiculos.edit')
                                                     <a href="{{ route('vehiculos.edit', $item) }}">
-                                                        <img class="img-responsive img-rounded float-right" src="{{ asset('images/actualizar.png') }}">
+                                                        <img class="img-responsive img-rounded float-right" src="{{ asset('images/actualizar.png') }}" title="Actualizar">
                                                     </a>
                                                 @endcan
                                             </td>
@@ -93,7 +98,7 @@
                                                 @can('vehiculos.destroy')
                                                     {!! Form::open(['route' => ['vehiculos.destroy', $item->id],
                                                     'method' => 'DELETE']) !!}
-                                                        <input type=image src="{{ asset('images/basura.png') }}">
+                                                        <input type=image src="{{ asset('images/basura.png') }}" title="Eliminar">
                                                     {!! Form::close() !!}
                                                 @endcan
                                             </td>
