@@ -5,7 +5,7 @@
         <div class="col-md-13">
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <span><h4><b>Lista de Clientes</b></h4></span>
+                    <span><h4><b>Lista de Usuarios</b></h4></span>
                     <a href="javascript:history.back()">
                         <img class="img-responsive img-rounded float-left" src="{{ asset('images/retroceder.png') }}">
                     </a>

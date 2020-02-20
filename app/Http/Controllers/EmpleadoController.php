@@ -38,7 +38,7 @@ class EmpleadoController extends Controller
      */
     public function store(Request $request)
     {
-        $user = User::where('cedula', 'LIKE', "%$request->cedula%")->first();
+        $user = User::where('cedula', $request->cedula)->first();
 
         if ($user) {
             $empleados = new Empleado();

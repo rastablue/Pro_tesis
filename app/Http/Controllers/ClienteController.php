@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use App\Cliente;
+use App\User;
 use Illuminate\Http\Request;
 
 class ClienteController extends Controller
@@ -14,7 +16,8 @@ class ClienteController extends Controller
      */
     public function index()
     {
-        //
+        $clientes = Cliente::paginate(8);
+        return view('clientes.index', compact('clientes'));
     }
 
     /**
@@ -24,7 +27,7 @@ class ClienteController extends Controller
      */
     public function create()
     {
-        //
+        return view('clientes.create');
     }
 
     /**
@@ -35,7 +38,20 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = User::where('cedula', $request->cedula)->first();
+
+        if ($user) {
+            $clientes = new Cliente();
+            $clientes->user_id = $user->id;
+
+            $clientes->save();
+
+            return redirect()->route('clientes.index')
+                    ->with('info', 'Cliente Creado');
+        }
+        else{
+            return abort(404);
+        }
     }
 
     /**
@@ -47,6 +63,12 @@ class ClienteController extends Controller
     public function show(Cliente $cliente)
     {
         //
+    }
+
+    public function search(Request $request)
+    {
+        $user = User::where('cedula', 'LIKE', "%$request->search%");
+        return view('clientes.search', compact('user'));
     }
 
     /**
