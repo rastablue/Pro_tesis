@@ -48,23 +48,28 @@ class VehiculoController extends Controller
         $ced = $request->user_id;
 
         if ($id_users = User::where('cedula', $ced)->first()) {
-
             $id_users = User::where('cedula', $ced)->first()->id;
-            $id_clie = Cliente::where('user_id', $id_users)->first()->id;
 
-            $vehiculo = new Vehiculo();
-            $vehiculo->placa = $request->placa;
-            $vehiculo->marca_vehiculo_id = $request->marca;
-            $vehiculo->modelo = $request->modelo;
-            $vehiculo->color = $request->color;
-            $vehiculo->observacion = $request->observa;
-            $vehiculo->cliente_id = $id_clie;
-            $vehiculo->save();
+            if($id_clie = Cliente::where('user_id', $id_users)->first()){
+                $id_clie = Cliente::where('user_id', $id_users)->first()->id;
 
-            return redirect()->route('vehiculos.index')
-                    ->with('info', 'Vehiculo creado con exito');
-        } else {
-            return abort(404);
+                $vehiculo = new Vehiculo();
+                $vehiculo->placa = $request->placa;
+                $vehiculo->marca_vehiculo_id = $request->marca;
+                $vehiculo->modelo = $request->modelo;
+                $vehiculo->color = $request->color;
+                $vehiculo->observacion = $request->observa;
+                $vehiculo->cliente_id = $id_clie;
+                $vehiculo->save();
+
+                return redirect()->route('vehiculos.index')
+                        ->with('info', 'Vehiculo creado con exito');
+            }else {
+                return abort(503);
+            }
+    
+        }else {
+            return abort(503);
         }
 
     }
@@ -113,23 +118,34 @@ class VehiculoController extends Controller
      */
     public function update(Request $request, $id)
     {
-
         $ced = $request->user_id;
-        $id_users = User::where('cedula', $ced)->first()->id;
-        $id_clie = Cliente::where('user_id', $id_users)->first()->id;
 
-        $vehiculo = Vehiculo::findOrFail($id);
-        $vehiculo->placa = $request->placa;
-        $vehiculo->marca_vehiculo_id = $request->marca;
-        $vehiculo->modelo = $request->modelo;
-        $vehiculo->color = $request->color;
-        $vehiculo->observacion = $request->observa;
-        $vehiculo->cliente_id = $id_clie;
+        if($id_users = User::where('cedula', $ced)->first()){
+            $id_users = User::where('cedula', $ced)->first()->id;
 
-        $vehiculo->save();
+            if($id_clie = Cliente::where('user_id', $id_users)->first()){
+                $id_clie = Cliente::where('user_id', $id_users)->first()->id;
+                
+                $vehiculo = Vehiculo::findOrFail($id);
+                $vehiculo->placa = $request->placa;
+                $vehiculo->marca_vehiculo_id = $request->marca;
+                $vehiculo->modelo = $request->modelo;
+                $vehiculo->color = $request->color;
+                $vehiculo->observacion = $request->observa;
+                $vehiculo->cliente_id = $id_clie;
 
-        return redirect()->route('vehiculos.index')
-                ->with('info', 'Usuario actualizado con exito');
+                $vehiculo->save();
+
+                return redirect()->route('vehiculos.index')
+                        ->with('info', 'Usuario actualizado con exito');
+            }else{
+                return abort(503);
+            }
+        }else{
+            return abort(503);   
+        }
+
+        
     }
 
     /**

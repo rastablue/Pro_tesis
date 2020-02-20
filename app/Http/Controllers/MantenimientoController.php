@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Mantenimiento;
@@ -60,10 +61,14 @@ class MantenimientoController extends Controller
 
             $mantenimiento->save();
 
+            /*if($request->hasFile('ficha')){
+                $path = Storage::disk('public')->put('imagesLoads', $request->file('ficha'));
+            }*/
+
             return redirect()->route('mantenimientos.index')
                     ->with('info', 'Mantenimiento agregado');
         } else {
-            return abort(404);
+            return abort(503);
         }
 
     }
@@ -76,9 +81,7 @@ class MantenimientoController extends Controller
      */
     public function show(Mantenimiento $mantenimiento)
     {
-        $valor = DB::table('trabajos')
-                    ->selectRaw('val_total(9)')->get();
-        return view('mantenimientos.show', compact('mantenimiento', 'valor'));
+        return view('mantenimientos.show', compact('mantenimiento'));
     }
 
     public function search(Request $request)
@@ -113,22 +116,29 @@ class MantenimientoController extends Controller
         $vehi_id = Vehiculo::where('placa', $request->placa)->first();
         $date = Carbon::now();
 
-        $mantenimiento = Mantenimiento::findOrFail($id);
+        if($vehi_id){
 
-        $mantenimiento->nro_ficha = $request->ficha;
-        $mantenimiento->observacion = $request->observacion;
-        $mantenimiento->vehiculo_id = $vehi_id->id;
-        $mantenimiento->estado = $request->estado;
-        $mantenimiento->diagnostico = $request->diagnostico;
-        $mantenimiento->kilometraje = $request->kilometraje;
-        if ($request->estado == 'Finalizado') {
-            $mantenimiento->fecha_egreso = $date;
+            $mantenimiento = Mantenimiento::findOrFail($id);
+
+            $mantenimiento->nro_ficha = $request->ficha;
+            $mantenimiento->observacion = $request->observacion;
+            $mantenimiento->vehiculo_id = $vehi_id->id;
+            $mantenimiento->estado = $request->estado;
+            $mantenimiento->diagnostico = $request->diagnostico;
+            $mantenimiento->kilometraje = $request->kilometraje;
+            if ($request->estado == 'Finalizado') {
+                $mantenimiento->fecha_egreso = $date;
+            }
+
+            $mantenimiento->save();
+
+            return redirect()->route('mantenimientos.index')
+                    ->with('info', 'Mantenimiento actualizado');
+        }else{
+            return abort(503);
         }
 
-        $mantenimiento->save();
-
-        return redirect()->route('mantenimientos.index')
-                ->with('info', 'Mantenimiento actualizado');
+        
     }
 
     /**

@@ -50,7 +50,7 @@ class EmpleadoController extends Controller
                     ->with('info', 'Empleado Creado');
         }
         else{
-            return abort(404);
+            return abort(503);
         }
 
 

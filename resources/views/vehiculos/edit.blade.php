@@ -40,9 +40,9 @@
                                     <div class="col-md-6">
 
                                         <select id="marca" class="form-control" name="marca">
-                                            <option disabled="true" selected='true'>Seleccione Marca</option>
+                                            <option value="{{ $vehiculo->marcas->id }}" selected='true'>{{$vehiculo->marcas->marca }}</option>
                                             @foreach(App\MarcaVehiculo::all() as $marcas)
-                                                <option value="{{ $marcas->id }}">  {{ $marcas->marca}}  </option>
+                                                <option value="{{ $marcas->id }}">  {{ $marcas->marca }}  </option>
                                             @endforeach
                                         </select>
 
