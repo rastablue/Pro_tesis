@@ -28,10 +28,11 @@
                         <thead>
                             <tr class="table-secondary">
                                 <th></th>
-                                <th scope="col"><div class="text-center">Nro. Ficha</div></th>
-                                <th scope="col" width="210px"><div class="text-center">Fecha de Ingreso</div></th>
-                                <th scope="col" width="210px"><div class="text-center">Fecha de Egreso</div></th>
-                                <th scope="col" width="210px"><div class="text-center">Estado</div></th>
+                                <th scope="col" width="100px"><div class="text-center">Nro. Ficha</div></th>
+                                <th scope="col" width="200px"><div class="text-center">Fecha de Ingreso</div></th>
+                                <th scope="col" width="200px"><div class="text-center">Fecha de Egreso</div></th>
+                                <th scope="col" width="100px"><div class="text-center">Estado</div></th>
+                                <th scope="col" width="150px"><div class="text-center">Valor Total</div></th>
                                 <th></th>
                                 <th></th>
                                 <th></th>
@@ -46,6 +47,7 @@
                                 <td><div class="text-center">{{ $item->fecha_ingreso }}</div></td>
                                 <td><div class="text-center">{{ $item->fecha_egreso }}</div></td>
                                 <td><div class="text-center">{{ $item->estado }}</div></td>
+                                <td><div class="text-center">{{ $item->valor_total }}</div></td>
                                 <td>
                                     @can('mantenimientos.show')
                                         <a href="{{ route('mantenimientos.show', $item) }}">

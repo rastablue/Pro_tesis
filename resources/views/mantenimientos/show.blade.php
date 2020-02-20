@@ -9,6 +9,16 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center bg-secondary">
                         <span><h4><b>Detalles del Mantenimiento:</b><i> {{ $mantenimiento->nro_ficha }}</i></h4></span>
+                        @can('trabajos.create')
+                            <a href="{{ route('trabajos.show', $mantenimiento) }}">
+                                <img class="img-responsive img-rounded float-right" src="{{ asset('images/trabajos.png') }}">
+                            </a>
+                        @endcan
+                        @can('mantenimientos.edit')
+                            <a href="{{ route('mantenimientos.edit', $mantenimiento) }}">
+                                <img class="img-responsive img-rounded float-right" src="{{ asset('images/actualizar.png') }}">
+                            </a>
+                        @endcan
                         <a href="{{ route('mantenimientos.index') }}">
                             <img class="img-responsive img-rounded float-left" src="{{ asset('images/retroceder.png') }}">
                         </a>
@@ -18,11 +28,12 @@
                         <table class="table">
                             <thead>
                                 <tr class="table-secondary">
-                                    <th scope="col"><div class="text-center">Nro. Ficha</div></th>
-                                    <th scope="col" width="210px"><div class="text-center">Fecha de Ingreso</div></th>
-                                    <th scope="col" width="210px"><div class="text-center">Fecha de Egreso</div></th>
-                                    <th scope="col" width="210px"><div class="text-center">Valor Total</div></th>
-                                    <th scope="col" width="210px"><div class="text-center">Estado</div></th>
+                                    <th scope="col" width="100px"><div class="text-center">Nro. Ficha</div></th>
+                                    <th scope="col" width="200px"><div class="text-center">Fecha de Ingreso</div></th>
+                                    <th scope="col" width="200px"><div class="text-center">Fecha de Egreso</div></th>
+                                    <th scope="col" width="150px"><div class="text-center">Kilometraje</div></th>
+                                    <th scope="col" width="150px"><div class="text-center">Valor Total</div></th>
+                                    <th scope="col" width="150px"><div class="text-center">Estado</div></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -30,24 +41,25 @@
                                     <th scope="row"><div class="text-center">{{ $mantenimiento->nro_ficha }}</div></th>
                                     <td><div class="text-center">{{ $mantenimiento->fecha_ingreso }}</div></td>
                                     <td><div class="text-center">{{ $mantenimiento->fecha_egreso }}</div></td>
-                                    <td><div class="text-center">{{ $valor }}</div></td>
+                                    <td><div class="text-center">{{ $mantenimiento->kilometraje }}</div></td>
+                                    <td><div class="text-center">{{ $mantenimiento->valor_total }}</div></td>
                                     <td><div class="text-center">{{ $mantenimiento->estado }}</div></td>
                                 </tr>
                                 <thead>
                                     <tr class="table-info">
-                                        <th scope="col" colspan="5">Observaciones:</th>
+                                        <th scope="col" colspan="6">Observaciones:</th>
                                     </tr>
                                 </thead>
                                 <tr>
-                                    <td colspan="5"> {{ $mantenimiento->observacion }} </td>
+                                    <td colspan="6"> {{ $mantenimiento->observacion }} </td>
                                 </tr>
                                 <thead>
                                     <tr class="table-info">
-                                        <th scope="col" colspan="5">Diagnostico:</th>
+                                        <th scope="col" colspan="6">Diagnostico:</th>
                                     </tr>
                                 </thead>
                                 <tr>
-                                    <td colspan="5"> {{ $mantenimiento->diagnostico }} </td>
+                                    <td colspan="6"> {{ $mantenimiento->diagnostico }} </td>
                                 </tr>
                             </tbody>
                         </table>
