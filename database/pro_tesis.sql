@@ -27,11 +27,11 @@ CREATE TABLE `clientes` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `user_id` (`user_id`),
   CONSTRAINT `FK_clientes_users` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `clientes` */
 
-insert  into `clientes`(`id`,`user_id`,`created_at`,`updated_at`) values (1,21,NULL,NULL),(2,22,NULL,NULL),(3,25,NULL,NULL),(4,26,'2020-02-19 22:38:12','2020-02-19 22:38:12');
+insert  into `clientes`(`id`,`user_id`,`created_at`,`updated_at`) values (1,21,NULL,NULL),(2,22,NULL,NULL),(3,25,NULL,NULL),(4,26,'2020-02-19 22:38:12','2020-02-19 22:38:12'),(9,13,NULL,NULL);
 
 /*Table structure for table `empleados` */
 
@@ -89,11 +89,11 @@ CREATE TABLE `mantenimientos` (
   UNIQUE KEY `nro_ficha` (`nro_ficha`),
   KEY `FK_mantenimientos_vehiculos` (`vehiculo_id`),
   CONSTRAINT `FK_mantenimientos_vehiculos` FOREIGN KEY (`vehiculo_id`) REFERENCES `vehiculos` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `mantenimientos` */
 
-insert  into `mantenimientos`(`id`,`nro_ficha`,`fecha_ingreso`,`fecha_egreso`,`observacion`,`estado`,`diagnostico`,`kilometraje`,`valor_total`,`vehiculo_id`,`created_at`,`updated_at`) values (9,2145879,'2020-02-19 10:23:56','2020-02-20 12:40:30','Ninguna 1','Activo','Ninguno 1',236578,2290.03,5,'2020-02-13 17:23:32','2020-02-20 12:40:30'),(10,2546859,'2020-02-18 17:10:27','2020-02-20 12:30:44','nada bro','Finalizado','nada bro',20000,291.02,2,'2020-02-18 17:10:27','2020-02-20 12:30:44');
+insert  into `mantenimientos`(`id`,`nro_ficha`,`fecha_ingreso`,`fecha_egreso`,`observacion`,`estado`,`diagnostico`,`kilometraje`,`valor_total`,`vehiculo_id`,`created_at`,`updated_at`) values (9,2145879,'2020-02-19 10:23:56','2020-02-20 17:57:59','Ninguna 1','Finalizado','Ninguno 1',236578,2290.03,5,'2020-02-13 17:23:32','2020-02-20 17:57:59'),(10,2546859,'2020-02-18 17:10:27','2020-02-20 12:30:44','nada bro','Finalizado','nada bro',20000,291.02,2,'2020-02-18 17:10:27','2020-02-20 12:30:44'),(11,2548632,'2020-02-20 14:28:32',NULL,'ninguna 3','Activo','ninguno 3',54829,29.01,2,'2020-02-20 14:28:32','2020-02-20 14:28:32'),(17,2369854,'2020-02-21 00:03:28',NULL,'dsff','Activo','ads',230896,2056.00,9,'2020-02-21 00:03:28','2020-02-21 00:03:28');
 
 /*Table structure for table `marca_vehiculos` */
 
@@ -138,6 +138,8 @@ CREATE TABLE `password_resets` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `password_resets` */
+
+insert  into `password_resets`(`email`,`token`,`created_at`) values ('marticarcel@hotmail.com','$2y$10$V5IGVfSbvw84mtrvyWePduB7xrgUTCEigmCkPkdOz7zen/k6RLADG','2020-02-20 16:15:54');
 
 /*Table structure for table `permission_role` */
 
@@ -253,7 +255,7 @@ CREATE TABLE `trabajos` (
   `estado` enum('Activo','Inactivo','En espera','Finalizado') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `tipo` enum('Preventivo','Correctivo') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `mantenimiento_id` bigint(20) unsigned NOT NULL,
-  `empleado_id` bigint(20) unsigned NOT NULL,
+  `empleado_id` bigint(20) unsigned DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -261,11 +263,11 @@ CREATE TABLE `trabajos` (
   KEY `FK_trabajos_mantenimientos` (`mantenimiento_id`),
   CONSTRAINT `FK_trabajos_empleados` FOREIGN KEY (`empleado_id`) REFERENCES `empleados` (`id`),
   CONSTRAINT `FK_trabajos_mantenimientos` FOREIGN KEY (`mantenimiento_id`) REFERENCES `mantenimientos` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `trabajos` */
 
-insert  into `trabajos`(`id`,`manobra`,`repuestos`,`costo_repuestos`,`costo_manobra`,`estado`,`tipo`,`mantenimiento_id`,`empleado_id`,`created_at`,`updated_at`) values (16,'Nada 1','Ninguno 1',235.03,55.00,'Activo','Correctivo',9,3,'2020-02-13 17:24:21','2020-02-13 17:24:21'),(29,'nada 2','ninguno 2',1000.00,1000.00,'Activo','Correctivo',9,6,'2020-02-20 12:14:25','2020-02-20 12:14:25'),(31,'nada 2','ninguno 2',30.25,3.33,'Activo','Preventivo',10,6,'2020-02-20 12:15:48','2020-02-20 12:15:48'),(32,'nada 3','ninguno 3',232.30,25.14,'Activo','Correctivo',10,6,'2020-02-20 12:25:46','2020-02-20 12:25:46');
+insert  into `trabajos`(`id`,`manobra`,`repuestos`,`costo_repuestos`,`costo_manobra`,`estado`,`tipo`,`mantenimiento_id`,`empleado_id`,`created_at`,`updated_at`) values (16,'Nada 1','ninguno 1',235.03,55.00,'Activo','Correctivo',9,3,'2020-02-13 17:24:21','2020-02-13 17:24:21'),(29,'nada 2','ninguno 2',1000.00,1000.00,'Activo','Correctivo',9,6,'2020-02-20 12:14:25','2020-02-20 12:14:25'),(31,'nada 2','ninguno 2',30.25,3.33,'Activo','Preventivo',10,6,'2020-02-20 12:15:48','2020-02-20 12:15:48'),(32,'nada 3','ninguno 3',232.30,25.14,'Activo','Correctivo',10,6,'2020-02-20 12:25:46','2020-02-20 12:25:46'),(33,'nada 4','ninguno 4',23.32,5.69,'Activo','Preventivo',11,6,'2020-02-20 15:12:18','2020-02-20 15:12:53'),(41,'sdf','sdf',20.00,2036.00,'Activo','Correctivo',17,6,'2020-02-21 00:45:12','2020-02-21 00:45:12');
 
 /*Table structure for table `users` */
 
@@ -292,7 +294,7 @@ CREATE TABLE `users` (
 
 /*Data for the table `users` */
 
-insert  into `users`(`id`,`cedula`,`name`,`apellido_pater`,`apellido_mater`,`direc`,`tlf`,`email`,`email_verified_at`,`password`,`remember_token`,`created_at`,`updated_at`) values (1,'1','Hert Shields','Autem in ex expedita explicabo aut et aliquam sit.','Quia voluptas ratione et ab neque asperiores et.','Autem sunt minima aut animi.','2365145','odonnelly@example.org','2020-02-11 00:19:44','$2y$10$y3gEkPe7z1rj9EYfnDy1.ehKz/JqbLmnmssymqiV67b821.Ceo0VK','N1Y8W1xlUR','2020-02-11 00:19:44','2020-02-13 16:29:28'),(2,'2','Brenna Bergstrom','Quaerat in ipsum qui nemo eligendi laudantium.','Dolorem aut inventore commodi optio et.','Ullam mollitia laudantium et quo.','7','eldon.russel@example.org','2020-02-11 00:19:44','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','hzweR3HFmM','2020-02-11 00:19:44','2020-02-11 00:19:44'),(4,'4','Mark Flatley V','Et dignissimos magni consequatur eligendi aperiam.','Occaecati saepe consequatur hic iure repudiandae voluptatum.','Magni quo repellendus tenetur pariatur.','2536514','jcummings@example.net','2020-02-11 00:19:44','$2y$10$3VmxscV0QbY16XiIkwAcIOEaTZScQGh0RztwT4R4Oxgn7rvOr5.wG','D3MtJk3cbW','2020-02-11 00:19:45','2020-02-13 16:55:59'),(5,'5','Elda Mraz','Officiis omnis repudiandae eos pariatur recusandae asperiores.','Voluptas deleniti quis amet doloremque amet.','Dolorem est quam dolores et.','1','powlowski.darrick@example.com','2020-02-11 00:19:44','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','25oPh4oy4h','2020-02-11 00:19:45','2020-02-11 00:19:45'),(6,'6','Lue Keebler','Animi numquam voluptate voluptatem dolorem aut reiciendis.','Quis praesentium sit optio illum sint et.','Aut magnam nam aliquam.','7','lhirthe@example.net','2020-02-11 00:19:44','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','jUMsh4E3yr','2020-02-11 00:19:45','2020-02-11 00:19:45'),(7,'7','Mittie Jaskolski','Enim sit ut illo quam.','Nisi modi id impedit earum labore assumenda laborum.','Et nobis maxime praesentium est non et consequatur.','4254875','nkuvalis@example.com','2020-02-11 00:19:44','$2y$10$BkexBA6/YTjCOrTvIzICIe8bIgJBjUaEl3NlERpcOhgxJ0Jg63ca6','9BALLpAra5','2020-02-11 00:19:45','2020-02-13 16:57:34'),(8,'8','Keon Huel','Est explicabo modi laborum sit at voluptas.','Neque sunt consequatur excepturi vel quo harum.','Est omnis et minima aut.','1','emmet16@example.com','2020-02-11 00:19:44','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','4CTyGvYfty','2020-02-11 00:19:45','2020-02-11 00:19:45'),(9,'9','Aliyah Glover MD','Dicta sunt quo aliquam at molestiae.','Minima iste dolores dignissimos est.','Libero qui in est nisi.','5','caleigh48@example.org','2020-02-11 00:19:44','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','SVnRyEmEzy','2020-02-11 00:19:45','2020-02-11 00:19:45'),(10,'10','Ima Crist Sr.','Voluptas totam beatae maxime.','Accusantium sequi cum quibusdam fugiat maiores.','Et velit aut molestias pariatur ut.','8','toy.verlie@example.org','2020-02-11 00:19:44','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','pSX2SsUtLP','2020-02-11 00:19:45','2020-02-11 00:19:45'),(11,'11','Isabel Lynch','Reiciendis quo molestiae suscipit amet magnam.','Voluptas placeat aut ipsa voluptatibus rerum.','Ea necessitatibus autem consectetur incidunt libero voluptas.','9','pmills@example.com','2020-02-11 00:19:44','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','LHUQODpEKx','2020-02-11 00:19:45','2020-02-11 00:19:45'),(12,'12','Anais Deckow','Et repellat est odio.','Sunt ad aliquam qui id mollitia pariatur.','Quam quasi at voluptatem.','7','angelo.goldner@example.org','2020-02-11 00:19:44','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','sKIyj3fC9f','2020-02-11 00:19:45','2020-02-11 00:19:45'),(13,'13','Everett McGlynn','Sint quis eos doloremque consequuntur temporibus necessitatibus temporibus.','Quia recusandae sint repellendus.','Est et cupiditate necessitatibus similique animi voluptate.','4','adan44@example.org','2020-02-11 00:19:44','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','UUHeKFcYtO','2020-02-11 00:19:45','2020-02-11 00:19:45'),(14,'14','Ole Gutmann III','Dolores exercitationem nostrum et explicabo quia atque doloremque.','Sit inventore maxime dolorem minima.','Qui eos consequatur facilis qui.','4','tlesch@example.com','2020-02-11 00:19:44','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','WFaGdLl2N8','2020-02-11 00:19:45','2020-02-11 00:19:45'),(15,'15','Vida Von','Velit velit qui est dolorum consequatur.','Voluptatum ea est ratione esse id.','Sit natus temporibus eligendi vel iste.','1','hledner@example.org','2020-02-11 00:19:44','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','z3RWjfCyHk','2020-02-11 00:19:45','2020-02-11 00:19:45'),(16,'16','Romaine Schinner','Aperiam quo totam ut velit ut.','Praesentium a repudiandae ab quibusdam.','Molestiae ducimus qui quaerat maiores saepe sint sapiente.','2','hand.shana@example.net','2020-02-11 00:19:44','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','aaFaSPKSUO','2020-02-11 00:19:45','2020-02-11 00:19:45'),(17,'17','Adolfo Monahan','Voluptatem facere veniam vitae.','Temporibus laudantium voluptatem aspernatur exercitationem.','Dolore tempora nostrum consequuntur iste ut.','2','delpha.ratke@example.com','2020-02-11 00:19:44','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','afevOetpyV','2020-02-11 00:19:45','2020-02-11 00:19:45'),(18,'18','Lea Pacocha','Modi molestias quasi consectetur aut.','Quibusdam consequatur rerum iste asperiores quia est quas.','Ut labore ut et quis qui qui ratione minus.','7','bernier.lowell@example.com','2020-02-11 00:19:44','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','sV64mvRZaA','2020-02-11 00:19:45','2020-02-11 00:19:45'),(19,'19','Ruby Kuvalis I','Placeat non a non excepturi officiis aut.','Qui aspernatur dolore omnis.','Adipisci fuga ut et neque autem velit minima.','0','ibrakus@example.com','2020-02-11 00:19:44','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','p1sey5J2zA','2020-02-11 00:19:45','2020-02-11 00:19:45'),(20,'20','Abigayle Ebert MD','Ab eos et et sequi commodi saepe voluptas.','Autem qui quidem illo commodi nobis suscipit aliquam.','Eius quisquam fugit quae molestias.','4','gblock@example.org','2020-02-11 00:19:44','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','xut9jMQx48','2020-02-11 00:19:45','2020-02-11 00:19:45'),(21,'1206855593','Martin','Ronquillo','Vargas','Pedro Carbo y 5 de Junio','2735416','marticarcel@hotmail.com',NULL,'$2y$10$70/KAo19W3nkaHjSvc.OjeB1P531AWPQggn0fHrEpsICJkl3.IDHa',NULL,'2020-02-11 00:36:12','2020-02-13 14:30:04'),(22,'1206855594','Ximena','Cedenio','Casquete','La Pj','2735417','ximena@gmail.com',NULL,'$2y$10$/B2wg.ESIJ8gXi9JAdhprutcEFs/DKUtQvIXOcaoi8sNChVOS6rG6',NULL,'2020-02-12 12:32:00','2020-02-13 17:35:41'),(23,'1206855595','Mariana','Quisirumbay','Armijo','Las Naves','2735418','mariana@gmail.com',NULL,'$2y$10$FGupETDnShP8mzp3uwmZmubPdoOT6N/YNhVXI2HWQcPqnckdOz3ES',NULL,'2020-02-13 18:20:03','2020-02-13 18:33:46'),(24,'1206855596','Jose','Balseca','Armero','Pa deeeeeeentro','2569856324','jose@gmail.com',NULL,'$2y$10$g6xVfm7UgJyVjplUR/Si8OeL/UK7kOF8J/htiFtQ3qGjqBwqVDaoi',NULL,'2020-02-16 15:28:53','2020-02-16 15:28:53'),(25,'1206855560','Julio','Gomez','Otero','bypass','2548754','julio@gmail.com',NULL,'$2y$10$lFKKUkKzwDSGYFzBfxFn1emztb0XYsfSNeu3L8smu4Dk6xyecF6ci',NULL,'2020-02-19 15:42:18','2020-02-19 15:42:18'),(26,'1206855597','Jeremy','Ronquillo','Vasquez','Ricaurte','2735420','jeremy@gmail.com',NULL,'$2y$10$YO3eY4PiTLTq.xQ0aOy4H.gscyvcR2AYhE.WJPI7eeIjaYHtH8lrG',NULL,'2020-02-19 22:33:37','2020-02-19 22:33:37');
+insert  into `users`(`id`,`cedula`,`name`,`apellido_pater`,`apellido_mater`,`direc`,`tlf`,`email`,`email_verified_at`,`password`,`remember_token`,`created_at`,`updated_at`) values (1,'1','Hert Shields','Autem in ex expedita explicabo aut et aliquam sit.','Quia voluptas ratione et ab neque asperiores et.','Autem sunt minima aut animi.','2365145','odonnelly@example.org','2020-02-11 00:19:44','$2y$10$y3gEkPe7z1rj9EYfnDy1.ehKz/JqbLmnmssymqiV67b821.Ceo0VK','N1Y8W1xlUR','2020-02-11 00:19:44','2020-02-13 16:29:28'),(4,'4','Mark Flatley V','Et dignissimos magni consequatur eligendi aperiam.','Occaecati saepe consequatur hic iure repudiandae voluptatum.','Magni quo repellendus tenetur pariatur.','2536514','jcummings@example.net','2020-02-11 00:19:44','$2y$10$3VmxscV0QbY16XiIkwAcIOEaTZScQGh0RztwT4R4Oxgn7rvOr5.wG','D3MtJk3cbW','2020-02-11 00:19:45','2020-02-13 16:55:59'),(6,'6','Lue Keebler','Animi numquam voluptate voluptatem dolorem aut reiciendis.','Quis praesentium sit optio illum sint et.','Aut magnam nam aliquam.','7','lhirthe@example.net','2020-02-11 00:19:44','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','jUMsh4E3yr','2020-02-11 00:19:45','2020-02-11 00:19:45'),(7,'7','Mittie Jaskolski','Enim sit ut illo quam.','Nisi modi id impedit earum labore assumenda laborum.','Et nobis maxime praesentium est non et consequatur.','4254875','nkuvalis@example.com','2020-02-11 00:19:44','$2y$10$BkexBA6/YTjCOrTvIzICIe8bIgJBjUaEl3NlERpcOhgxJ0Jg63ca6','9BALLpAra5','2020-02-11 00:19:45','2020-02-13 16:57:34'),(9,'9','Aliyah Glover MD','Dicta sunt quo aliquam at molestiae.','Minima iste dolores dignissimos est.','Libero qui in est nisi.','5','caleigh48@example.org','2020-02-11 00:19:44','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','SVnRyEmEzy','2020-02-11 00:19:45','2020-02-11 00:19:45'),(10,'10','Ima Crist Sr.','Voluptas totam beatae maxime.','Accusantium sequi cum quibusdam fugiat maiores.','Et velit aut molestias pariatur ut.','8','toy.verlie@example.org','2020-02-11 00:19:44','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','pSX2SsUtLP','2020-02-11 00:19:45','2020-02-11 00:19:45'),(11,'11','Isabel Lynch','Reiciendis quo molestiae suscipit amet magnam.','Voluptas placeat aut ipsa voluptatibus rerum.','Ea necessitatibus autem consectetur incidunt libero voluptas.','9','pmills@example.com','2020-02-11 00:19:44','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','LHUQODpEKx','2020-02-11 00:19:45','2020-02-11 00:19:45'),(12,'12','Anais Deckow','Et repellat est odio.','Sunt ad aliquam qui id mollitia pariatur.','Quam quasi at voluptatem.','7','angelo.goldner@example.org','2020-02-11 00:19:44','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','sKIyj3fC9f','2020-02-11 00:19:45','2020-02-11 00:19:45'),(13,'13','Everett McGlynn','Sint quis eos doloremque consequuntur temporibus necessitatibus temporibus.','Quia recusandae sint repellendus.','Est et cupiditate necessitatibus similique animi voluptate.','4','adan44@example.org','2020-02-11 00:19:44','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','UUHeKFcYtO','2020-02-11 00:19:45','2020-02-11 00:19:45'),(15,'15','Vida Von','Velit velit qui est dolorum consequatur.','Voluptatum ea est ratione esse id.','Sit natus temporibus eligendi vel iste.','1','hledner@example.org','2020-02-11 00:19:44','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','z3RWjfCyHk','2020-02-11 00:19:45','2020-02-11 00:19:45'),(16,'16','Romaine Schinner','Aperiam quo totam ut velit ut.','Praesentium a repudiandae ab quibusdam.','Molestiae ducimus qui quaerat maiores saepe sint sapiente.','2','hand.shana@example.net','2020-02-11 00:19:44','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','aaFaSPKSUO','2020-02-11 00:19:45','2020-02-11 00:19:45'),(17,'17','Adolfo Monahan','Voluptatem facere veniam vitae.','Temporibus laudantium voluptatem aspernatur exercitationem.','Dolore tempora nostrum consequuntur iste ut.','2','delpha.ratke@example.com','2020-02-11 00:19:44','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','afevOetpyV','2020-02-11 00:19:45','2020-02-11 00:19:45'),(18,'18','Lea Pacocha','Modi molestias quasi consectetur aut.','Quibusdam consequatur rerum iste asperiores quia est quas.','Ut labore ut et quis qui qui ratione minus.','7','bernier.lowell@example.com','2020-02-11 00:19:44','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','sV64mvRZaA','2020-02-11 00:19:45','2020-02-11 00:19:45'),(19,'19','Ruby Kuvalis I','Placeat non a non excepturi officiis aut.','Qui aspernatur dolore omnis.','Adipisci fuga ut et neque autem velit minima.','0','ibrakus@example.com','2020-02-11 00:19:44','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','p1sey5J2zA','2020-02-11 00:19:45','2020-02-11 00:19:45'),(20,'20','Abigayle Ebert MD','Ab eos et et sequi commodi saepe voluptas.','Autem qui quidem illo commodi nobis suscipit aliquam.','Eius quisquam fugit quae molestias.','4','gblock@example.org','2020-02-11 00:19:44','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','xut9jMQx48','2020-02-11 00:19:45','2020-02-11 00:19:45'),(21,'1206855593','Martin','Ronquillo','Vargas','Pedro Carbo y 5 de Junio','2735416','marticarcel@hotmail.com',NULL,'$2y$10$70/KAo19W3nkaHjSvc.OjeB1P531AWPQggn0fHrEpsICJkl3.IDHa',NULL,'2020-02-11 00:36:12','2020-02-13 14:30:04'),(22,'1206855594','Ximena','Cedenio','Casquete','La Pj','2735417','ximena@gmail.com',NULL,'$2y$10$/B2wg.ESIJ8gXi9JAdhprutcEFs/DKUtQvIXOcaoi8sNChVOS6rG6',NULL,'2020-02-12 12:32:00','2020-02-13 17:35:41'),(23,'1206855595','Mariana','Quisirumbay','Armijo','Las Naves','2735418','mariana@gmail.com',NULL,'$2y$10$FGupETDnShP8mzp3uwmZmubPdoOT6N/YNhVXI2HWQcPqnckdOz3ES',NULL,'2020-02-13 18:20:03','2020-02-13 18:33:46'),(24,'1206855596','Jose','Balseca','Armero','Pa deeeeeeentro','2569856324','jose@gmail.com',NULL,'$2y$10$g6xVfm7UgJyVjplUR/Si8OeL/UK7kOF8J/htiFtQ3qGjqBwqVDaoi',NULL,'2020-02-16 15:28:53','2020-02-16 15:28:53'),(25,'1206855560','Julio','Gomez','Otero','bypass','2548754','julio@gmail.com',NULL,'$2y$10$lFKKUkKzwDSGYFzBfxFn1emztb0XYsfSNeu3L8smu4Dk6xyecF6ci',NULL,'2020-02-19 15:42:18','2020-02-19 15:42:18'),(26,'1206855597','Jeremy','Ronquillo','Vasquez','Ricaurte','2735420','jeremy@gmail.com',NULL,'$2y$10$YO3eY4PiTLTq.xQ0aOy4H.gscyvcR2AYhE.WJPI7eeIjaYHtH8lrG',NULL,'2020-02-19 22:33:37','2020-02-19 22:33:37');
 
 /*Table structure for table `vehiculos` */
 
@@ -314,11 +316,41 @@ CREATE TABLE `vehiculos` (
   KEY `FK_vehiculos_marcas` (`marca_vehiculo_id`),
   CONSTRAINT `FK_vehiculos_clientes` FOREIGN KEY (`cliente_id`) REFERENCES `clientes` (`id`),
   CONSTRAINT `FK_vehiculos_marcas` FOREIGN KEY (`marca_vehiculo_id`) REFERENCES `marca_vehiculos` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `vehiculos` */
 
-insert  into `vehiculos`(`id`,`placa`,`marca_vehiculo_id`,`modelo`,`color`,`observacion`,`cliente_id`,`created_at`,`updated_at`) values (2,'GSH-524',1,'fortune','Blanco','Pequeño rayon',1,NULL,'2020-02-19 12:35:50'),(5,'HSD-265',8,'F-150','Negro','ventanas portatiles',1,'2020-02-11 19:03:04','2020-02-11 19:03:04'),(6,'NMD-362',3,'Wrangler','Concho vino','Faltan Plumas',2,'2020-02-19 11:59:59','2020-02-19 11:59:59'),(7,'HOW20H',6,'honda','rojo','se pudrio',3,'2020-02-19 15:45:42','2020-02-19 15:45:42');
+insert  into `vehiculos`(`id`,`placa`,`marca_vehiculo_id`,`modelo`,`color`,`observacion`,`cliente_id`,`created_at`,`updated_at`) values (2,'GSH-524',1,'Fortune','Blanco','Pequeño rayon',1,NULL,'2020-02-20 18:20:33'),(5,'HSD-265',8,'F-150','Negro','ventanas portatiles',1,'2020-02-11 19:03:04','2020-02-11 19:03:04'),(9,'HOW20H',3,'Wrangler','Concho vino','faro lateral roto',9,'2020-02-21 00:02:21','2020-02-21 00:02:21');
+
+/* Trigger structure for table `clientes` */
+
+DELIMITER $$
+
+/*!50003 DROP TRIGGER*//*!50032 IF EXISTS */ /*!50003 `delete_vehiculos` */$$
+
+/*!50003 CREATE */ /*!50017 DEFINER = 'root'@'localhost' */ /*!50003 TRIGGER `delete_vehiculos` BEFORE DELETE ON `clientes` FOR EACH ROW BEGIN
+    DELETE 
+      FROM vehiculos
+     WHERE vehiculos.cliente_id = old.id;
+END */$$
+
+
+DELIMITER ;
+
+/* Trigger structure for table `empleados` */
+
+DELIMITER $$
+
+/*!50003 DROP TRIGGER*//*!50032 IF EXISTS */ /*!50003 `actualizar_empleado_mantenimiento` */$$
+
+/*!50003 CREATE */ /*!50017 DEFINER = 'root'@'localhost' */ /*!50003 TRIGGER `actualizar_empleado_mantenimiento` BEFORE DELETE ON `empleados` FOR EACH ROW BEGIN
+	UPDATE trabajos
+	SET empleado_id = NULL
+	WHERE trabajos.empleado_id = old.id;
+END */$$
+
+
+DELIMITER ;
 
 /* Trigger structure for table `mantenimientos` */
 
@@ -381,9 +413,9 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 DROP TRIGGER*//*!50032 IF EXISTS */ /*!50003 `refrescar_val_total` */$$
+/*!50003 DROP TRIGGER*//*!50032 IF EXISTS */ /*!50003 `refresca_val_total` */$$
 
-/*!50003 CREATE */ /*!50017 DEFINER = 'root'@'localhost' */ /*!50003 TRIGGER `refrescar_val_total` AFTER DELETE ON `trabajos` FOR EACH ROW BEGIN
+/*!50003 CREATE */ /*!50017 DEFINER = 'root'@'localhost' */ /*!50003 TRIGGER `refresca_val_total` AFTER DELETE ON `trabajos` FOR EACH ROW BEGIN
         UPDATE mantenimientos 
         SET valor_total = (SELECT SUM(costo_repuestos) 
 			   FROM trabajos 
@@ -392,7 +424,7 @@ DELIMITER $$
 			  (SELECT SUM(costo_manobra) 
 			   FROM trabajos 
 			   WHERE mantenimiento_id = mantenimientos.id)
-        WHERE id = (SELECT mantenimiento_id FROM trabajos where mantenimiento_id = mantenimientos.id  LIMIT 1);
+        WHERE id = (SELECT old.mantenimiento_id FROM trabajos WHERE old.mantenimiento_id = mantenimientos.id  LIMIT 1);
 END */$$
 
 
@@ -423,6 +455,21 @@ DELIMITER $$
     DELETE 
       FROM clientes
      WHERE clientes.user_id = old.id;
+END */$$
+
+
+DELIMITER ;
+
+/* Trigger structure for table `vehiculos` */
+
+DELIMITER $$
+
+/*!50003 DROP TRIGGER*//*!50032 IF EXISTS */ /*!50003 `delete_mantenimientos` */$$
+
+/*!50003 CREATE */ /*!50017 DEFINER = 'root'@'localhost' */ /*!50003 TRIGGER `delete_mantenimientos` BEFORE DELETE ON `vehiculos` FOR EACH ROW BEGIN
+    DELETE 
+      FROM mantenimientos
+     WHERE mantenimientos.vehiculo_id = old.id;
 END */$$
 
 
