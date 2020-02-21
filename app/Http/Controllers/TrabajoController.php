@@ -20,7 +20,7 @@ class TrabajoController extends Controller
      */
     public function index()
     {
-        $trabajos = Trabajo::paginate(8);
+        $trabajos = Trabajo::paginate(5);
         return view('trabajos.index', compact('trabajos'));
     }
 

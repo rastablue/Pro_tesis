@@ -15,7 +15,7 @@ class MarcaVehiculoController extends Controller
      */
     public function index()
     {
-        $marcas = MarcaVehiculo::paginate(8);
+        $marcas = MarcaVehiculo::paginate(5);
         return view('marcaVehiculos.index', compact('marcas'));
     }
 

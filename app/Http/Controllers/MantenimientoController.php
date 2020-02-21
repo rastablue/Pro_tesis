@@ -22,7 +22,7 @@ class MantenimientoController extends Controller
      */
     public function index()
     {
-        $mantenimiento = Mantenimiento::paginate(8);
+        $mantenimiento = Mantenimiento::paginate(5);
 
         return view('mantenimientos.index', compact('mantenimiento'));
     }
@@ -138,7 +138,7 @@ class MantenimientoController extends Controller
             return abort(503);
         }
 
-        
+
     }
 
     /**

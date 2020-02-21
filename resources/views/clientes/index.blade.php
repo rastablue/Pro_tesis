@@ -55,6 +55,7 @@
                         </tbody>
                     </table>
                 {{-- fin card body --}}
+                {{ $clientes->links() }}
                 </div>
             </div>
         </div>

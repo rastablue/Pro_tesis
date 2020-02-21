@@ -108,7 +108,7 @@
                         <span><h4><b>Lista de Mantenimientos</b></h4></span>
                     </div>
 
-                    <div class="card-body">
+                    <div id="global" class="card-body">
                         <table class="table">
                             <thead>
                                 <tr class="table-secondary">

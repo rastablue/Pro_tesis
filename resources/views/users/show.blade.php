@@ -58,7 +58,7 @@
                             <span><h4><b>Lista de Vehiculos</b></h4></span>
                         </div>
 
-                        <div class="card-body">
+                        <div id="global" class="card-body">
                             <table class="table">
                                 <thead>
                                     <tr class="table-secondary">
@@ -74,6 +74,7 @@
                                 </thead>
                                 <tbody>
                                     @foreach (App\User::findOrFail($user->id)->clientes->vehiculos as $item)
+                                    <div></div>
                                         <tr>
                                             <th scope="row"><i>{{ $loop->iteration }}</i></th>
                                             <th scope="row"><div class="text-center">{{ $item->placa }}</div></th>
@@ -113,6 +114,5 @@
             </div>
         </div>
     @endif
-
 
 @endsection

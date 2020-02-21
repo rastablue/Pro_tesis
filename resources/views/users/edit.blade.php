@@ -23,7 +23,7 @@
                                 <label for="cedula" class="col-md-4 col-form-label text-md-right">{{ __('Cedula') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="cedula" type="text" placeholder="{{ $user->cedula }}" class="form-control @error('cedula') is-invalid @enderror" name="cedula" value="{{ $user->cedula }}" required autocomplete="cedula" autofocus>
+                                    <input id="cedula" type="text" pattern="[0-9]{10}" placeholder="{{ $user->cedula }}" class="form-control @error('cedula') is-invalid @enderror" name="cedula" value="{{ $user->cedula }}" required autocomplete="cedula" autofocus>
 
                                     @error('cedula')
                                         <span class="invalid-feedback" role="alert">
@@ -132,7 +132,11 @@
                                 <div class="col-md-6">
 
                                     <select id="roles" class="form-control" name="roles">
-                                        <option disabled="true" selected>Seleccione un Role</option>
+                                        @if ($user->roles()->first())
+                                            <option value="{{ $user->roles()->first()->id }}" selected> {{ $user->roles()->first()->name }} </option>
+                                        @else
+                                            <option disabled selected="true"> Seleccione un Role</option>
+                                        @endif
                                         @foreach($roles as $role)
                                             <option value="{{ $role->id }}">  {{ $role->name}}  </option>
                                         @endforeach

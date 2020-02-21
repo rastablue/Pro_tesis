@@ -22,7 +22,7 @@ class VehiculoController extends Controller
      */
     public function index()
     {
-        $vehiculo = Vehiculo::paginate(8);
+        $vehiculo = Vehiculo::paginate(5);
 
         return view('vehiculos.index', compact('vehiculo'));
     }
@@ -67,7 +67,7 @@ class VehiculoController extends Controller
             }else {
                 return abort(503);
             }
-    
+
         }else {
             return abort(503);
         }
@@ -125,7 +125,7 @@ class VehiculoController extends Controller
 
             if($id_clie = Cliente::where('user_id', $id_users)->first()){
                 $id_clie = Cliente::where('user_id', $id_users)->first()->id;
-                
+
                 $vehiculo = Vehiculo::findOrFail($id);
                 $vehiculo->placa = $request->placa;
                 $vehiculo->marca_vehiculo_id = $request->marca;
@@ -142,10 +142,10 @@ class VehiculoController extends Controller
                 return abort(503);
             }
         }else{
-            return abort(503);   
+            return abort(503);
         }
 
-        
+
     }
 
     /**

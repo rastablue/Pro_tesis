@@ -20,6 +20,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/navBar.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/scroll.css') }}" rel="stylesheet">
 </head>
 
 <body>

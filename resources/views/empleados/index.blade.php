@@ -58,6 +58,7 @@
                         </tbody>
                     </table>
                 {{-- fin card body --}}
+                {{ $empleados->links() }}
                 </div>
             </div>
         </div>

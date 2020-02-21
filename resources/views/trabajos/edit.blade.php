@@ -24,7 +24,7 @@
                                     <label for="cedula" class="col-md-4 col-form-label text-md-right">{{ __('Cedula del Encargado') }}</label>
 
                                     <div class="col-md-6">
-                                    <input id="cedula" type="text" placeholder="{{ $trabajo->empleados->users->cedula }}" class="form-control @error('cedula') is-invalid @enderror" name="cedula" value="{{ $trabajo->empleados->users->cedula }}" required autocomplete="cedula" autofocus>
+                                    <input id="cedula" type="text" pattern="[0-9]{10}" placeholder="{{ $trabajo->empleados->users->cedula }}" class="form-control @error('cedula') is-invalid @enderror" name="cedula" value="{{ $trabajo->empleados->users->cedula }}" required autocomplete="cedula" autofocus>
 
                                         @error('cedula')
                                             <span class="invalid-feedback" role="alert">

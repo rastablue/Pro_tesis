@@ -23,7 +23,7 @@
                                     <label for="cedula" class="col-md-4 col-form-label text-md-right">{{ __('Cedula del Encargado') }}</label>
 
                                     <div class="col-md-6">
-                                        <input id="cedula" type="text" class="form-control @error('cedula') is-invalid @enderror" name="cedula" value="{{ old('cedula') }}" required autocomplete="cedula" autofocus>
+                                        <input id="cedula" type="text" pattern="[0-9]{10}" class="form-control @error('cedula') is-invalid @enderror" name="cedula" value="{{ old('cedula') }}" required autocomplete="cedula" autofocus>
 
                                         @error('cedula')
                                             <span class="invalid-feedback" role="alert">
@@ -101,7 +101,7 @@
                                     <div class="col-md-6">
 
                                         <select id="tipo" class="form-control" name="tipo">
-                                            <option selected='true'>Seleccione Tipo</option>
+                                            <option disabled selected='true'>Seleccione Tipo</option>
                                             @foreach(App\Trabajo::getEnumValues('trabajos', 'tipo') as $tipos)
                                                 <option value="{{ $tipos }}">  {{ $tipos}}  </option>
                                             @endforeach

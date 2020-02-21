@@ -48,7 +48,7 @@
 
                                     </div>
                                 </div>
-                                
+
                             {{-- Modelo --}}
                                 <div class="form-group row">
                                     <label for="modelo" class="col-md-4 col-form-label text-md-right">{{ __('Modelo') }}</label>
@@ -100,7 +100,7 @@
                                     <label for="user_id" class="col-md-4 col-form-label text-md-right">{{ __('Cedula del Cliente') }}</label>
                                     @foreach ($user as $users)
                                         <div class="col-md-6">
-                                            <input id="user_id" placeholder="{{ $users->cedula }}" type="text"  class="form-control @error('user_id') is-invalid @enderror" name="user_id" value="{{ $users->cedula }}" required autocomplete="user_id" autofocus>
+                                            <input id="user_id" pattern="[0-9]{10}" placeholder="{{ $users->cedula }}" type="text" class="form-control @error('user_id') is-invalid @enderror" name="user_id" value="{{ $users->cedula }}" required autocomplete="user_id" autofocus>
 
                                             @error('user_id')
                                                 <span class="invalid-feedback" role="alert">
