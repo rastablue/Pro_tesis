@@ -15,7 +15,7 @@ class Trabajo extends Model
 
     public function mantenimientos()
     {
-        return $this->belongsTo(Mantenimiento::class);
+        return $this->belongsTo(Mantenimiento::class, 'mantenimiento_id');
     }
 
     public static function getEnumValues($table, $column) {

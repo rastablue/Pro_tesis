@@ -211,6 +211,9 @@ Route::middleware(['auth'])->group(function(){
     Route::get('trabajos/{trabajo}', 'TrabajoController@show')->name('trabajos.show')
                    ->middleware('can:trabajos.show');
 
+    Route::get('trabajos/pendientes/{trabajo}', 'TrabajoController@pendientes')->name('trabajos.pendientes')
+                   ->middleware('can:trabajos.show');
+
     Route::delete('trabajos/{trabajo}', 'TrabajoController@destroy')->name('trabajos.destroy')
                    ->middleware('can:trabajos.destroy');
 

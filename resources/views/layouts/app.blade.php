@@ -137,6 +137,11 @@
                                                                         <a href="{{ route('empleados.create') }}">Agregar Empleados</a>
                                                                     </li>
                                                                 @endcan
+                                                                @can('trabajos.show')
+                                                                    <li>
+                                                                        <a href="{{ route('trabajos.pendientes', Auth::user()->id) }}">Mis Trabajos</a>
+                                                                    </li>
+                                                                @endcan
                                                             </ul>
                                                         </div>
                                                     </li>
@@ -183,6 +188,11 @@
                                                                 @can('mantenimientos.create')
                                                                     <li>
                                                                         <a href="{{ route('mantenimientos.create') }}">Agregar Mantenimientos</a>
+                                                                    </li>
+                                                                @endcan
+                                                                @can('trabajos.index')
+                                                                    <li>
+                                                                        <a href="{{ route('trabajos.index') }}">Consultar Trabajos</a>
                                                                     </li>
                                                                 @endcan
                                                             </ul>

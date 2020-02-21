@@ -20,7 +20,8 @@ class TrabajoController extends Controller
      */
     public function index()
     {
-        //
+        $trabajos = Trabajo::paginate(8);
+        return view('trabajos.index', compact('trabajos'));
     }
 
     /**
@@ -79,6 +80,23 @@ class TrabajoController extends Controller
         $mantenimiento = Mantenimiento::findOrFail($trabajo);
         return view('trabajos.create', compact('mantenimiento'));
     }
+
+    public function pendientes($id)
+    {
+        if ($empleado = User::findOrFail($id)->empleados) {
+            $empleado = User::findOrFail($id)->empleados->id;
+
+            $trabajos = Trabajo::where('empleado_id', $empleado)->get();
+
+            return view('trabajos.show', compact('trabajos'));
+
+        } else {
+
+            return abort(503);
+
+        }
+    }
+
 
     /**
      * Show the form for editing the specified resource.
