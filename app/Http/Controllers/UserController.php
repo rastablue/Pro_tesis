@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
@@ -12,6 +11,7 @@ use Illuminate\Support\Facades\Validator;
 use Caffeinated\Shinobi\Models\Role;
 use App\User;
 use App\Empleado;
+use App\Cliente;
 
 class UserController extends Controller
 {
@@ -115,6 +115,17 @@ class UserController extends Controller
 
         //actualiza roles de ese usuario
         $users->roles()->sync($request->get('roles'));
+
+        /*if ($request->roles == 3) {
+            if (Cliente::select('user_id')->where('user_id', $id) != array()) {
+                return redirect()->route('users.index')
+                    ->with('info', 'Usuario actualizado con exito');
+            }else {
+                $cliente = New Cliente();
+                $cliente->user_id = $id;
+                $cliente->save();
+            }
+        }*/
 
         return redirect()->route('users.index')
                 ->with('info', 'Usuario actualizado con exito');

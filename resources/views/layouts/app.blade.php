@@ -8,6 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
+    <link rel="shortcut icon" href="{{ asset('images/ico/favicon.ico') }}">
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -259,7 +260,7 @@
                     @if (session('info'))
                         <div class="container">
                             <div class="row">
-                                <div class="col-md-13 col-md-offset-13">
+                                <div class="col-md-12 col-md-offset-13">
                                     <div class="alert alert-success">
                                         {{ session('info') }}
                                     </div>
