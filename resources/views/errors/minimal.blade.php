@@ -3,6 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
         <title>@yield('title')</title>
 
@@ -47,15 +48,18 @@
                 text-align: center;
             }
         </style>
+
+        <!-- Custom stlylesheet -->
+        <link type="text/css" rel="stylesheet" href="{{ asset('css/error.css') }}" />
     </head>
     <body>
-        <div class="flex-center position-ref full-height">
-            <div class="code">
-                @yield('code')
-            </div>
-
-            <div class="message" style="padding: 10px;">
-                @yield('message')
+        <div id="notfound">
+            <div class="notfound">
+                <div class="notfound-404">
+                    <h1>Oops!</h1>
+                    <h2>@yield('code') - @yield('message')</h2>
+                </div>
+                <a href="{{ route('home') }}">IR AL INICIO</a>
             </div>
         </div>
     </body>

@@ -34,7 +34,7 @@
             <div class="sidebar-content">
 
                 <div class="sidebar-brand">
-                    <a class="navbar-brand" href="{{ url('/') }}">
+                    <a class="navbar-brand" href="{{ url('home') }}">
                         {{ config('app.name', 'Laravel') }}
                     </a>
                     <div id="close-sidebar">
@@ -88,7 +88,7 @@
                                                         <div class="sidebar-submenu">
                                                             <ul>
                                                                 <li>
-                                                                    <a href="{{ route('users.index') }} ">Consultar Usuarios</a>
+                                                                    <a href="{{ route('users.index') }}">Consultar Usuarios</a>
                                                                 </li>
                                                                 @can('users.create')
                                                                     <li>
