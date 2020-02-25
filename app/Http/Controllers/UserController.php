@@ -126,21 +126,33 @@ class UserController extends Controller
         //actualiza roles de ese usuario
         $users->roles()->sync($request->get('roles'));
 
-        /*$aaa = Cliente::select('user_id')->where('user_id', $id);
-
-        if ($aaa){
-            $cliente = New Cliente();
-            $cliente->user_id = $id;
-            $cliente->save();
+        if($request->get('roles') == 3){
+            if ($aaa = Cliente::where('user_id', $id)->first()){
+                return redirect()->route('users.index')
+                    ->with('info', 'Usuario actualizado con exito');
+            }
+            else {
+                $cliente = New Cliente();
+                $cliente->user_id = $id;
+                $cliente->save();
+                return redirect()->route('users.index')
+                    ->with('info', 'Usuario actualizado con exito');
+            }
+        }else{
+            if($request->get('roles') == 4){
+                if ($aaa = Empleado::where('user_id', $id)->first()){
+                    return redirect()->route('users.index')
+                        ->with('info', 'Usuario actualizado con exito');
+                }
+                else {
+                    $empleado = New Empleado();
+                    $empleado->user_id = $id;
+                    $empleado->save();
+                    return redirect()->route('users.index')
+                        ->with('info', 'Usuario actualizado con exito');
+                }
+            }
         }
-        else {
-            return redirect()->route('users.index')
-                ->with('info', 'Usuario actualizado con exito');
-        }*/
-
-        return redirect()->route('users.index')
-                ->with('info', 'Usuario actualizado con exito');
-
     }
 
     /**
