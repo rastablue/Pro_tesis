@@ -53,23 +53,30 @@ class VehiculoController extends Controller
             if($id_clie = Cliente::where('user_id', $id_users)->first()){
                 $id_clie = Cliente::where('user_id', $id_users)->first()->id;
 
-                $vehiculo = new Vehiculo();
-                $vehiculo->placa = $request->placa;
-                $vehiculo->marca_vehiculo_id = $request->marca;
-                $vehiculo->modelo = $request->modelo;
-                $vehiculo->color = $request->color;
-                $vehiculo->observacion = $request->observa;
-                $vehiculo->cliente_id = $id_clie;
-                $vehiculo->save();
+                if($vehi_id = Vehiculo::where('placa', $request->placa)->first()){
 
-                return redirect()->route('vehiculos.index')
-                        ->with('info', 'Vehiculo creado con exito');
+                    return back()->with('info', 'El Vehiculo ya existe');
+
+                }else{
+                    $vehiculo = new Vehiculo();
+                    $vehiculo->placa = $request->placa;
+                    $vehiculo->marca_vehiculo_id = $request->marca;
+                    $vehiculo->modelo = $request->modelo;
+                    $vehiculo->color = $request->color;
+                    $vehiculo->observacion = $request->observa;
+                    $vehiculo->cliente_id = $id_clie;
+                    $vehiculo->save();
+
+                    return redirect()->route('vehiculos.index')
+                            ->with('info', 'Vehiculo creado con exito');
+                }
+
             }else {
-                return abort(503);
+                return back()->with('info', 'El Cliente no existe');
             }
 
         }else {
-            return abort(503);
+            return back()->with('info', 'El Usuario no existe');
         }
 
     }
@@ -126,23 +133,29 @@ class VehiculoController extends Controller
             if($id_clie = Cliente::where('user_id', $id_users)->first()){
                 $id_clie = Cliente::where('user_id', $id_users)->first()->id;
 
-                $vehiculo = Vehiculo::findOrFail($id);
-                $vehiculo->placa = $request->placa;
-                $vehiculo->marca_vehiculo_id = $request->marca;
-                $vehiculo->modelo = $request->modelo;
-                $vehiculo->color = $request->color;
-                $vehiculo->observacion = $request->observa;
-                $vehiculo->cliente_id = $id_clie;
+                if($vehi_id = Vehiculo::where('placa', $request->placa)->first()){
 
-                $vehiculo->save();
+                    $vehiculo = Vehiculo::findOrFail($id);
+                    $vehiculo->placa = $request->placa;
+                    $vehiculo->marca_vehiculo_id = $request->marca;
+                    $vehiculo->modelo = $request->modelo;
+                    $vehiculo->color = $request->color;
+                    $vehiculo->observacion = $request->observa;
+                    $vehiculo->cliente_id = $id_clie;
 
-                return redirect()->route('vehiculos.index')
-                        ->with('info', 'Usuario actualizado con exito');
+                    $vehiculo->save();
+
+                    return redirect()->route('vehiculos.index')
+                            ->with('info', 'Vehiculo actualizado con exito');
+
+                }else{
+                    return back()->with('info', 'El Vehiculo no existe');
+                }
             }else{
-                return abort(503);
+                return back()->with('info', 'El Cliente no existe');
             }
         }else{
-            return abort(503);
+            return back()->with('info', 'El Usuario no existe');
         }
 
 

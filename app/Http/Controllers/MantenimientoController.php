@@ -48,29 +48,33 @@ class MantenimientoController extends Controller
         $date = Carbon::now();
 
         $vehi_id = Vehiculo::where('placa', $request->placa)->first();
+        $nFicha = $request->ficha;
 
-        if ($vehi_id) {
-            $mantenimiento = new Mantenimiento();
-            $mantenimiento->nro_ficha = $request->ficha;
-            $mantenimiento->fecha_ingreso = $date;
-            $mantenimiento->observacion = $request->observacion;
-            $mantenimiento->vehiculo_id = $vehi_id->id;
-            $mantenimiento->estado = 'activo';
-            $mantenimiento->diagnostico = $request->diagnostico;
-            $mantenimiento->kilometraje = $request->kilometraje;
-
-            $mantenimiento->save();
-
-            /*if($request->hasFile('ficha')){
-                $path = Storage::disk('public')->put('imagesLoads', $request->file('ficha'));
-            }*/
-
-            return redirect()->route('mantenimientos.index')
-                    ->with('info', 'Mantenimiento agregado');
+        if ($nro_ficha = Mantenimiento::where('nro_ficha', $nFicha)->first()) {
+            return back() ->with('info', 'La Ficha ya fue ingresada');
         } else {
-            return abort(503);
-        }
+            if ($vehi_id) {
+                $mantenimiento = new Mantenimiento();
+                $mantenimiento->nro_ficha = $request->ficha;
+                $mantenimiento->fecha_ingreso = $date;
+                $mantenimiento->observacion = $request->observacion;
+                $mantenimiento->vehiculo_id = $vehi_id->id;
+                $mantenimiento->estado = 'activo';
+                $mantenimiento->diagnostico = $request->diagnostico;
+                $mantenimiento->kilometraje = $request->kilometraje;
 
+                $mantenimiento->save();
+
+                /*if($request->hasFile('ficha')){
+                    $path = Storage::disk('public')->put('imagesLoads', $request->file('ficha'));
+                }*/
+
+                return redirect()->route('mantenimientos.index')
+                        ->with('info', 'Mantenimiento agregado');
+            } else {
+                return back() ->with('info', 'El Vehiculo no existe');
+            }
+        }
     }
 
     /**
@@ -135,7 +139,7 @@ class MantenimientoController extends Controller
             return redirect()->route('mantenimientos.index')
                     ->with('info', 'Mantenimiento actualizado');
         }else{
-            return abort(503);
+            return back() ->with('info', 'El vehiculo no existe');
         }
 
 

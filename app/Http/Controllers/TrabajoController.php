@@ -63,7 +63,7 @@ class TrabajoController extends Controller
             return redirect()->route('mantenimientos.index')
                     ->with('info', 'Trabajo agregado');
         } else {
-            return abort(404);
+            return back() ->with('info', 'No se puede encontrar al empleado');
         }
 
     }
@@ -119,24 +119,28 @@ class TrabajoController extends Controller
      */
     public function update(Request $request, $trabajo)
     {
-        $id_users = User::where('cedula', $request->cedula)->first()->id;
-        $id_empleado = Empleado::where('user_id', $id_users)->first()->id;
+        if ($id_users = User::where('cedula', $request->cedula)->first()) {
+            $id_users = User::where('cedula', $request->cedula)->first()->id;
+            $id_empleado = Empleado::where('user_id', $id_users)->first()->id;
 
-        $trabajos = Trabajo::findOrFail($trabajo);
+            $trabajos = Trabajo::findOrFail($trabajo);
 
-        $trabajos->manobra = $request->manobra;
-        $trabajos->repuestos = $request->repuestos;
-        $trabajos->costo_repuestos = $request->costo_repuestos;
-        $trabajos->costo_manobra = $request->costo_manobra;
-        $trabajos->estado = $request->estado;
-        $trabajos->tipo = $request->tipo;
-        $trabajos->mantenimiento_id = $request->id_mante;
-        $trabajos->empleado_id = $id_empleado;
+            $trabajos->manobra = $request->manobra;
+            $trabajos->repuestos = $request->repuestos;
+            $trabajos->costo_repuestos = $request->costo_repuestos;
+            $trabajos->costo_manobra = $request->costo_manobra;
+            $trabajos->estado = $request->estado;
+            $trabajos->tipo = $request->tipo;
+            $trabajos->mantenimiento_id = $request->id_mante;
+            $trabajos->empleado_id = $id_empleado;
 
-        $trabajos->save();
+            $trabajos->save();
 
-        return redirect()->route('mantenimientos.index')
-                ->with('info', 'Trabajo actualizado');
+            return redirect()->route('mantenimientos.index')
+                    ->with('info', 'Trabajo actualizado');
+        } else {
+            return back() ->with('info', 'No se puede encontrar al empleado');
+        }
     }
 
     /**

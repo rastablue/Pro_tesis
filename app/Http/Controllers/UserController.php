@@ -45,19 +45,29 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        User::create([
-            'cedula' => $request['cedula'],
-            'name' => $request['name'],
-            'apellido_pater' => $request['apellido_pater'],
-            'apellido_mater' => $request['apellido_mater'],
-            'direc' => $request['direc'],
-            'tlf' => $request['tlf'],
-            'email' => $request['email'],
-            'password' => Hash::make($request['password']),
-        ]);
+        $ced = $request->cedula;
 
-        return redirect()->route('users.index')
-                ->with('info', 'Usuario creado con exito');
+        if ($id_users = User::where('cedula', $ced)->first()) {
+            return back() ->with('info', 'El Usuario ya existe');
+        } else {
+            if ($id_users = User::where('email', $request->email)->first()) {
+                return back() ->with('info', 'El Correo ya existe');
+            } else {
+                User::create([
+                'cedula' => $request['cedula'],
+                'name' => $request['name'],
+                'apellido_pater' => $request['apellido_pater'],
+                'apellido_mater' => $request['apellido_mater'],
+                'direc' => $request['direc'],
+                'tlf' => $request['tlf'],
+                'email' => $request['email'],
+                'password' => Hash::make($request['password']),
+                ]);
+
+                return redirect()->route('users.index')
+                        ->with('info', 'Usuario creado con exito');
+            }
+        }
     }
 
     /**
@@ -101,6 +111,7 @@ class UserController extends Controller
     {
         //$user->update($request->all());
         //actualiza usuario
+
         $users = User::findOrFail($id);
 
         $users->cedula = $request->cedula;
@@ -112,23 +123,24 @@ class UserController extends Controller
         $users->email = $request->email;
 
         $users->save();
-
         //actualiza roles de ese usuario
         $users->roles()->sync($request->get('roles'));
 
-        /*if ($request->roles == 3) {
-            if (Cliente::select('user_id')->where('user_id', $id) != array()) {
-                return redirect()->route('users.index')
-                    ->with('info', 'Usuario actualizado con exito');
-            }else {
-                $cliente = New Cliente();
-                $cliente->user_id = $id;
-                $cliente->save();
-            }
+        /*$aaa = Cliente::select('user_id')->where('user_id', $id);
+
+        if ($aaa){
+            $cliente = New Cliente();
+            $cliente->user_id = $id;
+            $cliente->save();
+        }
+        else {
+            return redirect()->route('users.index')
+                ->with('info', 'Usuario actualizado con exito');
         }*/
 
         return redirect()->route('users.index')
                 ->with('info', 'Usuario actualizado con exito');
+
     }
 
     /**

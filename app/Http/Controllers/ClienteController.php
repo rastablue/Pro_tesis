@@ -50,7 +50,7 @@ class ClienteController extends Controller
                     ->with('info', 'Cliente Creado');
         }
         else{
-            return abort(503);
+            return back()->with('info', 'El Usuario no existe');
         }
     }
 
