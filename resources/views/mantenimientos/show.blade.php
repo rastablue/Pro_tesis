@@ -19,6 +19,11 @@
                                 <img class="img-responsive img-rounded float-right" src="{{ asset('images/actualizar.png') }}" title="Actualizar">
                             </a>
                         @endcan
+                        @can('fichas.show')
+                            <a href="{{ route('mantenimientos.ficha', $mantenimiento) }}">
+                                <img class="img-responsive img-rounded float-right" src="{{ asset('images/documento.png') }}" title="Ver Ficha">
+                            </a>
+                        @endcan
                         <a href="javascript:history.back()">
                             <img class="img-responsive img-rounded float-left" src="{{ asset('images/retroceder.png') }}">
                         </a>

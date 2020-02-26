@@ -142,6 +142,9 @@ Route::middleware(['auth'])->group(function(){
     Route::get('mantenimientos/{mantenimiento}', 'MantenimientoController@show')->name('mantenimientos.show')
                    ->middleware('can:mantenimientos.show');
 
+    Route::get('mantenimientos/fichas/{mantenimiento}', 'MantenimientoController@ficha')->name('mantenimientos.ficha')
+                   ->middleware('can:fichas.show');
+
     Route::delete('mantenimientos/{mantenimiento}', 'MantenimientoController@destroy')->name('mantenimientos.destroy')
                    ->middleware('can:mantenimientos.destroy');
 

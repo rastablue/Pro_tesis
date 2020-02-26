@@ -19,6 +19,10 @@ class Mantenimiento extends Model
         return $this->belongsTo(Vehiculo::class, 'vehiculo_id');
     }
 
+    public function getUrlPathAttribute(){
+        return \Storage::url($this->path);
+    }
+
     public static function getEnumValues($table, $column) {
         $type = DB::select(DB::raw("SHOW COLUMNS FROM $table WHERE Field = '{$column}'"))[0]->Type ;
         preg_match('/^enum\((.*)\)$/', $type, $matches);

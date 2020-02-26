@@ -63,8 +63,12 @@ class MantenimientoController extends Controller
                 $mantenimiento->diagnostico = $request->diagnostico;
                 $mantenimiento->kilometraje = $request->kilometraje;
 
-                $mantenimiento->save();
 
+                if ($request->hasFile('file')) {
+                    $image = $request->file->store('public');
+                    $mantenimiento->path = $image;
+                }
+                 $mantenimiento->save();
                 /*if($request->hasFile('ficha')){
                     $path = Storage::disk('public')->put('imagesLoads', $request->file('ficha'));
                 }*/
@@ -86,6 +90,11 @@ class MantenimientoController extends Controller
     public function show(Mantenimiento $mantenimiento)
     {
         return view('mantenimientos.show', compact('mantenimiento'));
+    }
+
+    public function ficha(Mantenimiento $mantenimiento)
+    {
+        return view('mantenimientos.ficha', compact('mantenimiento'));
     }
 
     public function search(Request $request)
@@ -132,6 +141,10 @@ class MantenimientoController extends Controller
             $mantenimiento->kilometraje = $request->kilometraje;
             if ($request->estado == 'Finalizado') {
                 $mantenimiento->fecha_egreso = $date;
+            }
+            if ($request->hasFile('file')) {
+                $image = $request->file->store('public');
+                $mantenimiento->path = $image;
             }
 
             $mantenimiento->save();

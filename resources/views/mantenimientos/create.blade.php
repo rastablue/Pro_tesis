@@ -92,14 +92,14 @@
                                     </div>
                                 </div>
 
-                            {{-- Imagen de la Ficha
+                            {{-- Imagen de la Ficha --}}
                                 <div class="form-group row">
                                     <label for="file" class="col-md-4 col-form-label text-md-right">{{ __('Cargar Imagen de la Ficha') }}</label>
 
                                     <div class="col-md-6">
-                                        <input id="file" type="file" name="ficha">
+                                        <input id="file" type="file" name="file">
                                     </div>
-                                </div> --}}
+                                </div>
 
                             {{-- btn --}}
                                 <div class="form-group row mb-0">

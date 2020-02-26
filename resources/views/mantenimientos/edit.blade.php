@@ -14,7 +14,7 @@
                     </div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('mantenimientos.update', $mantenimiento->id) }}">
+                        <form method="POST" action="{{ route('mantenimientos.update', $mantenimiento->id) }}" enctype="multipart/form-data">
                             @method('PUT')
                             @csrf
                             {{-- Ficha --}}
@@ -106,6 +106,15 @@
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
+                                    </div>
+                                </div>
+
+                            {{-- Imagen de la Ficha --}}
+                                <div class="form-group row">
+                                    <label for="file" class="col-md-4 col-form-label text-md-right">{{ __('Cargar Imagen de la Ficha') }}</label>
+
+                                    <div class="col-md-6">
+                                        <input id="file" type="file" name="file">
                                     </div>
                                 </div>
 
