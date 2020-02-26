@@ -41,14 +41,19 @@ class ClienteController extends Controller
         $user = User::where('cedula', $request->cedula)->first();
 
         if ($user) {
-            $clientes = new Cliente();
-            $clientes->user_id = $user->id;
 
-            $clientes->save();
+            if ($aaa = Cliente::where('user_id', $user->id)->first()){
+                return redirect()->route('users.index')
+                    ->with('info', 'El usuario ya es cliente');
+            }else {
+                    $cliente = New Cliente();
+                    $cliente->user_id = $user->id;
+                    $cliente->save();
+                    return redirect()->route('users.index')
+                        ->with('info', 'Cliente agregado con exito');
+                }
+            }
 
-            return redirect()->route('clientes.index')
-                    ->with('info', 'Cliente Creado');
-        }
         else{
             return back()->with('info', 'El Usuario no existe');
         }

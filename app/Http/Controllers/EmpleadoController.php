@@ -41,16 +41,20 @@ class EmpleadoController extends Controller
         $user = User::where('cedula', $request->cedula)->first();
 
         if ($user) {
-            $empleados = new Empleado();
-            $empleados->user_id = $user->id;
 
-            $empleados->save();
+            if ($aaa = Empleado::where('user_id', $user->id)->first()){
+                return redirect()->route('users.index')
+                    ->with('info', 'El usuario ya es empleado');
+            }else {
+                    $empleado = New Empleado();
+                    $empleado->user_id = $user->id;
+                    $empleado->save();
+                    return redirect()->route('users.index')
+                        ->with('info', 'Empleado agregado con exito');
+                }
 
-            return redirect()->route('empleados.index')
-                    ->with('info', 'Empleado Creado');
-        }
-        else{
-            return abort(503);
+        }else{
+            return back()->with('info', 'El Usuario no existe');
         }
 
 
