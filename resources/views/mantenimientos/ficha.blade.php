@@ -13,7 +13,12 @@
                     </div>
 
                     <div class="card-body">
+                        @if ($mantenimiento->path)
                             <img class="img-responsive img-rounded float-left" src="{{ $mantenimiento->url_path }}">
+                        @else
+                            <h5>No se ha encontrado el archivo! <a href="{{ route('mantenimientos.edit', $mantenimiento) }}">cargar...</a></h5>
+                        @endif
+
                     </div>
                 </div>
             </div>
