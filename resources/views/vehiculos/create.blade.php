@@ -78,6 +78,21 @@
                                     </div>
                                 </div>
 
+                            {{-- Kilometraje --}}
+                                <div class="form-group row">
+                                    <label for="kilometraje" class="col-md-4 col-form-label text-md-right">{{ __('Kilometraje') }}</label>
+
+                                    <div class="col-md-6">
+                                        <input id="kilometraje" type="text" placeholder="{{ $vehiculo->kilometraje }}" pattern="[0-9]{0, 6}" class="form-control @error('kilometraje') is-invalid @enderror" name="kilometraje" value="{{ $vehiculo->kilometraje }}" required autocomplete="kilometraje" autofocus>
+
+                                        @error('kilometraje')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
                             {{-- Observaciones --}}
                                 <div class="form-group row">
                                     <label for="observa" class="col-md-4 col-form-label text-md-right">{{ __('Observaciones') }}</label>

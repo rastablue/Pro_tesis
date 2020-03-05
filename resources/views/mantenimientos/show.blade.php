@@ -36,7 +36,6 @@
                                     <th scope="col" width="100px"><div class="text-center">Nro. Ficha</div></th>
                                     <th scope="col" width="200px"><div class="text-center">Fecha de Ingreso</div></th>
                                     <th scope="col" width="200px"><div class="text-center">Fecha de Egreso</div></th>
-                                    <th scope="col" width="150px"><div class="text-center">Kilometraje</div></th>
                                     <th scope="col" width="150px"><div class="text-center">Valor Total</div></th>
                                     <th scope="col" width="150px"><div class="text-center">Estado</div></th>
                                 </tr>
@@ -46,13 +45,12 @@
                                     <th scope="row"><div class="text-center">{{ $mantenimiento->nro_ficha }}</div></th>
                                     <td><div class="text-center">{{ $mantenimiento->fecha_ingreso }}</div></td>
                                     <td><div class="text-center">{{ $mantenimiento->fecha_egreso }}</div></td>
-                                    <td><div class="text-center">{{ $mantenimiento->kilometraje }}</div></td>
                                     <td><div class="text-center">{{ $mantenimiento->valor_total }}</div></td>
                                     <td><div class="text-center">{{ $mantenimiento->estado }}</div></td>
                                 </tr>
                                 <thead>
                                     <tr class="table-info">
-                                        <th scope="col" colspan="6">Observaciones:</th>
+                                        <th scope="col" colspan="5">Observaciones:</th>
                                     </tr>
                                 </thead>
                                 <tr>
@@ -60,7 +58,7 @@
                                 </tr>
                                 <thead>
                                     <tr class="table-info">
-                                        <th scope="col" colspan="6">Diagnostico:</th>
+                                        <th scope="col" colspan="5">Diagnostico:</th>
                                     </tr>
                                 </thead>
                                 <tr>
@@ -96,6 +94,7 @@
                                     <th scope="col"><div class="text-center">Marca</div></th>
                                     <th scope="col"><div class="text-center">Modelo</div></th>
                                     <th scope="col"><div class="text-center">Color</div></th>
+                                    <th scope="col"><div class="text-center">Kilometraje</div></th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -104,14 +103,15 @@
                                         <td><div class="text-center"> {{ $vehiculo->marcas->marca }} </td>
                                         <td><div class="text-center"> {{ $vehiculo->modelo }} </td>
                                         <td><div class="text-center"> {{ $vehiculo->color }} </td>
+                                        <td><div class="text-center"> {{ $vehiculo->kilometraje }} </td>
                                     </tr>
                                         <thead>
                                             <tr class="table-info">
-                                                <th scope="col" colspan="5">Observaciones:</th>
+                                                <th scope="col" colspan="6">Observaciones:</th>
                                             </tr>
                                         </thead>
                                     <tr>
-                                        <td colspan="5"> {{ $vehiculo->observacion }} </td>
+                                        <td colspan="6"> {{ $vehiculo->observacion }} </td>
                                     </tr>
                                 </tbody>
                             </table>

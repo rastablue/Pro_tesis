@@ -61,7 +61,6 @@ class MantenimientoController extends Controller
                 $mantenimiento->vehiculo_id = $vehi_id->id;
                 $mantenimiento->estado = 'activo';
                 $mantenimiento->diagnostico = $request->diagnostico;
-                $mantenimiento->kilometraje = $request->kilometraje;
 
 
                 if ($request->hasFile('file')) {
@@ -138,7 +137,6 @@ class MantenimientoController extends Controller
             $mantenimiento->vehiculo_id = $vehi_id->id;
             $mantenimiento->estado = $request->estado;
             $mantenimiento->diagnostico = $request->diagnostico;
-            $mantenimiento->kilometraje = $request->kilometraje;
             if ($request->estado == 'Finalizado') {
                 $mantenimiento->fecha_egreso = $date;
             }

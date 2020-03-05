@@ -8,7 +8,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-users-center bg-warning">
-                        <span><h4><b>Detalles del Vehiculo: </b><i>{{ $vehiculo->placa}}</i></h4></span>
+                        <span><h4><b>Detalles del Vehiculo: </b><i>{{ $vehiculo->placa }}</i></h4></span>
                         @can('vehiculos.edit')
                             <a href="{{ route('vehiculos.edit', $vehiculo) }}">
                                 <img class="img-responsive img-rounded float-right" src="{{ asset('images/actualiza.png') }}" title="Actualizar">
@@ -26,6 +26,7 @@
                                 <th scope="col"><div class="text-center">Marca</div></th>
                                 <th scope="col"><div class="text-center">Modelo</div></th>
                                 <th scope="col"><div class="text-center">Color</div></th>
+                                <th scope="col"><div class="text-center">Kilometraje</div></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -34,14 +35,15 @@
                                     <td><div class="text-center"> {{ $vehiculo->marcas->marca }} </td>
                                     <td><div class="text-center"> {{ $vehiculo->modelo }} </td>
                                     <td><div class="text-center"> {{ $vehiculo->color }} </td>
+                                    <td><div class="text-center"> {{ $vehiculo->kilometraje }} </td>
                                 </tr>
                                     <thead>
                                         <tr class="table-info">
-                                            <th scope="col" colspan="5">Observaciones:</th>
+                                            <th scope="col" colspan="6">Observaciones:</th>
                                         </tr>
                                     </thead>
                                 <tr>
-                                    <td colspan="5"> {{ $vehiculo->observacion }} </td>
+                                    <td colspan="6"> {{ $vehiculo->observacion }} </td>
                                 </tr>
                             </tbody>
                         </table>

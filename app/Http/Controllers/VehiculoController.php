@@ -63,6 +63,7 @@ class VehiculoController extends Controller
                     $vehiculo->marca_vehiculo_id = $request->marca;
                     $vehiculo->modelo = $request->modelo;
                     $vehiculo->color = $request->color;
+                    $vehiculo->kilometraje = $request->kilometraje;
                     $vehiculo->observacion = $request->observa;
                     $vehiculo->cliente_id = $id_clie;
                     $vehiculo->save();
@@ -140,6 +141,7 @@ class VehiculoController extends Controller
                     $vehiculo->marca_vehiculo_id = $request->marca;
                     $vehiculo->modelo = $request->modelo;
                     $vehiculo->color = $request->color;
+                    $vehiculo->kilometraje = $request->kilometraje;
                     $vehiculo->observacion = $request->observa;
                     $vehiculo->cliente_id = $id_clie;
 
