@@ -83,7 +83,7 @@
                                     <label for="kilometraje" class="col-md-4 col-form-label text-md-right">{{ __('Kilometraje') }}</label>
 
                                     <div class="col-md-6">
-                                        <input id="kilometraje" type="text" placeholder="{{ $vehiculo->kilometraje }}" pattern="[0-9]{0, 6}" class="form-control @error('kilometraje') is-invalid @enderror" name="kilometraje" value="{{ $vehiculo->kilometraje }}" required autocomplete="kilometraje" autofocus>
+                                        <input id="kilometraje" type="text" pattern="[0-9]{0, 6}" class="form-control @error('kilometraje') is-invalid @enderror" name="kilometraje" required autocomplete="kilometraje" autofocus>
 
                                         @error('kilometraje')
                                             <span class="invalid-feedback" role="alert">

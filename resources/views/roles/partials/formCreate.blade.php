@@ -22,7 +22,7 @@
 <h3>Lista de Permisos</h3>
 <div class="form-group">
     <ul class="list-unstyled">
-        @foreach ($permissions as $permission)
+        @foreach (Caffeinated\Shinobi\Models\Permission::all() as $permission)
             <li>
                 <label>
                     {{ Form::checkbox('permissions[]', $permission->id, null) }}

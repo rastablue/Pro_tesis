@@ -27,6 +27,21 @@ class MantenimientoController extends Controller
         return view('mantenimientos.index', compact('mantenimiento'));
     }
 
+    public function mantenimientoData()
+    {
+
+        return Datatables()
+                ->eloquent(Mantenimiento::query())
+                /*->addColumn('btn', function($vehiculos){
+                    return '<button type="button" class="btn btn-warning btn-sm" id="getEditProductData" data-id="'.$vehiculos->id.'">Edit</button>
+                    <button type="button" data-id="'.$vehiculos->id.'" data-toggle="modal" data-target="#DeleteProductModal" class="btn btn-danger btn-sm" id="getDeleteId">Delete</button>';
+
+                })*/
+                ->addColumn('btn', 'mantenimientos.actions')
+                ->rawColumns(['btn'])
+                ->make(true);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -165,7 +180,5 @@ class MantenimientoController extends Controller
     public function destroy(Mantenimiento $mantenimiento)
     {
         $mantenimiento->delete();
-
-        return back()->with('info', 'Usuario eliminado');
     }
 }

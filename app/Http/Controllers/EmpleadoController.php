@@ -16,8 +16,37 @@ class EmpleadoController extends Controller
      */
     public function index()
     {
-        $empleados = Empleado::paginate(5);
+        $empleados = Empleado::all();
         return view('empleados.index', compact('empleados'));
+    }
+
+    public function empleadoData()
+    {
+        $usuarios = User::all();
+
+        return Datatables()
+                ->eloquent(Empleado::query())
+                /*->addColumn('btn', function($vehiculos){
+                    return '<button type="button" class="btn btn-warning btn-sm" id="getEditProductData" data-id="'.$vehiculos->id.'">Edit</button>
+                    <button type="button" data-id="'.$vehiculos->id.'" data-toggle="modal" data-target="#DeleteProductModal" class="btn btn-danger btn-sm" id="getDeleteId">Delete</button>';
+
+                })*/
+                ->addColumn('empleados_ced', function($usuarios){
+                    return $usuarios->users->cedula;
+                })
+                ->addColumn('empleados_name', function($usuarios){
+                    return $usuarios->users->name;
+                })
+                ->addColumn('empleados_ape', function($usuarios){
+                    return $usuarios->users->apellido_pater;
+                })
+                ->addColumn('empleados_tlf', function($usuarios){
+                    return $usuarios->users->tlf;
+                })
+                ->addColumn('empleados_email', function($usuarios){
+                    return $usuarios->users->email;
+                })
+                ->make(true);
     }
 
     /**
@@ -43,13 +72,13 @@ class EmpleadoController extends Controller
         if ($user) {
 
             if ($aaa = Empleado::where('user_id', $user->id)->first()){
-                return redirect()->route('users.index')
+                return redirect()->route('empleados.index')
                     ->with('info', 'El usuario ya es empleado');
             }else {
                     $empleado = New Empleado();
                     $empleado->user_id = $user->id;
                     $empleado->save();
-                    return redirect()->route('users.index')
+                    return redirect()->route('empleados.index')
                         ->with('info', 'Empleado agregado con exito');
                 }
 

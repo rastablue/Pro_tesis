@@ -22,6 +22,25 @@ class RoleController extends Controller
         return view('roles.index', compact('role'));
     }
 
+    public function roleData()
+    {
+        $permissions = Permission::get();
+
+        return Datatables()
+                ->eloquent(Role::query())
+                ->addColumn('permissions', function($permissions){
+                    return $permissions;
+                })
+                /*->addColumn('btn', function($vehiculos){
+                    return '<button type="button" class="btn btn-warning btn-sm" id="getEditProductData" data-id="'.$vehiculos->id.'">Edit</button>
+                    <button type="button" data-id="'.$vehiculos->id.'" data-toggle="modal" data-target="#DeleteProductModal" class="btn btn-danger btn-sm" id="getDeleteId">Delete</button>';
+
+                })*/
+                ->addColumn('btn', 'roles.actions')
+                ->rawColumns(['btn'])
+                ->make(true);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -42,13 +61,40 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
+        if ($request->name == '') {
 
-        $role = Role::create($request->all());
+            return redirect()->route('roles.index')
+                ->with('info', 'No se ingreso un nombre');
 
-        $role->permissions()->sync($request->get('permissions'));
+        } else {
 
-        return redirect()->route('roles.index')
-                ->with('info', 'Role creado con exito');
+            if ($request->slug == '') {
+
+                return redirect()->route('roles.index')
+                    ->with('info', 'No se ingreso un slug');
+
+            } else {
+
+                if ($request->description == '') {
+
+                    return redirect()->route('roles.index')
+                        ->with('info', 'No se ingreso una descripcion');
+
+                } else {
+
+                    $role = Role::create($request->all());
+
+                    $role->permissions()->sync($request->get('permissions'));
+
+                    return redirect()->route('roles.index')
+                            ->with('info', 'Role creado con exito');
+
+                }
+
+            }
+
+        }
+
     }
 
     /**
@@ -114,7 +160,5 @@ class RoleController extends Controller
     public function destroy(Role $role)
     {
         $role->delete();
-
-        return back()->with('info', 'Role eliminado');
     }
 }

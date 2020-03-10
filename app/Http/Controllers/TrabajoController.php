@@ -24,6 +24,28 @@ class TrabajoController extends Controller
         return view('trabajos.index', compact('trabajos'));
     }
 
+    public function trabajoData()
+    {
+        $consultas = Trabajo::all();
+
+        return Datatables()
+                ->eloquent(Trabajo::query())
+                /*->addColumn('btn', function($vehiculos){
+                    return '<button type="button" class="btn btn-warning btn-sm" id="getEditProductData" data-id="'.$vehiculos->id.'">Edit</button>
+                    <button type="button" data-id="'.$vehiculos->id.'" data-toggle="modal" data-target="#DeleteProductModal" class="btn btn-danger btn-sm" id="getDeleteId">Delete</button>';
+
+                })*/
+                ->addColumn('nro_ficha', function($consultas){
+                    return $consultas->mantenimientos->nro_ficha;
+                })
+                ->addColumn('empleados', function($consultas){
+                    return $consultas->empleados->users->name;
+                })
+                ->addColumn('btn', 'trabajos.actions')
+                ->rawColumns(['btn'])
+                ->make(true);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -152,7 +174,5 @@ class TrabajoController extends Controller
     public function destroy(Trabajo $trabajo)
     {
         $trabajo->delete();
-
-        return back()->with('info', 'Trabajo eliminado');
     }
 }

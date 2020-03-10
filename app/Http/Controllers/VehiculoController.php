@@ -9,9 +9,11 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Validator;
 use Caffeinated\Shinobi\Models\Role;
+use Yajra\Datatables\Datatables;
 use App\Vehiculo;
 use App\User;
 use App\Cliente;
+use App\MarcaVehiculo;
 
 class VehiculoController extends Controller
 {
@@ -25,6 +27,27 @@ class VehiculoController extends Controller
         $vehiculo = Vehiculo::paginate(5);
 
         return view('vehiculos.index', compact('vehiculo'));
+    }
+
+    public function vehiculoData()
+    {
+        $vehiculos = Vehiculo::all();
+        return Datatables()
+                ->eloquent(Vehiculo::query())
+                ->addColumn('marca', function($vehiculos){
+                    return $vehiculos->marcas->marca;
+                })
+                /*->addColumn('btn', function($vehiculos){
+                    return '<button type="button" class="btn btn-warning btn-sm" id="getEditProductData" data-id="'.$vehiculos->id.'">Edit</button>
+                    <button type="button" data-id="'.$vehiculos->id.'" data-toggle="modal" data-target="#DeleteProductModal" class="btn btn-danger btn-sm" id="getDeleteId">Delete</button>';
+
+                })*/
+
+
+                ->addColumn('btn', 'vehiculos.actions')
+
+                ->rawColumns(['btn'])
+                ->make(true);
     }
 
     /**
@@ -58,18 +81,27 @@ class VehiculoController extends Controller
                     return back()->with('info', 'El Vehiculo ya existe');
 
                 }else{
-                    $vehiculo = new Vehiculo();
-                    $vehiculo->placa = $request->placa;
-                    $vehiculo->marca_vehiculo_id = $request->marca;
-                    $vehiculo->modelo = $request->modelo;
-                    $vehiculo->color = $request->color;
-                    $vehiculo->kilometraje = $request->kilometraje;
-                    $vehiculo->observacion = $request->observa;
-                    $vehiculo->cliente_id = $id_clie;
-                    $vehiculo->save();
 
-                    return redirect()->route('vehiculos.index')
-                            ->with('info', 'Vehiculo creado con exito');
+                    if ($marca = MarcaVehiculo::where('id', $request->marca)->first()) {
+
+                        $vehiculo = new Vehiculo();
+                        $vehiculo->placa = $request->placa;
+                        $vehiculo->marca_vehiculo_id = $request->marca;
+                        $vehiculo->modelo = $request->modelo;
+                        $vehiculo->color = $request->color;
+                        $vehiculo->kilometraje = $request->kilometraje;
+                        $vehiculo->observacion = $request->observa;
+                        $vehiculo->cliente_id = $id_clie;
+                        $vehiculo->save();
+
+                        return redirect()->route('vehiculos.index')
+                                ->with('info', 'Vehiculo creado con exito');
+
+                    } else {
+                        return redirect()->route('vehiculos.index')
+                                ->with('info', 'La Marca no existe');
+                    }
+
                 }
 
             }else {
@@ -111,10 +143,49 @@ class VehiculoController extends Controller
      */
     public function edit(Vehiculo $vehiculo)
     {
+
         $cliente = Vehiculo::findOrFail($vehiculo->id)->clientes->user_id;
         $user = User::get()->where('id', $cliente);
 
         return view('vehiculos.edit', compact('vehiculo', 'user'));
+
+        /*$data = $vehiculo;
+        $marcas = MarcaVehiculo::all();
+
+        $html = '<div class="form-group">
+                    <label for="Placa">Placa</label>
+                    <input type="text" class="form-control" name="placa" id="placa" value="'.$vehiculo->placa.'">
+                </div>
+                <div class="form-group">
+                    <label for="Marca">Marca</label>
+
+                        <select id="marca" class="form-control" name="marca">
+                            <option value="'.$vehiculo->marcas->id.'" selected="true">'.$vehiculo->marcas->marca.'</option>
+                            @foreach('.$marcas.')
+                                <option value="{{ $marcas->id }}">  '.$marcas->first()->marca.'  </option>
+                            @endforeach
+                        </select>
+
+                </div>
+                <div class="form-group">
+                    <label for="Modelo">Modelo</label>
+                    <input type="text" class="form-control" name="modelo" id="modelo" value="'.$vehiculo->modelo.'">
+                </div>
+                <div class="form-group">
+                    <label for="Color">Color</label>
+                    <input type="text" class="form-control" name="color" id="color" value="'.$vehiculo->color.'">
+                </div>
+                <div class="form-group">
+                    <label for="Obrsevacion">Observacion:</label>
+                    <textarea class="form-control" name="observa" id="observa">'.$vehiculo->observacion.'
+                    </textarea>
+                </div>
+                <div class="form-group">
+                    <label for="user_id">Cedula del Cliente</label>
+                    <input type="text" class="form-control" name="user_id" id="user_id" pattern="[0-9]{10}" placeholder="'.$vehiculo->clientes->users->cedula.'" value="'.$vehiculo->clientes->users->cedula.'" required autocomplete="user_id" autofocus>
+                </div>';
+
+        return response()->json(['html'=>$html]);*/
     }
 
     /**
@@ -126,6 +197,23 @@ class VehiculoController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        /*$validator = Validator::make($request->all(), [
+            'placa' => 'required',
+            'marca' => 'required',
+            'modelo' => 'required',
+            'color' => 'required',
+            'observacion' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()->all()]);
+        }
+        $vehiculo = Vehiculo::findOrFail($id);
+        $vehiculo->update($request->all());
+
+        return response()->json(['success'=>'Product updated successfully']);*/
+
         $ced = $request->user_id;
 
         if($id_users = User::where('cedula', $ced)->first()){
@@ -136,20 +224,26 @@ class VehiculoController extends Controller
 
                 if($vehi_id = Vehiculo::where('placa', $request->placa)->first()){
 
-                    $vehiculo = Vehiculo::findOrFail($id);
-                    $vehiculo->placa = $request->placa;
-                    $vehiculo->marca_vehiculo_id = $request->marca;
-                    $vehiculo->modelo = $request->modelo;
-                    $vehiculo->color = $request->color;
-                    $vehiculo->kilometraje = $request->kilometraje;
-                    $vehiculo->observacion = $request->observa;
-                    $vehiculo->cliente_id = $id_clie;
+                    if ($marca = MarcaVehiculo::where('id', $request->marca)->first()) {
 
-                    $vehiculo->save();
+                        $vehiculo = Vehiculo::findOrFail($id);
+                        $vehiculo->placa = $request->placa;
+                        $vehiculo->marca_vehiculo_id = $request->marca;
+                        $vehiculo->modelo = $request->modelo;
+                        $vehiculo->color = $request->color;
+                        $vehiculo->kilometraje = $request->kilometraje;
+                        $vehiculo->observacion = $request->observa;
+                        $vehiculo->cliente_id = $id_clie;
 
-                    return redirect()->route('vehiculos.index')
-                            ->with('info', 'Vehiculo actualizado con exito');
+                        $vehiculo->save();
 
+                        return redirect()->route('vehiculos.index')
+                                ->with('info', 'Vehiculo actualizado con exito');
+
+                    } else {
+                        return redirect()->route('vehiculos.index')
+                                ->with('info', 'La Marca no existe');
+                    }
                 }else{
                     return back()->with('info', 'El Vehiculo no existe');
                 }
@@ -172,7 +266,5 @@ class VehiculoController extends Controller
     public function destroy(Vehiculo $vehiculo)
     {
         $vehiculo->delete();
-
-        return back()->with('info', 'Vehiculo eliminado');
     }
 }

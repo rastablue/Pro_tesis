@@ -16,8 +16,37 @@ class ClienteController extends Controller
      */
     public function index()
     {
-        $clientes = Cliente::paginate(5);
+        $clientes = Cliente::all();
         return view('clientes.index', compact('clientes'));
+    }
+
+    public function clienteData()
+    {
+        $usuarios = Cliente::all();
+
+        return Datatables()
+                ->eloquent(Cliente::query())
+                /*->addColumn('btn', function($vehiculos){
+                    return '<button type="button" class="btn btn-warning btn-sm" id="getEditProductData" data-id="'.$vehiculos->id.'">Edit</button>
+                    <button type="button" data-id="'.$vehiculos->id.'" data-toggle="modal" data-target="#DeleteProductModal" class="btn btn-danger btn-sm" id="getDeleteId">Delete</button>';
+
+                })*/
+                ->addColumn('clientes_ced', function($usuarios){
+                    return $usuarios->users->cedula;
+                })
+                ->addColumn('clientes_name', function($usuarios){
+                    return $usuarios->users->name;
+                })
+                ->addColumn('clientes_ape', function($usuarios){
+                    return $usuarios->users->apellido_pater;
+                })
+                ->addColumn('clientes_tlf', function($usuarios){
+                    return $usuarios->users->tlf;
+                })
+                ->addColumn('clientes_email', function($usuarios){
+                    return $usuarios->users->email;
+                })
+                ->make(true);
     }
 
     /**
@@ -43,13 +72,13 @@ class ClienteController extends Controller
         if ($user) {
 
             if ($aaa = Cliente::where('user_id', $user->id)->first()){
-                return redirect()->route('users.index')
+                return redirect()->route('clientes.index')
                     ->with('info', 'El usuario ya es cliente');
             }else {
                     $cliente = New Cliente();
                     $cliente->user_id = $user->id;
                     $cliente->save();
-                    return redirect()->route('users.index')
+                    return redirect()->route('clientes.index')
                         ->with('info', 'Cliente agregado con exito');
                 }
             }

@@ -27,6 +27,21 @@ class UserController extends Controller
         return view('users.index', compact('user'));
     }
 
+    public function userData()
+    {
+
+        return Datatables()
+                ->eloquent(User::query())
+                /*->addColumn('btn', function($vehiculos){
+                    return '<button type="button" class="btn btn-warning btn-sm" id="getEditProductData" data-id="'.$vehiculos->id.'">Edit</button>
+                    <button type="button" data-id="'.$vehiculos->id.'" data-toggle="modal" data-target="#DeleteProductModal" class="btn btn-danger btn-sm" id="getDeleteId">Delete</button>';
+
+                })*/
+                ->addColumn('btn', 'users.actions')
+                ->rawColumns(['btn'])
+                ->make(true);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -152,6 +167,14 @@ class UserController extends Controller
                         ->with('info', 'Usuario actualizado con exito');
                 }
             }
+
+            if ($request->get('roles') == 1) {
+                return redirect()->route('users.index')
+                        ->with('info', 'Administrador actualizado con exito');
+            }else{
+                return redirect()->route('users.index')
+                        ->with('info', 'Usuario actualizado con exito');
+            }
         }
     }
 
@@ -164,7 +187,5 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         $user->delete();
-
-        return back()->with('info', 'Usuario eliminado');
     }
 }
