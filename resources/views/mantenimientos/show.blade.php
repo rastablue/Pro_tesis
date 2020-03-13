@@ -10,17 +10,17 @@
                     <div class="card-header d-flex justify-content-between align-items-center bg-secondary">
                         <span><h4><b>Detalles del Mantenimiento:</b><i> {{ $mantenimiento->nro_ficha }}</i></h4></span>
                         @can('trabajos.create')
-                            <a href="{{ route('trabajos.show', $mantenimiento) }}">
+                            <a href="{{ route('trabajos.show', Hashids::encode($mantenimiento->id)) }}">
                                 <img class="img-responsive img-rounded float-right" src="{{ asset('images/trabajos.png') }}" title="Agregar Trabajo">
                             </a>
                         @endcan
                         @can('mantenimientos.edit')
-                            <a href="{{ route('mantenimientos.edit', $mantenimiento) }}">
+                            <a href="{{ route('mantenimientos.edit', Hashids::encode($mantenimiento->id)) }}">
                                 <img class="img-responsive img-rounded float-right" src="{{ asset('images/actualizar.png') }}" title="Actualizar">
                             </a>
                         @endcan
                         @can('fichas.show')
-                            <a href="{{ route('mantenimientos.ficha', $mantenimiento) }}">
+                            <a href="{{ route('mantenimientos.ficha', Hashids::encode($mantenimiento->id)) }}">
                                 <img class="img-responsive img-rounded float-right" src="{{ asset('images/documento.png') }}" title="Ver Ficha">
                             </a>
                         @endcan
@@ -81,9 +81,9 @@
                         <div class="card-header d-flex justify-content-between align-users-center bg-warning">
                             <span><h4><b>Detalles del Vehiculo: </b><i>{{ $vehiculo->placa}}</i></h4></span>
                             @can('vehiculos.show')
-                                        <a href="{{ route('vehiculos.show', $vehiculo) }}">
-                                            <img class="img-responsive img-rounded float-left" src="{{ asset('images/ver.png') }}" title="Ver Detalles">
-                                        </a>
+                                <a href="{{ route('vehiculos.show', Hashids::encode($vehiculo->id)) }}">
+                                    <img class="img-responsive img-rounded float-left" src="{{ asset('images/ver.png') }}" title="Ver Detalles">
+                                </a>
                             @endcan
                         </div>
                         <div class="card-body">
@@ -132,7 +132,7 @@
                             <div class="card-header d-flex justify-content-between align-users-center bg-success">
                                 <span><h4><b>Detalles del Trabajo: </b><i>{{ $loop->iteration}}</i></h4></span>
                                 @can('trabajos.edit')
-                                    <a href="{{ route('trabajos.edit', $trabajo->id) }}">
+                                    <a href="{{ route('trabajos.edit', Hashids::encode($trabajo->id)) }}">
                                         <img class="img-responsive img-rounded float-right" src="{{ asset('images/actualizar.png') }}" title="Actualizar">
                                     </a>
                                 @endcan

@@ -1,10 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use App\Providers\RouteServiceProvider;
+use Vinkla\Hashids\Facades\Hashids;
 use App\Cliente;
-use App\User;
 use Illuminate\Http\Request;
 
 class ClienteController extends Controller
@@ -22,30 +22,10 @@ class ClienteController extends Controller
 
     public function clienteData()
     {
-        $usuarios = Cliente::all();
-
         return Datatables()
                 ->eloquent(Cliente::query())
-                /*->addColumn('btn', function($vehiculos){
-                    return '<button type="button" class="btn btn-warning btn-sm" id="getEditProductData" data-id="'.$vehiculos->id.'">Edit</button>
-                    <button type="button" data-id="'.$vehiculos->id.'" data-toggle="modal" data-target="#DeleteProductModal" class="btn btn-danger btn-sm" id="getDeleteId">Delete</button>';
-
-                })*/
-                ->addColumn('clientes_ced', function($usuarios){
-                    return $usuarios->users->cedula;
-                })
-                ->addColumn('clientes_name', function($usuarios){
-                    return $usuarios->users->name;
-                })
-                ->addColumn('clientes_ape', function($usuarios){
-                    return $usuarios->users->apellido_pater;
-                })
-                ->addColumn('clientes_tlf', function($usuarios){
-                    return $usuarios->users->tlf;
-                })
-                ->addColumn('clientes_email', function($usuarios){
-                    return $usuarios->users->email;
-                })
+                ->addColumn('btn', 'clientes.actions')
+                ->rawColumns(['btn'])
                 ->make(true);
     }
 
@@ -67,7 +47,33 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
-        $user = User::where('cedula', $request->cedula)->first();
+
+        $ced = $request->cedula;
+
+        if ($id_clientes = Cliente::where('cedula', $ced)->first()) {
+
+            return back() ->with('danger', 'Error, el cliente ya existe');
+
+        } else {
+
+            $clientes = new Cliente();
+
+            $clientes->cedula = $request->cedula;
+            $clientes->name = $request->name;
+            $clientes->apellido_pater = $request->apellido_pater;
+            $clientes->apellido_mater = $request->apellido_mater;
+            $clientes->direc = $request->direc;
+            $clientes->tlf = $request->tlf;
+            $clientes->email = $request->email;
+
+            $clientes->save();
+
+            return redirect()->route('clientes.index')
+                    ->with('info', 'Cliente creado con exito');
+
+        }
+
+        /*$user = User::where('cedula', $request->cedula)->first();
 
         if ($user) {
 
@@ -85,7 +91,7 @@ class ClienteController extends Controller
 
         else{
             return back()->with('info', 'El Usuario no existe');
-        }
+        }*/
     }
 
     /**
@@ -94,15 +100,11 @@ class ClienteController extends Controller
      * @param  \App\Cliente  $cliente
      * @return \Illuminate\Http\Response
      */
-    public function show(Cliente $cliente)
+    public function show($cliente)
     {
-        //
-    }
-
-    public function search(Request $request)
-    {
-        $user = User::where('cedula', 'LIKE', "%$request->search%");
-        return view('clientes.search', compact('user'));
+        $id = Hashids::decode($cliente);
+        $cliente = Cliente::findOrFail($id)->first();
+        return view('clientes.show', compact('cliente'));
     }
 
     /**
@@ -111,9 +113,11 @@ class ClienteController extends Controller
      * @param  \App\Cliente  $cliente
      * @return \Illuminate\Http\Response
      */
-    public function edit(Cliente $cliente)
+    public function edit($cliente)
     {
-        //
+        $id = Hashids::decode($cliente);
+        $cliente = Cliente::findOrFail($id)->first();
+        return view('clientes.edit', compact('cliente'));
     }
 
     /**
@@ -123,9 +127,28 @@ class ClienteController extends Controller
      * @param  \App\Cliente  $cliente
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Cliente $cliente)
+    public function update(Request $request, $cliente)
     {
-        //
+
+        $clientes = Cliente::findOrFail($cliente);
+
+        $clientes->name = $request->name;
+        $clientes->apellido_pater = $request->apellido_pater;
+        $clientes->apellido_mater = $request->apellido_mater;
+        $clientes->direc = $request->direc;
+        $clientes->tlf = $request->tlf;
+        $clientes->email = $request->email;
+
+        $clientes->save();
+
+        if ($clientes->save()) {
+            return redirect()->route('clientes.index')
+                ->with('info', 'Cliente actualizado con exito');
+        } else {
+            return redirect()->route('clientes.index')
+                ->with('danger', 'Error al actualizar al cliente');
+        }
+
     }
 
     /**
@@ -134,8 +157,9 @@ class ClienteController extends Controller
      * @param  \App\Cliente  $cliente
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Cliente $cliente)
+    public function destroy($cliente)
     {
-        //
+        $id = Cliente::findOrFail($cliente);
+        $id->delete();
     }
 }

@@ -232,6 +232,19 @@
                             </div>
                         </div>
                     @endif
+                    @if(session('danger'))
+                        <div class="msg" style="z-index: 99 !important">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-12 col-md-offset-13">
+                                        <div class="alert alert-danger">
+                                            {{ session('danger') }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
                     @yield('content')
                 </div>
 

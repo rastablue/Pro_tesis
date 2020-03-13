@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use Vinkla\Hashids\Facades\Hashids;
 use App\Mantenimiento;
 use App\Trabajo;
 use App\User;
@@ -66,7 +67,7 @@ class MantenimientoController extends Controller
         $nFicha = $request->ficha;
 
         if ($nro_ficha = Mantenimiento::where('nro_ficha', $nFicha)->first()) {
-            return back() ->with('info', 'La Ficha ya fue ingresada');
+            return back() ->with('danger', 'Error, la Ficha ya fue ingresada');
         } else {
             if ($vehi_id) {
                 $mantenimiento = new Mantenimiento();
@@ -90,7 +91,7 @@ class MantenimientoController extends Controller
                 return redirect()->route('mantenimientos.index')
                         ->with('info', 'Mantenimiento agregado');
             } else {
-                return back() ->with('info', 'El Vehiculo no existe');
+                return back() ->with('danger', 'Error, el Vehiculo no existe');
             }
         }
     }
@@ -101,21 +102,20 @@ class MantenimientoController extends Controller
      * @param  \App\Mantenimiento  mantenimiento
      * @return \Illuminate\Http\Response
      */
-    public function show(Mantenimiento $mantenimiento)
+    public function show($mantenimiento)
     {
+        $id = Hashids::decode($mantenimiento);
+        $mantenimiento = Mantenimiento::findOrFail($id)->first();
+
         return view('mantenimientos.show', compact('mantenimiento'));
     }
 
-    public function ficha(Mantenimiento $mantenimiento)
+    public function ficha($mantenimiento)
     {
+        $id = Hashids::decode($mantenimiento);
+        $mantenimiento = Mantenimiento::findOrFail($id)->first();
+
         return view('mantenimientos.ficha', compact('mantenimiento'));
-    }
-
-    public function search(Request $request)
-    {
-        $mantenimiento = Mantenimiento::where('nro_ficha', 'LIKE', "%$request->search%");
-
-        return view('mantenimientos.search', compact('mantenimiento'));
     }
 
     /**
@@ -124,8 +124,11 @@ class MantenimientoController extends Controller
      * @param  \App\Mantenimiento  $mantenimiento
      * @return \Illuminate\Http\Response
      */
-    public function edit(Mantenimiento $mantenimiento)
+    public function edit($mantenimiento)
     {
+        $id = Hashids::decode($mantenimiento);
+        $mantenimiento = Mantenimiento::findOrFail($id)->first();
+
         return view('mantenimientos.edit', compact('mantenimiento'));
     }
 
@@ -165,7 +168,7 @@ class MantenimientoController extends Controller
             return redirect()->route('mantenimientos.index')
                     ->with('info', 'Mantenimiento actualizado');
         }else{
-            return back() ->with('info', 'El vehiculo no existe');
+            return back() ->with('danger', 'Error, el vehiculo no existe');
         }
 
 

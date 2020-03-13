@@ -1,0 +1,91 @@
+public function show ($id)
+    {
+        $id =  Crypt::decrypt($id);
+        $institucion = Institucion::find($id);
+        return view ('sistema.instituciones.show', compact('institucion'));
+    }
+
+@can('convenios.edit')
+    <a class="btn btn-outline-warning btn-sm"
+        href="{{ route('convenios.edit', Crypt::encrypt($id)) }}"
+        title="Editar Convenio">
+        <i class="fa fa-pencil fa-lg"></i>
+    </a>
+@endcan
+ 
+//------
+
+public function obtener(Request $request){
+        //if(!$request->ajax()) return redirect('/');
+        
+        $proyectos = Proyecto::join('convenios', 'convenios.id', '=', 'proyectos.convenio_id')
+            ->join('instituciones', 'instituciones.id', '=', 'convenios.institucion_id')
+            ->join('personas as responsable', 'responsable.id', '=', 'proyectos.responsable_id')
+            //->join('personas as coordinador', 'coordinador.id', '=', 'proyectos.responsable_id')
+            ->join('periodos', 'periodos.id', '=', 'proyectos.periodo_id')
+            ->select('proyectos.id', 'proyectos.codigo', 'proyectos.nombre','instituciones.institucion', 'responsable.nombre', 'periodos.periodo','proyectos.estado');
+        
+        return Datatables::of($proyectos)
+            ->addColumn('btn', 'sistema.proyectos_vinculacion.actions')
+            ->rawColumns(['btn'])
+            ->make(true);
+    }
+
+<script>
+        function activar_dataTable() {
+            $('#tabla').DataTable({
+                "serverSide": true,
+                "processing": true,
+                "ajax": "{{ url('proyectos/obtener') }}",
+                "columns" : [
+                    {data:  'codigo'        ,   name: 'proyectos.codigo'},
+                    {data:  'nombre'        ,   name: 'proyectos.nombre'},
+                    {data:  'institucion'   ,   name: 'instituciones.institucion'},
+                    {data:  'nombre'        ,   name: 'responsable.nombre'},
+                    {data:  'periodo'       ,   name: 'periodos.periodo'},
+                    {data:  'estado'        ,   name: 'proyectos.estado'},
+                    {data:  'btn'},
+                ],
+                "order" : [[2, "asc"]],
+                "language": {
+                    "url": "/json/dataTableEspanol.json"
+                },
+                "lengthMenu":   [[10, 25, 50, -1], [10, 25, 50, "Todos"]],
+                "iDisplayLength": 10,
+            });
+        }
+        activar_dataTable();
+    </script>
+
+
+validar cedula
+
+function validarCedula(cad){
+    var total = 0;
+    var longitud = cad.length;
+    var longcheck = longitud - 1;
+
+    if (cad !== "" && longitud === 10){
+        for(i = 0; i < longcheck; i++){
+            if (i%2 === 0) {
+                var aux = cad.charAt(i) * 2;
+                if (aux > 9) aux -= 9;
+                total += aux;
+            } 
+            else {
+                total += parseInt(cad.charAt(i)); // parseInt o concatenará en lugar de sumar
+            }
+        }
+
+        total = total % 10 ? 10 - total % 10 : 0;
+
+        if (cad.charAt(longitud-1) == total) {
+            return true;
+        }
+        else{
+            //toastr.warning("Cedula invalida","Advertencia");
+            return false;
+        }
+    }
+}
+

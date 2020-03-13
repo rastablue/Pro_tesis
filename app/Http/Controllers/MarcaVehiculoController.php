@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\MarcaVehiculo;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use Vinkla\Hashids\Facades\Hashids;
 
 class MarcaVehiculoController extends Controller
 {
@@ -58,9 +58,11 @@ class MarcaVehiculoController extends Controller
      * @param  \App\MarcaVehiculo  $marcaVehiculo
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($marca)
     {
-        $marca = MarcaVehiculo::findOrFail($id);
+        $id = Hashids::decode($marca);
+        $marca = MarcaVehiculo::findOrFail($id)->first();
+
         return view('marcaVehiculos.edit', compact('marca'));
     }
 

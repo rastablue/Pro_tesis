@@ -50,8 +50,7 @@
                             @csrf
                             {{-- Ficha --}}
                                 <div class="form-group row">
-                                    <label for="ficha" class="col-md-4 col-form-label">Numero de Ficha</label>
-
+                                    <label for="ficha" class="col-md-3 text-md-right">Numero de Ficha</label>
                                     <div class="col-md-8">
                                         <input id="ficha" type="text" pattern="[0-9]{7}" class="form-control" name="ficha" required autocomplete="ficha" autofocus>
                                     </div>
@@ -60,7 +59,7 @@
                             {{-- Placa del Vehiculo --}}
                                 <div class="form-group row">
 
-                                    <label for="placa" class="col-md-4 col-form-label">Placa</label>
+                                    <label for="placa" class="col-md-3 text-md-right">Placa</label>
 
                                     <div class="col-md-8">
                                         <input id="placa" type="text" class="form-control" name="placa" required autocomplete="placa" autofocus>
@@ -69,8 +68,7 @@
 
                             {{-- Observacion --}}
                                 <div class="form-group row">
-                                    <label for="observacion" class="col-md-4 col-form-label">Observacion</label>
-
+                                    <label for="observacion" class="col-md-3 text-md-right">Observacion</label>
                                     <div class="col-md-8">
                                         <textarea id="observacion" type="text" class="form-control" name="observacion" required autocomplete="observacion" autofocus></textarea>
                                     </div>
@@ -78,7 +76,7 @@
 
                             {{-- Diagnostico --}}
                                 <div class="form-group row">
-                                    <label for="diagnostico" class="col-md-4 col-form-label">Diagnostico</label>
+                                    <label for="diagnostico" class="col-md-3 text-md-right">Diagnostico</label>
 
                                     <div class="col-md-8">
                                         <textarea id="diagnostico" type="text" class="form-control" name="diagnostico" required autocomplete="diagnostico" autofocus></textarea>
@@ -87,14 +85,13 @@
 
                             {{-- Imagen de la Ficha --}}
                                 <div class="form-group row">
-                                    <label for="file" class="col-md-4 col-form-label">Cargar Imagen de la Ficha</label>
-
+                                    <label for="file" class="col-md-3 text-md-right">Cargar Imagen de la Ficha</label>
                                     <div class="col-md-8">
                                         <input id="file" type="file" name="file">
                                     </div>
                                 </div>
-                            </form>
-                        </div>
+                        </form>
+                    </div>
                 <!-- Modal footer -->
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -110,11 +107,12 @@
             <div class="modal-content">
                 <!-- Modal Header -->
                     <div class="modal-header">
+                        <h5><b>Eliminar Mantenimiento</b></h5>
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
                 <!-- Modal body -->
                     <div class="modal-body">
-                        <h5 align="center">¿Desea eliminar el mantenimiento?</h5>
+                        <h6 align="center">Eliminar este mantenimiento tambien eliminara todos los trabajos vinculados. <br> ¿Desea continuar?</h6>
                     </div>
                 <!-- Modal footer -->
                     <div class="modal-footer">
@@ -136,7 +134,7 @@
             // initializing Datatable
                 var table = $("#mantenimientos-table").DataTable({
                     serverSide: true,
-                    pageLength: 5,
+                    pageLength: 10,
                     ajax: '{!! route('datatables.mantenimientos') !!}',
                     columns: [
                         { data: 'nro_ficha', name: 'nro_ficha' },

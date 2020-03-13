@@ -85,6 +85,9 @@ Route::middleware(['auth'])->group(function(){
         Route::get('users/{user}/edit', 'UserController@edit')->name('users.edit')
                     ->middleware('can:users.edit');
 
+        Route::get('users/{user}/edita', 'UserController@edita')->name('users.edita')
+                    ->middleware('can:users.edit');
+
     //Clientes
 
         Route::post('clientes/store', 'ClienteController@store')->name('clientes.store')

@@ -10,6 +10,7 @@ use App\Empleado;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use Vinkla\Hashids\Facades\Hashids;
 
 class TrabajoController extends Controller
 {
@@ -85,7 +86,7 @@ class TrabajoController extends Controller
             return redirect()->route('mantenimientos.index')
                     ->with('info', 'Trabajo agregado');
         } else {
-            return back() ->with('info', 'No se puede encontrar al empleado');
+            return back() ->with('danger', 'Error, no se puede encontrar al empleado');
         }
 
     }
@@ -99,7 +100,8 @@ class TrabajoController extends Controller
 
     public function show($trabajo)
     {
-        $mantenimiento = Mantenimiento::findOrFail($trabajo);
+        $id = Hashids::decode($trabajo);
+        $mantenimiento = Mantenimiento::findOrFail($id)->first();
         return view('trabajos.create', compact('mantenimiento'));
     }
 
@@ -126,8 +128,10 @@ class TrabajoController extends Controller
      * @param  \App\Trabajo  $trabajo
      * @return \Illuminate\Http\Response
      */
-    public function edit(Trabajo $trabajo)
+    public function edit($trabajo)
     {
+        $id = Hashids::decode($trabajo);
+        $trabajo = Trabajo::findOrFail($id)->first();
         $mantenimiento = Mantenimiento::where('id', $trabajo->mantenimiento_id)->first();
         return view('trabajos.edit', compact('trabajo', 'mantenimiento'));
     }
@@ -161,7 +165,7 @@ class TrabajoController extends Controller
             return redirect()->route('mantenimientos.index')
                     ->with('info', 'Trabajo actualizado');
         } else {
-            return back() ->with('info', 'No se puede encontrar al empleado');
+            return back() ->with('danger', 'Error, no se puede encontrar al empleado');
         }
     }
 

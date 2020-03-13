@@ -73,7 +73,7 @@ class EmpleadoController extends Controller
 
             if ($aaa = Empleado::where('user_id', $user->id)->first()){
                 return redirect()->route('empleados.index')
-                    ->with('info', 'El usuario ya es empleado');
+                    ->with('danger', 'Error, el usuario ya es empleado');
             }else {
                     $empleado = New Empleado();
                     $empleado->user_id = $user->id;
@@ -83,7 +83,7 @@ class EmpleadoController extends Controller
                 }
 
         }else{
-            return back()->with('info', 'El Usuario no existe');
+            return back()->with('danger', 'Error, el Usuario no existe');
         }
 
 

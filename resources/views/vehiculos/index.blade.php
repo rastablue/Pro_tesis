@@ -23,7 +23,7 @@
                                         <th>Marca</th>
                                         <th>Modelo</th>
                                         <th>Color</th>
-                                        <th width="155">&nbsp;</th>
+                                        <th width="160">&nbsp;</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -119,11 +119,12 @@
             <div class="modal-content">
                 <!-- Modal Header -->
                     <div class="modal-header">
+                        <h5><b>Eliminar Vehiculo</b></h5>
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
                 <!-- Modal body -->
                     <div class="modal-body">
-                        <h5 align="center">¿Desea eliminar el vehiculo?</h5>
+                        <h6 align="center">Eliminar este vehiculo tambien eliminara todos los mantenimientos vinculados. <br> ¿Desea Continuar?</h6>
                     </div>
                 <!-- Modal footer -->
                     <div class="modal-footer">
@@ -145,9 +146,10 @@
             // initializing Datatable
                 var table = $("#vehiculos-table").DataTable({
                     serverSide: true,
-                    pageLength: 5,
+                    pageLength: 10,
                     ajax: '{!! route('datatables.vehiculo') !!}',
                     columns: [
+                        //{ data: 'marca', name: 'marca_vehiculos.id' },
                         { data: 'placa', name: 'placa' },
                         { data: 'marca', name: 'marca'   },
                         { data: 'modelo', name: 'modelo'  },

@@ -6,6 +6,9 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <span><h4><b>Lista de Trabajos</b></h4></span>
+                    </div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-bordered" id="trabajos-table">
@@ -58,7 +61,7 @@
             // initializing Datatable
                 var table = $("#trabajos-table").DataTable({
                     serverSide: true,
-                    pageLength: 5,
+                    pageLength: 10,
                     ajax: '{!! route('datatables.trabajos') !!}',
                     columns: [
                         { data: 'nro_ficha', name: 'nro_ficha' },

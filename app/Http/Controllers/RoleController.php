@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Providers\RouteServiceProvider;
 use Caffeinated\Shinobi\Models\Role;
 use Caffeinated\Shinobi\Models\Permission;
+use Vinkla\Hashids\Facades\Hashids;
 
 class RoleController extends Controller
 {
@@ -64,21 +65,21 @@ class RoleController extends Controller
         if ($request->name == '') {
 
             return redirect()->route('roles.index')
-                ->with('info', 'No se ingreso un nombre');
+                ->with('danger', 'Error, no se ingreso un nombre');
 
         } else {
 
             if ($request->slug == '') {
 
                 return redirect()->route('roles.index')
-                    ->with('info', 'No se ingreso un slug');
+                    ->with('danger', 'Error, no se ingreso un slug');
 
             } else {
 
                 if ($request->description == '') {
 
                     return redirect()->route('roles.index')
-                        ->with('info', 'No se ingreso una descripcion');
+                        ->with('danger', 'Error, no se ingreso una descripcion');
 
                 } else {
 
@@ -103,19 +104,13 @@ class RoleController extends Controller
      * @param  \App\role  $role
      * @return \Illuminate\Http\Response
      */
-    public function show(Role $role)
+    public function show($role)
     {
+        $id = Hashids::decode($role);
+        $role = Role::findOrFail($id)->first();
         $permissions = Permission::get();
 
         return view('roles.show', compact('role', 'permissions'));
-    }
-
-    public function search(Request $request)
-    {
-
-        $role = Role::where('name', 'LIKE', "%$request->search%");
-
-        return view('roles.search', compact('role'));
     }
 
     /**
@@ -124,8 +119,10 @@ class RoleController extends Controller
      * @param  \App\role  $role
      * @return \Illuminate\Http\Response
      */
-    public function edit(Role $role)
+    public function edit($role)
     {
+        $id = Hashids::decode($role);
+        $role = Role::findOrFail($id)->first();
         $permissions = Permission::get();
 
         return view('roles.edit', compact('role', 'permissions'));

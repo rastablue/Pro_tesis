@@ -11,11 +11,6 @@ class User extends Authenticatable
 {
     use Notifiable, HasRolesAndPermissions;
 
-    public function clientes()
-    {
-        return $this->hasOne(Cliente::class);
-    }
-
     public function empleados()
     {
         return $this->hasOne(Empleado::class);

@@ -18,7 +18,7 @@
                         @else
                             <h5>No se ha encontrado el archivo!</h5>
                             @can('mantenimientos.edit')
-                                <h5><a href="{{ route('mantenimientos.edit', $mantenimiento) }}">cargar...</a></h5>
+                                <h5><a href="{{ route('mantenimientos.edit', Hashids::encode($mantenimiento->id)) }}">cargar...</a></h5>
                             @endcan
                         @endif
 

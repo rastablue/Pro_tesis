@@ -10,7 +10,7 @@
                     <div class="card-header d-flex justify-content-between align-users-center bg-warning">
                         <span><h4><b>Detalles del Vehiculo: </b><i>{{ $vehiculo->placa }}</i></h4></span>
                         @can('vehiculos.edit')
-                            <a href="{{ route('vehiculos.edit', $vehiculo) }}">
+                            <a href="{{ route('vehiculos.edit', Hashids::encode($vehiculo->id)) }}">
                                 <img class="img-responsive img-rounded float-right" src="{{ asset('images/actualiza.png') }}" title="Actualizar">
                             </a>
                         @endcan
@@ -54,51 +54,46 @@
     </div>
 
 <!-- Tabla del Cliente -->
-    @foreach ($user as $item)
-
-        <div class="container mt-5">
-            <div class="row justify-content-center">
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-header d-flex justify-content-between align-items-center bg-info">
-                            <span><h4><b>Detalles del Cliente:</b><i> {{ $item->name }}    {{ $item->apellido_pater }} </i></h4></span>
-                            @can('users.show')
-                                <a href="{{ route('users.show', $item) }}">
-                                    <img class="img-responsive img-rounded float-left" src="{{ asset('images/ver.png') }}" title="Ver Detalles">
-                                </a>
-                            @endcan
-                        </div>
-                        <div class="card-body">
-
-                            <table class="table">
-                                <thead>
-                                    <tr class="table-secondary">
-                                        <th scope="col"><div class="text-center">Cedula</div></th>
-                                        <th scope="col"><div class="text-center">Nombre</div></th>
-                                        <th scope="col"><div class="text-center">Apellidos</div></th>
-                                        <th scope="col" width="210px"><div class="text-center">Direccion</div></th>
-                                        <th scope="col"><div class="text-center">Telefono</div></th>
-                                        <th scope="col"><div class="text-center">E-mail</div></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th scope="row"><div class="text-center">{{ $item->cedula }}</div></th>
-                                        <td><div class="text-center">{{ $item->name }}</div></td>
-                                        <td><div class="text-center">{{ $item->apellido_pater }}    {{ $item->apellido_mater }}</div></td>
-                                        <td><div class="text-center">{{ $item->direc }}</div></td>
-                                        <td><div class="text-center">{{ $item->tlf }}</div></td>
-                                        <td><div class="text-center">{{ $item->email }}</div></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center bg-info">
+                        <span><h4><b>Detalles del Cliente:</b><i> {{ $vehiculo->clientes->name }}    {{ $vehiculo->clientes->apellido_pater }} </i></h4></span>
+                        @can('users.show')
+                            <a href="{{ route('clientes.show', Hashids::encode($vehiculo->clientes->id)) }}">
+                                <img class="img-responsive img-rounded float-left" src="{{ asset('images/ver.png') }}" title="Ver Detalles">
+                            </a>
+                        @endcan
+                    </div>
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                                <tr class="table-secondary">
+                                    <th scope="col"><div class="text-center">Cedula</div></th>
+                                    <th scope="col"><div class="text-center">Nombre</div></th>
+                                    <th scope="col"><div class="text-center">Apellidos</div></th>
+                                    <th scope="col" width="210px"><div class="text-center">Direccion</div></th>
+                                    <th scope="col"><div class="text-center">Telefono</div></th>
+                                    <th scope="col"><div class="text-center">E-mail</div></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row"><div class="text-center">{{ $vehiculo->clientes->cedula }}</div></th>
+                                    <td><div class="text-center">{{ $vehiculo->clientes->name }}</div></td>
+                                    <td><div class="text-center">{{ $vehiculo->clientes->apellido_pater }}    {{ $vehiculo->clientes->apellido_mater }}</div></td>
+                                    <td><div class="text-center">{{ $vehiculo->clientes->direc }}</div></td>
+                                    <td><div class="text-center">{{ $vehiculo->clientes->tlf }}</div></td>
+                                    <td><div class="text-center">{{ $vehiculo->clientes->email }}</div></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
-
-    @endforeach
+    </div>
 
 <!-- Tabla de Mantenimientos -->
     <div class="container mt-5">
@@ -134,21 +129,21 @@
                                     <td><div class="text-center">{{ $item->estado }}</div></td>
                                     <td>
                                         @can('mantenimientos.show')
-                                            <a href="{{ route('mantenimientos.show', $item) }}">
+                                            <a href="{{ route('mantenimientos.show', Hashids::encode($item->id)) }}">
                                                 <img class="img-responsive img-rounded float-left" src="{{ asset('images/ver.png') }}"  title="Ver Detalles">
                                             </a>
                                         @endcan
                                     </td>
                                     <td>
                                         @can('trabajos.create')
-                                            <a href="{{ route('trabajos.show', $item) }}">
+                                            <a href="{{ route('trabajos.show', Hashids::encode($item->id)) }}">
                                                 <img class="img-responsive img-rounded float-right" src="{{ asset('images/trabajos.png') }}" title="Agregar Trabajo">
                                             </a>
                                         @endcan
                                     </td>
                                     <td>
                                         @can('mantenimientos.edit')
-                                            <a href="{{ route('mantenimientos.edit', $item) }}">
+                                            <a href="{{ route('mantenimientos.edit', Hashids::encode($item->id)) }}">
                                                 <img class="img-responsive img-rounded float-right" src="{{ asset('images/actualizar.png') }}" title="Actualizar">
                                             </a>
                                         @endcan

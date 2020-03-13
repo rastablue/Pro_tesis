@@ -24,7 +24,7 @@
                                         <th>Apellido</th>
                                         <th>Telefono</th>
                                         <th>E-mail</th>
-                                        <th width="170">&nbsp;</th>
+                                        <th width="160">&nbsp;</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -41,7 +41,7 @@
             <div class="modal-content">
                 <!-- Modal Header -->
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Agregar Vehiculos</h5>
+                        <h5 class="modal-title" id="exampleModalLongTitle">Agregar Usuarios</h5>
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
                 <!-- Modal body -->
@@ -218,11 +218,12 @@
             <div class="modal-content">
                 <!-- Modal Header -->
                     <div class="modal-header">
+                        <h5><b>Eliminar Usuario</b></h5>
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
                 <!-- Modal body -->
                     <div class="modal-body">
-                        <h5 align="center">¿Desea eliminar al usuario?</h5>
+                        <h6 align="center">Eliminar este usuario tambien eliminara a todos los empleados vinculados. <br> ¿Desea continuar?</h6>
                     </div>
                 <!-- Modal footer -->
                     <div class="modal-footer">
@@ -244,7 +245,7 @@
             // initializing Datatable
                 var table = $("#users-table").DataTable({
                     serverSide: true,
-                    pageLength: 5,
+                    pageLength: 10,
                     ajax: '{!! route('datatables.users') !!}',
                     columns: [
                         { data: 'cedula', name: 'cedula' },
@@ -384,7 +385,7 @@
                     });
                 });
 
-            // Eliminar vehiculo Ajax request.
+            // Eliminar Ajax request.
                 var deleteID;
                 $('body').on('click', '#getDeleteId', function(){
                     deleteID = $(this).data('id');

@@ -70,7 +70,7 @@
                     </div>
                 <!-- Modal body -->
                     <div class="modal-body">
-                        <h5 align="center">¿Desea eliminar al usuario?</h5>
+                        <h5 align="center">¿Desea eliminar el Role?</h5>
                     </div>
                 <!-- Modal footer -->
                     <div class="modal-footer">
@@ -92,7 +92,7 @@
             // initializing Datatable
                 var table = $("#roles-table").DataTable({
                     serverSide: true,
-                    pageLength: 5,
+                    pageLength: 10,
                     ajax: '{!! route('datatables.roles') !!}',
                     columns: [
                         { data: 'name', name: 'name' },

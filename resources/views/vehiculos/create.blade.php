@@ -68,7 +68,7 @@
                                     <label for="color" class="col-md-4 col-form-label text-md-right">{{ __('Color') }}</label>
 
                                     <div class="col-md-6">
-                                        <input id="color" type="text" class="form-control @error('color') is-invalid @enderror" name="color" value="{{ old('color') }}" required autocomplete="color" autofocus>
+                                        <input id="color" type="text" pattern="[A-Za-z]{1,25}" class="form-control @error('color') is-invalid @enderror" name="color" value="{{ old('color') }}" required autocomplete="color" autofocus>
 
                                         @error('color')
                                             <span class="invalid-feedback" role="alert">
@@ -83,7 +83,7 @@
                                     <label for="kilometraje" class="col-md-4 col-form-label text-md-right">{{ __('Kilometraje') }}</label>
 
                                     <div class="col-md-6">
-                                        <input id="kilometraje" type="text" pattern="[0-9]{0, 6}" class="form-control @error('kilometraje') is-invalid @enderror" name="kilometraje" required autocomplete="kilometraje" autofocus>
+                                        <input id="kilometraje" type="text" pattern="[0-9]{0, 7}" class="form-control @error('kilometraje') is-invalid @enderror" name="kilometraje" required autocomplete="kilometraje" autofocus>
 
                                         @error('kilometraje')
                                             <span class="invalid-feedback" role="alert">

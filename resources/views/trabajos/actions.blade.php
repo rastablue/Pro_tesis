@@ -1,5 +1,5 @@
 @can('trabajos.edit')
-    <a href="{{ route('trabajos.edit', $id) }}" class="btn btn-sm btn-warning">
+    <a href="{{ route('trabajos.edit', Hashids::encode($id)) }}" class="btn btn-sm btn-warning">
         Editar
     </a>
 @endcan

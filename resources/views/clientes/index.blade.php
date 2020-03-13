@@ -24,6 +24,7 @@
                                         <th>Apellido</th>
                                         <th>Telefono</th>
                                         <th>E-mail</th>
+                                        <th width="160px">&nbsp;</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -40,7 +41,7 @@
             <div class="modal-content">
                 <!-- Modal Header -->
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Agregar Cliente</h5>
+                        <h5 class="modal-title" id="exampleModalLongTitle">Agregar Clientes</h5>
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
                 <!-- Modal body -->
@@ -52,7 +53,104 @@
                                     <label for="cedula" class="col-md-3 col-form-label">Cedula</label>
 
                                     <div class="col-md-9">
-                                        <input id="cedula" type="text" pattern="[0-9]{10}" class="form-control" name="cedula" required autocomplete="cedula" autofocus>
+                                        <input id="cedula" type="text" pattern="[0-9]{10}" class="form-control @error('cedula') is-invalid @enderror" name="cedula" value="{{ old('cedula') }}" required autocomplete="cedula" autofocus>
+
+                                        @error('cedula')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                            {{-- Nombre --}}
+                                <div class="form-group row">
+                                    <label for="name" class="col-md-3 col-form-label">Nombre</label>
+
+                                    <div class="col-md-9">
+                                        <input id="name" type="text" pattern="[A-Za-z]{1,25}" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+
+                                        @error('name')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                            {{-- Apellido Paterno --}}
+                                <div class="form-group row">
+                                    <label for="apellido_pater" class="col-md-3 col-form-label">Apellido Paterno</label>
+
+                                    <div class="col-md-9">
+                                        <input id="apellido_pater" type="text" pattern="[A-Za-z ]{1,25}" class="form-control @error('apellido_pater') is-invalid @enderror" name="apellido_pater" value="{{ old('apellido_pater') }}" required autocomplete="apellido_pater" autofocus>
+
+                                        @error('apellido_pater')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                            {{-- Apellido Materno --}}
+                                <div class="form-group row">
+
+                                    <label for="apellido_mater" class="col-md-3 col-form-label">Apellido Materno</label>
+
+                                    <div class="col-md-9">
+                                        <input id="apellido_mater" type="text" pattern="[A-Za-z]{1,25}" class="form-control @error('apellido_mater') is-invalid @enderror" name="apellido_mater" value="{{ old('apellido_mater') }}" required autocomplete="apellido_mater" autofocus>
+
+                                        @error('apellido_mater')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                            {{-- Direccion --}}
+                                <div class="form-group row">
+                                    <label for="direc" class="col-md-3 col-form-label">Direccion</label>
+
+                                    <div class="col-md-9">
+                                        <input id="direc" type="text" class="form-control @error('direc') is-invalid @enderror" name="direc" value="{{ old('direc') }}" required autocomplete="direc" autofocus>
+
+                                        @error('direc')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                            {{-- Telefono --}}
+                                <div class="form-group row">
+                                    <label for="tlf" class="col-md-3 col-form-label">Telefono</label>
+
+                                    <div class="col-md-9">
+                                        <input id="tlf" type="text" pattern="[0-9]{7,10}" class="form-control @error('tlf') is-invalid @enderror" name="tlf" value="{{ old('tlf') }}" required autocomplete="tlf" autofocus>
+
+                                        @error('tlf')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                            {{-- Email --}}
+                                <div class="form-group row">
+                                    <label for="email" class="col-md-3 col-form-label">E-Mail Address</label>
+
+                                    <div class="col-md-9">
+                                        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+
+                                        @error('email')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                     </div>
                                 </div>
                         </form>
@@ -61,6 +159,28 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                         <button type="submit" form="formCliente" id="submitBtn" class="btn btn-primary">Agregar</button>
+                    </div>
+            </div>
+        </div>
+    </div>
+
+<!-- Delete Product Modal -->
+    <div class="modal fade" id="DeleteProductModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h5><b>Eliminar Cliente</b></h5>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                <!-- Modal body -->
+                    <div class="modal-body">
+                        <h6 align="center">Eliminar a este cliente tambien eliminara los vehiculos y los mantenimientos relacionados al mismo. <br> ¿Desea continuar?</h6>
+                    </div>
+                <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-danger" id="SubmitDeleteProductForm">Eliminar</button>
                     </div>
             </div>
         </div>
@@ -77,16 +197,16 @@
         $(document).ready(function(){
             // initializing Datatable
                 var table = $("#clientes-table").DataTable({
-                    searching: false,
                     serverSide: true,
-                    pageLength: -1,
+                    pageLength: 10,
                     ajax: '{!! route('datatables.clientes') !!}',
                     columns: [
-                        { data: 'clientes_ced', name: 'clientes_ced' },
-                        { data: 'clientes_name', name: 'clientes_name' },
-                        { data: 'clientes_ape', name: 'clientes_ape' },
-                        { data: 'clientes_tlf', name: 'clientes_tlf' },
-                        { data: 'clientes_email', name: 'clientes_email' }
+                        { data: 'cedula', name: 'cedula' },
+                        { data: 'name', name: 'name' },
+                        { data: 'apellido_pater', name: 'apellido_pater' },
+                        { data: 'tlf', name: 'tlf'  },
+                        { data: 'email', name: 'email'  },
+                        { data: 'btn', name: 'btn',orderable:false,serachable:false,sClass:'text-center' }
                     ],
                     "language":{
                         "info": "_TOTAL_ registros",
@@ -153,6 +273,95 @@
             // Resetear modal crear una vez que se cierra
                 $('#creaClienteModal').on('hidden.bs.modal', function() {
                     $('#formCliente')[0].reset();
+                });
+
+            // Get single product in EditModel
+                var id;
+                    $(document).on('click', '#getEditProductData', function(e){
+                        e.preventDefault();
+                        id = $(this).data('id');
+                        $.ajax({
+                            url: "vehiculos/"+id+"/edit",
+                            method: 'GET',
+                            data: {
+                                id: id,
+                            },
+                            success: function(result) {
+                                console.log(result);
+                                $('#editaVehiculoBody').html(result.html);
+                                $('#myModal').show();
+                            }
+                        });
+                        $('.modal-body').load('content.html',function(){
+                            $("#alertModal").addClass("display-none").removeClass("alert-danger")
+                            $("#inputId").val(null)
+                            $('#myModal').modal({show:true});
+                        });
+                    });
+
+            // Update product Ajax request.
+                $('#SubmitEditVehiculoForm').click(function(e) {
+                    e.preventDefault();
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    $.ajax({
+                        url: "vehiculos/"+id,
+                        method: 'PUT',
+                        data: {
+                            placa: $('#placa').val(),
+                            marca: ('#marca').val(),
+                            modelo: $('#modelo').val(),
+                            color: $('#color').val(),
+                            observacion: $('#observa').val(),
+                            user_id: $('#user_id').val(),
+                        },
+                        success: function(result) {
+                            if(result.errors) {
+                                $('.alert-danger').html('');
+                                $.each(result.errors, function(key, value) {
+                                    $('.alert-danger').show();
+                                    $('.alert-danger').append('<strong><li>'+value+'</li></strong>');
+                                });
+                            } else {
+                                $('.alert-danger').hide();
+                                $('.alert-success').show();
+                                $('.datatable').DataTable().ajax.reload();
+                                setInterval(function(){
+                                    $('.alert-success').hide();
+                                    $('#EditProductModal').hide();
+                                }, 2000);
+                            }
+                        }
+                    });
+                });
+
+            // Eliminar Ajax request.
+                var deleteID;
+                $('body').on('click', '#getDeleteId', function(){
+                    deleteID = $(this).data('id');
+                })
+                $('#SubmitDeleteProductForm').click(function(e) {
+                    e.preventDefault();
+                    $("#alertModal").addClass("display-none").removeClass("alert-danger")
+                    $("#inputId").val(null)
+                    var id = deleteID;
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    $.ajax({
+                        url: "clientes/"+id,
+                        method: 'DELETE',
+                        success: function(result) {
+                            setImmediate(function(){
+                                $('#clientes-table').DataTable().ajax.reload();
+                            });
+                        }
+                    });
                 });
         });
 

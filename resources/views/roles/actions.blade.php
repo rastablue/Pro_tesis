@@ -1,10 +1,10 @@
 @can('roles.show')
-    <a href="{{ route('roles.show', $id) }}" class="btn btn-sm btn-info">
+    <a href="{{ route('roles.show', Hashids::encode($id)) }}" class="btn btn-sm btn-info">
         Ver
     </a>
 @endcan
 @can('roles.edit')
-    <a href="{{ route('roles.edit', $id) }}" class="btn btn-sm btn-warning">
+    <a href="{{ route('roles.edit', Hashids::encode($id)) }}" class="btn btn-sm btn-warning">
         Editar
     </a>
 @endcan

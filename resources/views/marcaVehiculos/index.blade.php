@@ -36,7 +36,7 @@
                                 <td><div class="text-center">{{ $item->marca }}</div></td>
                                 <td>
                                     @can('marcas.edit')
-                                        <a href="{{ route('marcas.edit', $item) }}">
+                                        <a href="{{ route('marcas.edit', Hashids::encode($item->id)) }}">
                                             <img class="img-responsive img-rounded float-right" src="{{ asset('images/actualizar.png') }}" title="Actualizar">
                                         </a>
                                     @endcan
