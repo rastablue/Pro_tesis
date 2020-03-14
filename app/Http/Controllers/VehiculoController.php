@@ -51,9 +51,11 @@ class VehiculoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($vehiculo)
     {
-        return view('vehiculos.create', compact('marca'));
+        $id = Hashids::decode($vehiculo);
+        $cliente = Cliente::findOrFail($id)->first();
+        return view('vehiculos.create', compact('cliente'));
     }
 
     /**
@@ -70,28 +72,79 @@ class VehiculoController extends Controller
             $id_clie = Cliente::where('cedula', $ced)->first()->id;
 
 
-            if ($marca = MarcaVehiculo::where('id', $request->marca)->first()) {
+            if ($placa = Vehiculo::where('placa', $request->placa)->first()){
 
-                $vehiculo = new Vehiculo();
+                return back()->with('danger', 'Error, la placa ya existe');
 
-                $vehiculo->placa = $request->placa;
-                $vehiculo->marca_vehiculo_id = $request->marca;
-                $vehiculo->modelo = $request->modelo;
-                $vehiculo->color = $request->color;
-                $vehiculo->kilometraje = $request->kilometraje;
-                $vehiculo->observacion = $request->observa;
-                $vehiculo->cliente_id = $id_clie;
-                $vehiculo->save();
-
-                return redirect()->route('vehiculos.index')
-                        ->with('info', 'Vehiculo agregado con exito');
             } else {
-                return redirect()->route('vehiculos.index')
-                        ->with('danger', 'Error, la Marca no existe');
+
+                if ($marca = MarcaVehiculo::where('id', $request->marca)->first()) {
+
+                    $vehiculo = new Vehiculo();
+
+                    $vehiculo->placa = $request->placa;
+                    $vehiculo->marca_vehiculo_id = $request->marca;
+                    $vehiculo->modelo = $request->modelo;
+                    $vehiculo->color = $request->color;
+                    $vehiculo->kilometraje = $request->kilometraje;
+                    $vehiculo->observacion = $request->observa;
+                    $vehiculo->cliente_id = $id_clie;
+                    $vehiculo->save();
+
+                    return redirect()->route('vehiculos.index')
+                            ->with('info', 'Vehiculo agregado con exito');
+
+                } else {
+
+                    return back()->with('danger', 'Error, la Marca no existe');
+
+                }
+
             }
 
         }else{
-            return redirect()->route('vehiculos.index')
+            return back()
+                    ->with('danger', 'Error, el Cliente no existe');
+        }
+
+    }
+
+    public function storeDirect(Request $request)
+    {
+        $ced = $request->user_id;
+
+        if($id_clie = Cliente::where('cedula', $ced)->first()){
+            $id_clie = Cliente::where('cedula', $ced)->first()->id;
+
+            if ($placa = Vehiculo::where('placa', $request->placa)->first()){
+
+                return back()->with('danger', 'Error, la placa ya existe');
+
+            } else {
+
+                if ($marca = MarcaVehiculo::where('id', $request->marca)->first()) {
+
+                    $vehiculo = new Vehiculo();
+
+                    $vehiculo->placa = $request->placa;
+                    $vehiculo->marca_vehiculo_id = $request->marca;
+                    $vehiculo->modelo = $request->modelo;
+                    $vehiculo->color = $request->color;
+                    $vehiculo->kilometraje = $request->kilometraje;
+                    $vehiculo->observacion = $request->observa;
+                    $vehiculo->cliente_id = $id_clie;
+                    $vehiculo->save();
+
+                    return redirect()->route('clientes.show', Hashids::encode($id_clie))
+                            ->with('info', 'Vehiculo agregado con exito');
+                } else {
+                    return back()
+                            ->with('danger', 'Error, la Marca no existe');
+                }
+            }
+
+        }else{
+            return back()
                 ->with('danger', 'Error, el Cliente no existe');
         }
 

@@ -56,6 +56,11 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center bg-warning">
                         <span><h4><b>Lista de Vehiculos</b></h4></span>
+                        @can('vehiculos.create')
+                            <a href="{{ route('vehiculos.create', Hashids::encode($cliente->id)) }}">
+                                <img class="img-responsive img-rounded float-left" src="{{ asset('images/mas.png') }}" title="Agregar Vehiculo">
+                            </a>
+                        @endcan
                     </div>
 
                     <div id="global" class="card-body">
@@ -67,7 +72,6 @@
                                     <th scope="col"><div class="text-center">Marca</div></th>
                                     <th scope="col" width="300px"><div class="text-center">Modelo</div></th>
                                     <th scope="col"><div class="text-center">Color</div></th>
-                                    <th width="50px"></th>
                                     <th width="50px"></th>
                                     <th width="50px"></th>
                                 </tr>
@@ -94,14 +98,14 @@
                                                 </a>
                                             @endcan
                                         </td>
-                                        <td>
+                                        {{--<td>
                                             @can('vehiculos.destroy')
                                                 {!! Form::open(['route' => ['vehiculos.destroy', $item->id],
                                                 'method' => 'DELETE']) !!}
                                                     <input type=image src="{{ asset('images/basura.png') }}" title="Eliminar">
                                                 {!! Form::close() !!}
                                             @endcan
-                                        </td>
+                                        </td>--}}
                                     </tr>
                                 @endforeach
                             </tbody>

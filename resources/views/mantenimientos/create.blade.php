@@ -14,7 +14,7 @@
                     </div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('mantenimientos.store') }}" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('mantenimientos.direct') }}" enctype="multipart/form-data">
                             @csrf
                             {{-- Ficha --}}
                                 <div class="form-group row">
@@ -37,7 +37,7 @@
                                     <label for="placa" class="col-md-4 col-form-label text-md-right">{{ __('Placa') }}</label>
 
                                     <div class="col-md-6">
-                                        <input id="placa" type="text" class="form-control @error('placa') is-invalid @enderror" name="placa" value="{{ old('placa') }}" required autocomplete="placa" autofocus>
+                                        <input type="text" class="form-control @error('placa') is-invalid @enderror" disabled value="{{ $vehiculo->placa }}" required autocomplete="placa" autofocus>
 
                                         @error('placa')
                                             <span class="invalid-feedback" role="alert">
@@ -47,14 +47,15 @@
                                     </div>
                                 </div>
 
-                            {{-- Kilometraje --}}
+                            {{-- Modelo del Vehiculo --}}
                                 <div class="form-group row">
-                                    <label for="kilometraje" class="col-md-4 col-form-label text-md-right">{{ __('Kilometraje') }}</label>
+
+                                    <label for="placa" class="col-md-4 col-form-label text-md-right">{{ __('Modelo Del Vehiculo') }}</label>
 
                                     <div class="col-md-6">
-                                        <input id="kilometraje" type="text" pattern="[0-9]{2,10}" class="form-control @error('kilometraje') is-invalid @enderror" name="kilometraje" value="{{ old('kilometraje') }}" required autocomplete="kilometraje" autofocus>
+                                        <input type="text" class="form-control @error('placa') is-invalid @enderror" disabled value="{{ $vehiculo->marcas->marca }} || {{ $vehiculo->modelo }}" required autocomplete="placa" autofocus>
 
-                                        @error('kilometraje')
+                                        @error('placa')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
@@ -100,6 +101,9 @@
                                         <input id="file" type="file" name="file">
                                     </div>
                                 </div>
+
+                            {{-- ID Del Mantenimiento --}}
+                                <input id="placa" type="hidden" name="placa" value="{{ $vehiculo->placa }}">
 
                             {{-- btn --}}
                                 <div class="form-group row mb-0">

@@ -14,7 +14,7 @@
                     </div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('vehiculos.store') }}">
+                        <form method="POST" action="{{ route('vehiculos.direct') }}">
                             @csrf
                             {{-- Placa --}}
                                 <div class="form-group row">
@@ -68,7 +68,7 @@
                                     <label for="color" class="col-md-4 col-form-label text-md-right">{{ __('Color') }}</label>
 
                                     <div class="col-md-6">
-                                        <input id="color" type="text" pattern="[A-Za-z]{1,25}" class="form-control @error('color') is-invalid @enderror" name="color" value="{{ old('color') }}" required autocomplete="color" autofocus>
+                                        <input id="color" type="text" pattern="[A-Za-z ]{1,25}" class="form-control @error('color') is-invalid @enderror" name="color" value="{{ old('color') }}" required autocomplete="color" autofocus>
 
                                         @error('color')
                                             <span class="invalid-feedback" role="alert">
@@ -110,10 +110,10 @@
 
                             {{-- Cedula del cliente --}}
                                 <div class="form-group row">
-                                    <label for="user_id" class="col-md-4 col-form-label text-md-right">{{ __('Cedula del Cliente') }}</label>
+                                    <label for="user_id" class="col-md-4 col-form-label text-md-right">{{ __('Cliente') }}</label>
 
                                     <div class="col-md-6">
-                                        <input id="user_id" type="text" pattern="[0-9]{10}" class="form-control @error('user_id') is-invalid @enderror" name="user_id" value="{{ old('user_id') }}" required autocomplete="user_id" autofocus>
+                                        <input type="text" pattern="[0-9]{10}" class="form-control @error('user_id') is-invalid @enderror" disabled value="{{ $cliente->name }}  {{ $cliente->apellido_pater }}" required autocomplete="user_id" autofocus>
 
                                         @error('user_id')
                                             <span class="invalid-feedback" role="alert">
@@ -123,7 +123,8 @@
                                     </div>
                                 </div>
 
-
+                            {{-- ID Del Cliente --}}
+                                <input id="user_id" type="hidden" name="user_id" value="{{ $cliente->cedula }}">
 
                             {{-- btn --}}
                                 <div class="form-group row mb-0">

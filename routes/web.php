@@ -145,13 +145,16 @@ Route::middleware(['auth'])->group(function(){
         Route::post('mantenimientos/store', 'MantenimientoController@store')->name('mantenimientos.store')
                     ->middleware('can:mantenimientos.create');
 
+        Route::post('mantenimientos/store/direct', 'MantenimientoController@storeDirect')->name('mantenimientos.direct')
+                    ->middleware('can:mantenimientos.create');
+
         Route::get('mantenimientos', 'MantenimientoController@index')->name('mantenimientos.index')
                     ->middleware('can:mantenimientos.index');
 
         Route::get('get-mantenimientos', 'MantenimientoController@mantenimientoData')->name('datatables.mantenimientos')
                     ->middleware('can:mantenimientos.index');
 
-        Route::get('mantenimientos/create', 'MantenimientoController@create')->name('mantenimientos.create')
+        Route::get('mantenimientos/create/{mantenimiento}', 'MantenimientoController@create')->name('mantenimientos.create')
                     ->middleware('can:mantenimientos.create');
 
         Route::put('mantenimientos/{mantenimiento}', 'MantenimientoController@update')->name('mantenimientos.update')
@@ -174,13 +177,16 @@ Route::middleware(['auth'])->group(function(){
         Route::post('vehiculos/store', 'VehiculoController@store')->name('vehiculos.store')
                     ->middleware('can:vehiculos.create');
 
+        Route::post('vehiculos/store/direct', 'VehiculoController@storeDirect')->name('vehiculos.direct')
+                    ->middleware('can:vehiculos.create');
+
         Route::get('vehiculos', 'VehiculoController@index')->name('vehiculos.index')
                     ->middleware('can:vehiculos.index');
 
         Route::get('get-vehiculos', 'VehiculoController@vehiculoData')->name('datatables.vehiculo')
                     ->middleware('can:vehiculos.index');
 
-        Route::get('vehiculos/create', 'VehiculoController@create')->name('vehiculos.create')
+        Route::get('vehiculos/create/{vehiculo}', 'VehiculoController@create')->name('vehiculos.create')
                     ->middleware('can:vehiculos.create');
 
         Route::put('vehiculos/{vehiculo}', 'VehiculoController@update')->name('vehiculos.update')

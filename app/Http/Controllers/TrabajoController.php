@@ -31,13 +31,11 @@ class TrabajoController extends Controller
 
         return Datatables()
                 ->eloquent(Trabajo::query())
-                /*->addColumn('btn', function($vehiculos){
-                    return '<button type="button" class="btn btn-warning btn-sm" id="getEditProductData" data-id="'.$vehiculos->id.'">Edit</button>
-                    <button type="button" data-id="'.$vehiculos->id.'" data-toggle="modal" data-target="#DeleteProductModal" class="btn btn-danger btn-sm" id="getDeleteId">Delete</button>';
-
-                })*/
                 ->addColumn('nro_ficha', function($consultas){
                     return $consultas->mantenimientos->nro_ficha;
+                })
+                ->addColumn('placa', function($consultas){
+                    return $consultas->mantenimientos->vehiculos->placa;
                 })
                 ->addColumn('empleados', function($consultas){
                     return $consultas->empleados->users->name;

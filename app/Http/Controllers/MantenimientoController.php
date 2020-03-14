@@ -30,14 +30,13 @@ class MantenimientoController extends Controller
 
     public function mantenimientoData()
     {
+        $placa = Mantenimiento::all();
 
         return Datatables()
                 ->eloquent(Mantenimiento::query())
-                /*->addColumn('btn', function($vehiculos){
-                    return '<button type="button" class="btn btn-warning btn-sm" id="getEditProductData" data-id="'.$vehiculos->id.'">Edit</button>
-                    <button type="button" data-id="'.$vehiculos->id.'" data-toggle="modal" data-target="#DeleteProductModal" class="btn btn-danger btn-sm" id="getDeleteId">Delete</button>';
-
-                })*/
+                ->addColumn('placa', function($placa){
+                    return $placa->vehiculos->placa;
+                })
                 ->addColumn('btn', 'mantenimientos.actions')
                 ->rawColumns(['btn'])
                 ->make(true);
@@ -48,9 +47,11 @@ class MantenimientoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($mantenimiento)
     {
-        return view('mantenimientos.create');
+        $id = Hashids::decode($mantenimiento);
+        $vehiculo = Vehiculo::findOrFail($id)->first();
+        return view('mantenimientos.create', compact('vehiculo'));
     }
 
     /**
@@ -89,6 +90,43 @@ class MantenimientoController extends Controller
                 }*/
 
                 return redirect()->route('mantenimientos.index')
+                        ->with('info', 'Mantenimiento agregado');
+            } else {
+                return back() ->with('danger', 'Error, el Vehiculo no existe');
+            }
+        }
+    }
+
+    public function storeDirect(Request $request)
+    {
+        $date = Carbon::now();
+
+        $vehi_id = Vehiculo::where('placa', $request->placa)->first();
+        $nFicha = $request->ficha;
+
+        if ($nro_ficha = Mantenimiento::where('nro_ficha', $nFicha)->first()) {
+            return back() ->with('danger', 'Error, la Ficha ya fue ingresada');
+        } else {
+            if ($vehi_id) {
+                $mantenimiento = new Mantenimiento();
+                $mantenimiento->nro_ficha = $request->ficha;
+                $mantenimiento->fecha_ingreso = $date;
+                $mantenimiento->observacion = $request->observacion;
+                $mantenimiento->vehiculo_id = $vehi_id->id;
+                $mantenimiento->estado = 'activo';
+                $mantenimiento->diagnostico = $request->diagnostico;
+
+
+                if ($request->hasFile('file')) {
+                    $image = $request->file->store('public');
+                    $mantenimiento->path = $image;
+                }
+                 $mantenimiento->save();
+                /*if($request->hasFile('ficha')){
+                    $path = Storage::disk('public')->put('imagesLoads', $request->file('ficha'));
+                }*/
+
+                return redirect()->route('vehiculos.show', Hashids::encode($vehi_id->id))
                         ->with('info', 'Mantenimiento agregado');
             } else {
                 return back() ->with('danger', 'Error, el Vehiculo no existe');

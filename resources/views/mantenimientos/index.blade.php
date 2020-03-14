@@ -19,11 +19,12 @@
                             <table class="table table-bordered" id="mantenimientos-table">
                                 <thead>
                                     <tr>
-                                        <th width="95px">Nro. Ficha</th>
+                                        <th width="70px">Nro. Ficha</th>
+                                        <th width="70px">Placa</th>
                                         <th>Fecha de Ingreso</th>
                                         <th>Fecha de Egreso</th>
                                         <th>Estado</th>
-                                        <th>Valor Total</th>
+                                        <th width="70px">Valor Total</th>
                                         <th width="170">&nbsp;</th>
                                     </tr>
                                 </thead>
@@ -138,6 +139,7 @@
                     ajax: '{!! route('datatables.mantenimientos') !!}',
                     columns: [
                         { data: 'nro_ficha', name: 'nro_ficha' },
+                        { data: 'placa', name: 'placa' },
                         { data: 'fecha_ingreso', name: 'fecha_ingreso' },
                         { data: 'fecha_egreso', name: 'fecha_egreso' },
                         { data: 'estado', name: 'estado'  },

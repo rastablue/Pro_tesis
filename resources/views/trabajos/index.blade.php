@@ -14,7 +14,8 @@
                             <table class="table table-bordered" id="trabajos-table">
                                 <thead>
                                     <tr>
-                                        <th width="95px">Nro. Ficha</th>
+                                        <th width="70px">Nro. Ficha</th>
+                                        <th width="70px">Placa</th>
                                         <th>Mano de Obra</th>
                                         <th>Tipo</th>
                                         <th>Encargado</th>
@@ -65,6 +66,7 @@
                     ajax: '{!! route('datatables.trabajos') !!}',
                     columns: [
                         { data: 'nro_ficha', name: 'nro_ficha' },
+                        { data: 'placa', name: 'placa' },
                         { data: 'manobra', name: 'manobra' },
                         { data: 'tipo', name: 'tipo' },
                         { data: 'empleados', name: 'empleados'  },

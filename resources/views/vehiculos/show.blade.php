@@ -102,6 +102,11 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center bg-secondary">
                         <span><h4><b>Lista de Mantenimientos</b></h4></span>
+                        @can('mantenimientos.create')
+                            <a href="{{ route('mantenimientos.create', Hashids::encode($vehiculo->id)) }}">
+                                <img class="img-responsive img-rounded float-left" src="{{ asset('images/mas.png') }}" title="Agregar Mantenimiento">
+                            </a>
+                        @endcan
                     </div>
 
                     <div id="global" class="card-body">
@@ -148,14 +153,14 @@
                                             </a>
                                         @endcan
                                     </td>
-                                    <td>
+                                    {{--<td>
                                         @can('mantenimientos.destroy')
                                             {!! Form::open(['route' => ['mantenimientos.destroy', $item->id],
                                             'method' => 'DELETE']) !!}
                                                 <input type=image src="{{ asset('images/basura.png') }}" title="Eliminar">
                                             {!! Form::close() !!}
                                         @endcan
-                                    </td>
+                                    </td>--}}
                                 </tr>
                                 @endforeach
                             </tbody>
