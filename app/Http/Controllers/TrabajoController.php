@@ -8,9 +8,13 @@ use App\Mantenimiento;
 use App\User;
 use App\Empleado;
 use Illuminate\Http\Request;
+use App\Http\Requests\CreateTrabajo;
+use App\Http\Requests\EditTrabajo;
+use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Vinkla\Hashids\Facades\Hashids;
+use Barryvdh\DomPDF\Facade as PDF;
 
 class TrabajoController extends Controller
 {
@@ -35,14 +39,35 @@ class TrabajoController extends Controller
                     return $consultas->mantenimientos->nro_ficha;
                 })
                 ->addColumn('placa', function($consultas){
-                    return $consultas->mantenimientos->vehiculos->placa;
+                    if ($consultas->mantenimientos->vehiculo_id) {
+                        return $consultas->mantenimientos->vehiculos->placa;
+                    } else {
+                        return 'N/A';
+                    }
                 })
                 ->addColumn('empleados', function($consultas){
-                    return $consultas->empleados->users->name;
+                    if ($consultas->user_id) {
+                        return $consultas->users->name.' '.$consultas->users->apellido_pater;
+                    } else {
+                        return 'N/A';
+                    }
                 })
                 ->addColumn('btn', 'trabajos.actions')
                 ->rawColumns(['btn'])
                 ->make(true);
+    }
+
+    public function reportes()
+    {
+        /**
+         * toma en cuenta que para ver los mismos
+         * datos debemos hacer la misma consulta
+        **/
+        $trabajo = Trabajo::all();
+
+        $pdf = PDF::loadView('pdfs.reporte-trabajos', compact('trabajo'));
+
+        return $pdf->download('reporte-trabajos.pdf');
     }
 
     /**
@@ -61,30 +86,50 @@ class TrabajoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateTrabajo $request)
     {
+        $user = User::where('cedula', $request->cedula)->first();
+        $mantenimiento = Mantenimiento::findOrFail($request->id_mantenimiento);
 
-        if ($id_users = User::where('cedula', $request->cedula)->first()) {
+        if ($mantenimiento->estado == 'Finalizado') {
 
-            $id_users = User::where('cedula', $request->cedula)->first()->id;
-            $id_empleado = Empleado::where('user_id', $id_users)->first()->id;
+            return redirect()->route('mantenimientos.show', Hashids::encode($mantenimiento->id))
+                    ->with('danger', 'Este mantenimiento ya ha finalizado, no es posible agregar mas trabajos');
+
+        } else {
+            if ($request->costo_de_repuestos < 0) {
+                $request->costo_de_repuestos = $request->costo_de_repuestos * -1;
+            }
+
+            if ($request->costo_mano_de_obra < 0) {
+                $request->costo_mano_de_obra = $request->costo_mano_de_obra * -1;
+            }
 
             $trabajo = new Trabajo();
-            $trabajo->manobra = $request->manobra;
+            $trabajo->fake_id = Str::random(5);
+            $trabajo->manobra = $request->mano_de_obra;
             $trabajo->repuestos = $request->repuestos;
-            $trabajo->costo_repuestos = $request->costo_repuestos;
-            $trabajo->costo_manobra = $request->costo_manobra;
-            $trabajo->estado = 'activo';
+            $trabajo->costo_repuestos = $request->costo_de_repuestos;
+            $trabajo->costo_manobra = $request->costo_mano_de_obra;
+            $trabajo->estado = $request->estado;
             $trabajo->tipo = $request->tipo;
-            $trabajo->mantenimiento_id = $request->id_mante;
-            $trabajo->empleado_id = $id_empleado;
+            $trabajo->mantenimiento_id = $request->id_mantenimiento;
+            $trabajo->user_id = $user->id;
 
             $trabajo->save();
 
-            return redirect()->route('mantenimientos.index')
-                    ->with('info', 'Trabajo agregado');
-        } else {
-            return back() ->with('danger', 'Error, no se puede encontrar al empleado');
+            $valorTotal = $request->costo_de_repuestos + $request->costo_mano_de_obra + $mantenimiento->valor_total;
+
+            $mantenimiento->valor_total = $valorTotal;
+
+            if($request->estado == 'Activo'){
+                $mantenimiento->estado = 'Activo';
+            }
+
+            $mantenimiento->save();
+
+            return redirect()->route('mantenimientos.show', Hashids::encode($request->id_mantenimiento))
+                    ->with('info', 'Trabajo creado');
         }
 
     }
@@ -96,9 +141,9 @@ class TrabajoController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function show($trabajo)
+    public function show($mantenimiento)
     {
-        $id = Hashids::decode($trabajo);
+        $id = Hashids::decode($mantenimiento);
         $mantenimiento = Mantenimiento::findOrFail($id)->first();
         return view('trabajos.create', compact('mantenimiento'));
     }
@@ -131,7 +176,12 @@ class TrabajoController extends Controller
         $id = Hashids::decode($trabajo);
         $trabajo = Trabajo::findOrFail($id)->first();
         $mantenimiento = Mantenimiento::where('id', $trabajo->mantenimiento_id)->first();
-        return view('trabajos.edit', compact('trabajo', 'mantenimiento'));
+
+        if ($trabajo->estado == 'Finalizado') {
+            return back()->with('danger', 'Error, el trabajo ya no puede actualizarse');
+        } else {
+            return view('trabajos.edit', compact('trabajo', 'mantenimiento'));
+        }
     }
 
     /**
@@ -141,29 +191,80 @@ class TrabajoController extends Controller
      * @param  \App\Trabajo  $trabajo
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $trabajo)
+    public function update(EditTrabajo $request, $trabajo)
     {
-        if ($id_users = User::where('cedula', $request->cedula)->first()) {
-            $id_users = User::where('cedula', $request->cedula)->first()->id;
-            $id_empleado = Empleado::where('user_id', $id_users)->first()->id;
+        $trabajos = Trabajo::findOrFail($trabajo);
+        $mantenimiento = Mantenimiento::findOrFail($request->id_mante);
+        $trabajos = Trabajo::findOrFail($trabajo);
+        $id_users = User::where('cedula', $request->cedula)->first()->id;
 
-            $trabajos = Trabajo::findOrFail($trabajo);
+        if ($mantenimiento->estado != 'Finalizado') {
+            //Revisa si los valores de precios ingresados son negativos, en caso de serlo se convierten a positivo
+                if ($request->costo_de_repuestos < 0) {
+                    $request->costo_de_repuestos = $request->costo_de_repuestos * -1;
+                }
 
-            $trabajos->manobra = $request->manobra;
-            $trabajos->repuestos = $request->repuestos;
-            $trabajos->costo_repuestos = $request->costo_repuestos;
-            $trabajos->costo_manobra = $request->costo_manobra;
-            $trabajos->estado = $request->estado;
-            $trabajos->tipo = $request->tipo;
-            $trabajos->mantenimiento_id = $request->id_mante;
-            $trabajos->empleado_id = $id_empleado;
+                if ($request->costo_mano_de_obra < 0) {
+                    $request->costo_mano_de_obra = $request->costo_mano_de_obra * -1;
+                }
 
-            $trabajos->save();
+            //Resta los antiuguos valores del trabajo de su respectivo mantenimiento
+                $valorResta = $mantenimiento->valor_total - $trabajos->costo_repuestos - $trabajos->costo_manobra;
+                $mantenimiento->valor_total = $valorResta;
+                $mantenimiento->save();
 
-            return redirect()->route('mantenimientos.index')
+            //Actualiza los datos del trabajo
+                $trabajos->manobra = $request->mano_de_obra;
+                $trabajos->repuestos = $request->repuestos;
+                $trabajos->costo_repuestos = $request->costo_de_repuestos;
+                $trabajos->costo_manobra = $request->costo_mano_de_obra;
+                $trabajos->estado = $request->estado;
+                $trabajos->tipo = $request->tipo;
+                $trabajos->mantenimiento_id = $mantenimiento->id;
+                $trabajos->user_id = $id_users;
+
+                $trabajos->save();
+
+            //Actualiza el valor total del mantenimiento respectivo al trabajo
+                $valorTotal = $request->costo_de_repuestos + $request->costo_mano_de_obra + $mantenimiento->valor_total;
+
+                $mantenimiento->valor_total = $valorTotal;
+                $mantenimiento->save();
+
+                return redirect()->route('mantenimientos.show', Hashids::encode($request->id_mante))
                     ->with('info', 'Trabajo actualizado');
+
         } else {
-            return back() ->with('danger', 'Error, no se puede encontrar al empleado');
+            return redirect()->route('mantenimientos.show', Hashids::encode($mantenimiento->id))
+                    ->with('danger', 'Este mantenimiento ha finalizado, por lo que no es posible actualizar su informacion');
+        }
+
+    }
+
+    public function finalizar(request $request, $id)
+    {
+        $trabajo = Trabajo::findOrFail($id);
+
+        if ($trabajo->estado != 'Finalizado') {
+
+            $trabajo->estado = 'Finalizado';
+
+            $trabajo->save();
+
+        }
+    }
+
+    public function finalizarFrom($id)
+    {
+        $trabajo = Trabajo::findOrFail($id);
+
+        if ($trabajo->estado != 'Finalizado') {
+
+            $trabajo->estado = 'Finalizado';
+
+            $trabajo->save();
+
+            return back()->with('info', 'Trabajo finalizado adecuadamente');
         }
     }
 
@@ -173,8 +274,16 @@ class TrabajoController extends Controller
      * @param  \App\Trabajo  $trabajo
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Trabajo $trabajo)
+    public function destroy($trabajo)
     {
-        $trabajo->delete();
+        $id = Trabajo::findOrFail($trabajo);
+
+        $mantenimiento = Mantenimiento::findOrFail($id->mantenimientos->id);
+
+        $valorTotal = $mantenimiento->valor_total - $id->costo_manobra - $id->costo_repuestos;
+        $mantenimiento->valor_total = $valorTotal;
+        $mantenimiento->save();
+
+        $id->delete();
     }
 }

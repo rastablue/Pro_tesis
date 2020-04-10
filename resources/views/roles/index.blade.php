@@ -7,7 +7,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <span><h4><b>Lista de Roles</b></h4></span>
+                        <span><h4><b>Roles</b></h4></span>
                         @can('roles.create')
                             <button type="button" id="btnCrearRoles" class="btn btn-success btn-sm">
                                 Nuevo Role
@@ -251,6 +251,7 @@
                         success: function(result) {
                             setImmediate(function(){
                                 $('#roles-table').DataTable().ajax.reload();
+                                $('#DeleteProductModal').modal('hide');
                             });
                         }
                     });

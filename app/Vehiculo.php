@@ -21,7 +21,7 @@ class Vehiculo extends Model
 
     public function marcas()
     {
-        return $this->belongsTo(MarcaVehiculo::class, 'marca_vehiculo_id');
+        return $this->belongsTo(Marca::class, 'marca_id');
     }
 
     public static function getEnumValues($table, $column) {
@@ -34,6 +34,6 @@ class Vehiculo extends Model
           $enum = Arr::add($enum, $v, $v);
         }
         return $enum;
-      }
+    }
 
 }

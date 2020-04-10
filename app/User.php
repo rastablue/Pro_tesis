@@ -11,9 +11,15 @@ class User extends Authenticatable
 {
     use Notifiable, HasRolesAndPermissions;
 
-    public function empleados()
+    public function trabajos()
     {
-        return $this->hasOne(Empleado::class);
+        return $this->hasMany(Trabajo::class);
+    }
+
+    public function getUrlPathAttribute(){
+
+        return \Storage::url($this->path);
+
     }
 
     /**
@@ -22,7 +28,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'cedula', 'name', 'apellido_pater','apellido_mater', 'direc', 'tlf', 'email', 'password',
+        'cedula', 'name', 'apellido_pater','apellido_mater', 'direc', 'tlf', 'email', 'password', 'path'
     ];
 
     /**

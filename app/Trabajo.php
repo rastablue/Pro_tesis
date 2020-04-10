@@ -8,9 +8,9 @@ use Illuminate\Support\Arr;
 
 class Trabajo extends Model
 {
-    public function empleados()
+    public function users()
     {
-        return $this->belongsTo(Empleado::class, 'empleado_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function mantenimientos()

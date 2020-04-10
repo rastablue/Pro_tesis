@@ -7,23 +7,31 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <span><h4><b>Lista de Vehiculos</b></h4></span>
-                        @can('vehiculos.create')
-                            <button type="button" id="btnCrearVehiculo" class="btn btn-success btn-sm">
-                                Nuevo Vehiculo
-                            </button>
-                        @endcan
+                        <span><h4><b>Vehiculos</b></h4></span>
+                        <div class="group">
+                            @can('vehiculos.show')
+                                <a href="{{ route('vehiculos.reportes') }}" class="btn btn-sm btn-info">
+                                    <i class="fas fa-fw fa-file-alt"></i>
+                                    Reporte
+                                </a>
+                            @endcan
+                            @can('vehiculos.create')
+                                <a href=" {{ route('vehiculos.create') }} " class="btn btn-success btn-sm">
+                                    Nuevo Vehiculo
+                                </a>
+                            @endcan
+                        </div>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-bordered" id="vehiculos-table">
                                 <thead>
                                     <tr>
-                                        <th width="75px">Placa</th>
+                                        <th>Placa</th>
                                         <th>Marca</th>
                                         <th>Modelo</th>
                                         <th>Color</th>
-                                        <th width="160">&nbsp;</th>
+                                        <th>Acciones</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -60,7 +68,7 @@
                                     <div class="col-md-9">
                                         <select id="marca" class="form-control" name="marca">
                                             <option disabled="true" selected='true'>Seleccione Marca</option>
-                                            @foreach(App\MarcaVehiculo::all() as $marcas)
+                                            @foreach(App\Marca::all() as $marcas)
                                                 <option value="{{ $marcas->id }}">  {{ $marcas->marca}}  </option>
                                             @endforeach
                                         </select>
@@ -124,7 +132,11 @@
                     </div>
                 <!-- Modal body -->
                     <div class="modal-body">
-                        <h6 align="center">Eliminar este vehiculo tambien eliminara todos los mantenimientos vinculados. <br> ¿Desea Continuar?</h6>
+                        <h6 align="center">
+                            Eliminar este vehiculo no eliminara los mantenimientos vinculados,
+                             sin embargo, esos mantenimientos ya no quedaran vinculados
+                             a ningun vehiculo. <br><br><b>¿Desea continuar?</b>
+                        </h6>
                     </div>
                 <!-- Modal footer -->
                     <div class="modal-footer">
@@ -307,6 +319,7 @@
                         success: function(result) {
                             setImmediate(function(){
                                 $('#vehiculos-table').DataTable().ajax.reload();
+                                $('#DeleteProductModal').modal('hide');
                             });
                         }
                     });
@@ -318,88 +331,3 @@
 
 </script>
 @endpush
-
-
-{{--@extends('layouts.app')
-@section('content')
-
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-13">
-            <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <span><h4><b>Lista de Vehiculos</b></h4></span>
-                    <!-- Cuadro Buscar  -->
-                        @can('vehiculos.show')
-                            <div class="sidebar-search">
-                                <div>
-                                    <div class="input-group">
-                                        <form action="{{ route('vehiculos.search') }}">
-                                            <div class="form-group">
-                                                <input id="search" name="search" type="text" class="form-control search-menu" placeholder="Search..." onkeypress="pulsar(event)">
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        @endcan
-                </div>
-
-                <div class="card-body">
-                    <table class="table">
-                        <thead>
-                            <tr class="table-secondary">
-                                <th></th>
-                                <th scope="col" width="150px"><div class="text-center">Placa</div></th>
-                                <th scope="col"><div class="text-center">Marca</div></th>
-                                <th scope="col" width="300px"><div class="text-center">Modelo</div></th>
-                                <th scope="col"><div class="text-center">Color</div></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($vehiculo as $item)
-                            <tr>
-                                <th scope="row"><i>{{ $loop->iteration }}</i></th>
-                                <th scope="row"><div class="text-center">{{ $item->placa }}</div></th>
-                                <td><div class="text-center">{{ $item->marcas->marca }}</div></td>
-                                <td><div class="text-center">{{ $item->modelo }}</div></td>
-                                <td><div class="text-center">{{ $item->color }}</div></td>
-                                <td>
-                                    @can('vehiculos.show')
-                                        <a href="{{ route('vehiculos.show', $item) }}">
-                                            <img class="img-responsive img-rounded float-left" src="{{ asset('images/ver.png') }}" title="Ver Detalles">
-                                        </a>
-                                    @endcan
-                                </td>
-                                <td>
-                                    @can('vehiculos.edit')
-                                        <a href="{{ route('vehiculos.edit', $item) }}">
-                                            <img class="img-responsive img-rounded float-right" src="{{ asset('images/actualizar.png') }}" title="Actualizar">
-                                        </a>
-                                    @endcan
-                                </td>
-                                <td>
-                                    @can('vehiculos.destroy')
-                                        {!! Form::open(['route' => ['vehiculos.destroy', $item->id],
-                                        'method' => 'DELETE']) !!}
-                                            <input type=image src="{{ asset('images/basura.png') }}" title="Eliminar">
-                                        {!! Form::close() !!}
-                                    @endcan
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                    {{ $vehiculo->links() }}
-                fin card body
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-@endsection
---}}

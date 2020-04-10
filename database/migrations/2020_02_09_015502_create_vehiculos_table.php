@@ -15,11 +15,17 @@ class CreateVehiculosTable extends Migration
     {
         Schema::create('vehiculos', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('placa');
-            $table->enum('marca', ['Chevrolet', 'Nissan', 'Toyota', 'Ford', 'Suzuki', 'Mercedes', 'Jeep', 'Fiat'])->nullable();
+            $table->string('placa')->unique();
             $table->string('modelo');
-            $table->string('color');
-            $table->text('observacion');
+            $table->string('color')->nullable();
+            $table->bigInteger('kilometraje')->unsigned()->nullable();
+            $table->string('tipo_vehiculo')->nullable();
+            $table->text('observacion')->nullable();
+            $table->unsignedBigInteger('cliente_id')->index()->nullable();
+            $table->foreign('cliente_id')->references('id')->on('clientes')
+                ->onDelete('set null')
+                ->onUpdate('cascade');
+            $table->unsignedBigInteger('marca_id')->index()->nullable();
             $table->timestamps();
         });
     }

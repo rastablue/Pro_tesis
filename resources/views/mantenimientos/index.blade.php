@@ -7,25 +7,33 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <span><h4><b>Lista de Mantenimientos</b></h4></span>
-                        @can('mantenimientos.create')
-                            <button type="button" id="btnCrearMantenimiento" class="btn btn-success btn-sm">
-                                Nuevo Mantenimiento
-                            </button>
-                        @endcan
+                        <span><h4><b>Mantenimientos</b></h4></span>
+                        <div class="group">
+                            @can('mantenimientos.show')
+                                <a href=" {{ route('mantenimientos.reportes') }} " class="btn btn-sm btn-info">
+                                    <i class="fas fa-fw fa-file-alt"></i>
+                                    Reporte
+                                </a>
+                            @endcan
+                            @can('mantenimientos.create')
+                                <a href=" {{ route('mantenimientos.create') }} " class="btn btn-success btn-sm">
+                                    Nuevo Mantenimiento
+                                </a>
+                            @endcan
+                        </div>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-bordered" id="mantenimientos-table">
+                            <table class="table table-bordered" id="mantenimientos-table" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
-                                        <th width="70px">Nro. Ficha</th>
-                                        <th width="70px">Placa</th>
-                                        <th>Fecha de Ingreso</th>
-                                        <th>Fecha de Egreso</th>
+                                        <th>Nro. Ficha</th>
+                                        <th>Placa</th>
+                                        <th width="100px">Fecha. Ingreso</th>
+                                        <th width="100px">Fecha. Egreso</th>
                                         <th>Estado</th>
-                                        <th width="70px">Valor Total</th>
-                                        <th width="170">&nbsp;</th>
+                                        <th>Valor</th>
+                                        <th>Acciones</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -36,7 +44,7 @@
         </div>
     </div>
 
-<!-- Modal Crear-->
+<!-- Modal Crear -->
     <div class="modal fade" id="creaMantenimientoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -47,7 +55,7 @@
                     </div>
                 <!-- Modal body -->
                     <div class="modal-body">
-                        <form id="formMantenimiento" method="POST" action="{{ route('mantenimientos.store') }}">
+                        <form id="formMantenimiento" method="POST" action="{{ route('mantenimientos.store') }}" enctype="multipart/form-data">
                             @csrf
                             {{-- Ficha --}}
                                 <div class="form-group row">
@@ -60,7 +68,7 @@
                             {{-- Placa del Vehiculo --}}
                                 <div class="form-group row">
 
-                                    <label for="placa" class="col-md-3 text-md-right">Placa</label>
+                                    <label for="placa" class="col-md-3 text-md-right">Placa del Vehiculo</label>
 
                                     <div class="col-md-8">
                                         <input id="placa" type="text" class="form-control" name="placa" required autocomplete="placa" autofocus>
@@ -102,6 +110,53 @@
         </div>
     </div>
 
+<!-- Finalizar Mantenimiento Modal -->
+    <div class="modal fade" id="FinalizaMantenimientoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h5><b>Finalizar Mantenimiento</b></h5>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                <!-- Modal body -->
+                    <div class="modal-body">
+                        <h6 align="center">
+                            Finalizar este mantenimiento tambien finalizara todos los trabajos vinculados y ya no se podran editar sus datos.
+                            <br><br><b>¿Desea finalizar el mantenimiento?</b></h6>
+                    </div>
+                <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-warning" id="SubmitFinalizarMantenimientoForm">Finalizar</button>
+                    </div>
+            </div>
+        </div>
+    </div>
+
+<!-- Mantenimiento Finalizado Modal -->
+    <div class="modal fade" id="NoOptionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h5><b>Advertencia</b></h5>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                <!-- Modal body -->
+                    <div class="modal-body">
+                        <h6 align="center">
+                            Este mantenimiento ya ha finalizado por lo que no es posible editar su informacion.
+                        </h6>
+                    </div>
+                <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    </div>
+            </div>
+        </div>
+    </div>
+
 <!-- Delete Product Modal -->
     <div class="modal fade" id="DeleteProductModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog">
@@ -113,7 +168,7 @@
                     </div>
                 <!-- Modal body -->
                     <div class="modal-body">
-                        <h6 align="center">Eliminar este mantenimiento tambien eliminara todos los trabajos vinculados. <br> ¿Desea continuar?</h6>
+                        <h6 align="center">Eliminar este mantenimiento tambien eliminara todos los trabajos vinculados. <br><br><b>¿Desea continuar?</b></h6>
                     </div>
                 <!-- Modal footer -->
                     <div class="modal-footer">
@@ -125,10 +180,10 @@
     </div>
 @stop
 @push('scripts')
- <!-- DataTables -->
- <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
- <!-- Bootstrap JavaScript -->
- <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+<!-- DataTables -->
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<!-- Bootstrap JavaScript -->
+<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
 <script>
     $(function() {
         $(document).ready(function(){
@@ -177,101 +232,34 @@
                     $("#creaMantenimientoModal").modal("show");
                 });
 
-            // Cuando se presiona submit en crear
-                $('#submitBtn').submit(function(e) {
-                    e.preventDefault()
-                    var form = $(this),
-                        url = form.attr("action")
-                    var formData = form.serialize();
-                    $.ajax({
-                        url: window.app + "/vehiculos-table",
-                        data: formData,
-                        dataType: 'json', // data type
-                        type: 'POST',
-                        success: function(data, textStatus, jqXHR) {
-                            if (data.error) {
-                                $("#alertModal").toggleClass("display-none").toggleClass("alert-danger");
-                                $("#alertMessage").html(data.msg);
-                                setTimeout(function() {
-                                    $("#alertModal").addClass("display-none").removeClass("alert-danger")
-                                }, 3000);
-                            } else {
-                                $("#alertHome").toggleClass("display-none").toggleClass("alert-success");
-                                setTimeout(function() {
-                                    $("#alertHome").addClass("display-none").removeClass("alert-success")
-                                }, 3000);
-                                $("#alertMsgHome").html(data.msg);
-                                $("#datatableModal").modal("hide");
-                                $("#datatable").DataTable().ajax.reload();
-                            }
-                        }
-                    });
-                });
-
             // Resetear modal crear una vez que se cierra
                 $('#creaMantenimientoModal').on('hidden.bs.modal', function() {
                     $('#formMantenimiento')[0].reset();
                 });
 
-            // Get single product in EditModel
-                var id;
-                $(document).on('click', '#getEditProductData', function(e){
+            // Finalizar Mantenimiento.
+                var finalizaID;
+                $('body').on('click', '#getFinalizaId', function(){
+                    finalizaID = $(this).data('id');
+                })
+                $('#SubmitFinalizarMantenimientoForm').click(function(e) {
                     e.preventDefault();
-                    id = $(this).data('id');
-                    $.ajax({
-                        url: "vehiculos/"+id+"/edit",
-                        method: 'GET',
-                        data: {
-                            id: id,
-                        },
-                        success: function(result) {
-                            console.log(result);
-                            $('#editaVehiculoBody').html(result.html);
-                            $('#myModal').show();
-                        }
-                    });
-                    $('.modal-body').load('content.html',function(){
-                        $("#alertModal").addClass("display-none").removeClass("alert-danger")
-                        $("#inputId").val(null)
-                        $('#myModal').modal({show:true});
-                    });
-                });
-
-            // Update product Ajax request.
-                $('#SubmitEditVehiculoForm').click(function(e) {
-                    e.preventDefault();
+                    $("#alertModal").addClass("display-none").removeClass("alert-danger")
+                    $("#inputId").val(null)
+                    var id = finalizaID;
                     $.ajaxSetup({
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         }
                     });
                     $.ajax({
-                        url: "vehiculos/"+id,
+                        url: "mantenimientos/finalizar/"+id,
                         method: 'PUT',
-                        data: {
-                            placa: $('#placa').val(),
-                            marca: ('#marca').val(),
-                            modelo: $('#modelo').val(),
-                            color: $('#color').val(),
-                            observacion: $('#observa').val(),
-                            user_id: $('#user_id').val(),
-                        },
                         success: function(result) {
-                            if(result.errors) {
-                                $('.alert-danger').html('');
-                                $.each(result.errors, function(key, value) {
-                                    $('.alert-danger').show();
-                                    $('.alert-danger').append('<strong><li>'+value+'</li></strong>');
-                                });
-                            } else {
-                                $('.alert-danger').hide();
-                                $('.alert-success').show();
-                                $('.datatable').DataTable().ajax.reload();
-                                setInterval(function(){
-                                    $('.alert-success').hide();
-                                    $('#EditProductModal').hide();
-                                }, 2000);
-                            }
+                            setImmediate(function(){
+                                $('#mantenimientos-table').DataTable().ajax.reload();
+                                $('#FinalizaMantenimientoModal').modal('hide');
+                            });
                         }
                     });
                 });
@@ -297,6 +285,7 @@
                         success: function(result) {
                             setImmediate(function(){
                                 $('#mantenimientos-table').DataTable().ajax.reload();
+                                $('#DeleteProductModal').modal('hide');
                             });
                         }
                     });
@@ -308,97 +297,3 @@
 
 </script>
 @endpush
-
-
-{{--@extends('layouts.app')
-@section('content')
-
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-13">
-            <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <span><h4><b>Lista de Mantenimientos</b></h4></span>
-                    <!-- Cuadro Buscar  -->
-                    @can('mantenimientos.show')
-                        <div class="sidebar-search">
-                            <div>
-                                <div class="input-group">
-                                    <form action="{{ route('mantenimientos.search') }}">
-                                        <div class="form-group">
-                                            <input id="search" name="search" type="text" class="form-control search-menu" placeholder="Search..." onkeypress="pulsar(event)">
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    @endcan
-                </div>
-
-                <div class="card-body">
-                    <table class="table">
-                        <thead>
-                            <tr class="table-secondary">
-                                <th></th>
-                                <th scope="col" width="100px"><div class="text-center">Nro. Ficha</div></th>
-                                <th scope="col" width="200px"><div class="text-center">Fecha de Ingreso</div></th>
-                                <th scope="col" width="200px"><div class="text-center">Fecha de Egreso</div></th>
-                                <th scope="col" width="100px"><div class="text-center">Estado</div></th>
-                                <th scope="col" width="150px"><div class="text-center">Valor Total</div></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($mantenimiento as $item)
-                            <tr>
-                                <th scope="row"><i>{{ $loop->iteration }}</i></th>
-                                <th scope="row"><div class="text-center">{{ $item->nro_ficha }}</div></th>
-                                <td><div class="text-center">{{ $item->fecha_ingreso }}</div></td>
-                                <td><div class="text-center">{{ $item->fecha_egreso }}</div></td>
-                                <td><div class="text-center">{{ $item->estado }}</div></td>
-                                <td><div class="text-center">{{ $item->valor_total }}</div></td>
-                                <td>
-                                    @can('mantenimientos.show')
-                                        <a href="{{ route('mantenimientos.show', $item) }}">
-                                            <img class="img-responsive img-rounded float-left" src="{{ asset('images/ver.png') }}" title="Ver Detalles">
-                                        </a>
-                                    @endcan
-                                </td>
-                                <td>
-                                    @can('trabajos.create')
-                                        <a href="{{ route('trabajos.show', $item) }}">
-                                            <img class="img-responsive img-rounded float-right" src="{{ asset('images/trabajos.png') }}" title="Agregar Trabajo">
-                                        </a>
-                                    @endcan
-                                </td>
-                                <td>
-                                    @can('mantenimientos.edit')
-                                        <a href="{{ route('mantenimientos.edit', $item) }}">
-                                            <img class="img-responsive img-rounded float-right" src="{{ asset('images/actualizar.png') }}" title="Actualizar">
-                                        </a>
-                                    @endcan
-                                </td>
-                                <td>
-                                    @can('mantenimientos.destroy')
-                                        {!! Form::open(['route' => ['mantenimientos.destroy', $item->id],
-                                        'method' => 'DELETE']) !!}
-                                            <input type=image src="{{ asset('images/basura.png') }}" title="Eliminar">
-                                        {!! Form::close() !!}
-                                    @endcan
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                    {{ $mantenimiento->links() }}
-                {{-- fin card body
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-@endsection--}}

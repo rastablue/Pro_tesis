@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class MarcaVehiculo extends Model
+class Marca extends Model
 {
     public function vehiculos(){
         return $this->hasMany(Vehiculo::class);

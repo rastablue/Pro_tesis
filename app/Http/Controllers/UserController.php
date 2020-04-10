@@ -9,8 +9,12 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Vinkla\Hashids\Facades\Hashids;
 use Illuminate\Support\Facades\Validator;
 use Caffeinated\Shinobi\Models\Role;
+use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\EditUser;
+use App\Http\Requests\CreateUser;
+use App\Http\Requests\Profile;
+use Barryvdh\DomPDF\Facade as PDF;
 use App\User;
-use App\Empleado;
 use App\Cliente;
 
 class UserController extends Controller
@@ -37,6 +41,19 @@ class UserController extends Controller
                 ->make(true);
     }
 
+    public function reportes()
+    {
+        /**
+         * toma en cuenta que para ver los mismos
+         * datos debemos hacer la misma consulta
+        **/
+        $user = User::all();
+
+        $pdf = PDF::loadView('pdfs.reporte-users', compact('user'));
+
+        return $pdf->download('reporte-empleados.pdf');
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -53,31 +70,27 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateUser $request)
     {
-        $ced = $request->cedula;
-
-        if ($id_users = User::where('cedula', $ced)->first()) {
-            return back() ->with('danger', 'Error, el Usuario ya existe');
-        } else {
-            if ($id_users = User::where('email', $request->email)->first()) {
-                return back() ->with('danger', 'Error, el Correo ya existe');
-            } else {
-                User::create([
-                'cedula' => $request['cedula'],
-                'name' => $request['name'],
-                'apellido_pater' => $request['apellido_pater'],
-                'apellido_mater' => $request['apellido_mater'],
-                'direc' => $request['direc'],
-                'tlf' => $request['tlf'],
-                'email' => $request['email'],
-                'password' => Hash::make($request['password']),
-                ]);
-
-                return redirect()->route('users.index')
-                        ->with('info', 'Usuario creado con exito');
-            }
+        if ($request->hasFile('foto')) {
+            $image = $request->foto->store('public');
         }
+
+        User::create([
+        'cedula' => $request['cedula'],
+        'name' => $request['nombre'],
+        'apellido_pater' => $request['apellido_paterno'],
+        'apellido_mater' => $request['apellido_materno'],
+        'direc' => $request['direccion'],
+        'tlf' => $request['telefono'],
+        'email' => $request['email'],
+        'password' => Hash::make($request['contraseña']),
+        'path' => $image,
+        ]);
+
+        return redirect()->route('users.index')
+                ->with('info', 'Empleado creado con exito');
+
     }
 
     /**
@@ -114,64 +127,93 @@ class UserController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(EditUser $request, $id)
     {
         //$user->update($request->all());
         //actualiza usuario
 
-        if ($id_users = User::where('email', $request->email)->first()) {
-            return redirect()->route('users.index')
-                ->with('danger', 'Error, el Correo ya existe');
+        $users = User::findOrFail($id);
+
+        $users->direc = $request->direccion;
+        $users->tlf = $request->telefono;
+
+        if ($request->hasFile('foto')) {
+            $image = $request->foto->store('public');
+            $users->path = $image;
+        }
+
+        $users->save();
+
+        //actualiza roles de ese usuario
+        $users->roles()->sync($request->get('roles'));
+
+        if ($request->get('roles') == 1) {
+            return redirect()->route('users.show', Hashids::encode($id))
+                    ->with('info', 'Administrador actualizado con exito');
+        }else{
+            return redirect()->route('users.show', Hashids::encode($id))
+                    ->with('info', 'Usuario actualizado con exito');
+        }
+
+    }
+
+    public function updateProfile($user)
+    {
+        $id = Hashids::decode($user);
+        $user = User::findOrfail($id)->first();
+        return view('users.profile', compact('user'));
+    }
+
+    public function updatePass(Profile $request, $id)
+    {
+        $user = User::findOrFail($id);
+
+        if ($request->nueva_contraseña) {
+
+            if (Hash::check($request->oldPassword, $user->password)) {
+
+                if ($request->confirmar_contraseña == $request->nueva_contraseña) {
+
+                    $request->user()->fill([
+                        'password' => Hash::make($request->nueva_contraseña)
+                    ])->save();
+
+                    $user->tlf = $request->telefono;
+                    $user->save();
+
+                    if ($request->hasFile('foto')) {
+                        $image = $request->foto->store('public');
+                        $user->path = $image;
+                        $user->save();
+                    }
+
+                    return redirect()->route('home')->with('info', 'Perfil actualizado');
+
+                } else {
+                    return back()->with('danger', 'La contraseña nueva no coincide con la confirmacion');
+                }
+
+            } else {
+                return back()->with('danger', 'La contraseña actual no coincide');
+            }
+
         } else {
 
-            $users = User::findOrFail($id);
+            if ($request->hasFile('foto')) {
+                $image = $request->foto->store('public');
+                $user->path = $image;
+                $user->save();
 
-            $users->name = $request->name;
-            $users->apellido_pater = $request->apellido_pater;
-            $users->apellido_mater = $request->apellido_mater;
-            $users->direc = $request->direc;
-            $users->tlf = $request->tlf;
-
-            $users->save();
-            //actualiza roles de ese usuario
-            $users->roles()->sync($request->get('roles'));
-
-            if($request->get('roles') == 3){
-                if ($users->roles()->sync($request->get('roles'))){
-                    return redirect()->route('users.index')
-                        ->with('info', 'Usuario actualizado con exito');
-                }
-                else {
-                    $cliente = New Cliente();
-                    $cliente->user_id = $id;
-                    $cliente->save();
-                    return redirect()->route('users.index')
-                        ->with('info', 'Usuario actualizado con exito');
-                }
-            }else{
-                if($request->get('roles') == 4){
-                    if ($aaa = Empleado::where('user_id', $id)->first()){
-                        return redirect()->route('users.index')
-                            ->with('info', 'Usuario actualizado con exito');
-                    }
-                    else {
-                        $empleado = New Empleado();
-                        $empleado->user_id = $id;
-                        $empleado->save();
-                        return redirect()->route('users.index')
-                            ->with('info', 'Usuario actualizado con exito');
-                    }
-                }
-
-                if ($request->get('roles') == 1) {
-                    return redirect()->route('users.index')
-                            ->with('info', 'Administrador actualizado con exito');
-                }else{
-                    return redirect()->route('users.index')
-                            ->with('info', 'Usuario actualizado con exito');
-                }
+                return redirect()->route('home')->with('info', 'Foto de perfil actualizada');
             }
+
+            $user->tlf = $request->telefono;
+            $user->save();
+
+            return redirect()->route('home')->with('info', 'No se realizaron cambios en el perfil');
+
         }
+
     }
 
     /**

@@ -1,3 +1,8 @@
+@can('mantenimientos.create')
+    <a href="{{ route('mantenimientos.createfromvehiculos', Hashids::encode($id)) }}" class="btn btn-sm btn-success">
+        Mantenimiento
+    </a>
+@endcan
 @can('vehiculos.show')
     <a href="{{ route('vehiculos.show', Hashids::encode($id)) }}" class="btn btn-sm btn-info">
         Ver

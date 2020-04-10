@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateEmpleadosTable extends Migration
+class CreateMarcasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,16 @@ class CreateEmpleadosTable extends Migration
      */
     public function up()
     {
-        Schema::create('empleados', function (Blueprint $table) {
+        Schema::create('marcas', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('marca');
             $table->timestamps();
+        });
+
+        Schema::table('vehiculos', function (Blueprint $table) {
+            $table->foreign('marca_id')->references('id')->on('marcas')
+                ->onDelete('set null')
+                ->onUpdate('cascade');
         });
     }
 
@@ -26,6 +33,6 @@ class CreateEmpleadosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('empleados');
+        Schema::dropIfExists('marcas');
     }
 }

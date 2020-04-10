@@ -15,12 +15,18 @@ class CreateMantenimientosTable extends Migration
     {
         Schema::create('mantenimientos', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('nro_ficha');
+            $table->bigInteger('nro_ficha')->unique();
             $table->datetime('fecha_ingreso');
-            $table->datetime('fecha_egreso');
-            $table->text('observacion');
+            $table->datetime('fecha_egreso')->nullable();
+            $table->text('observacion')->nullable();
+            $table->text('diagnostico')->nullable();
+            $table->float('valor_total')->nullable();
             $table->enum('estado', ['Activo', 'Inactivo', 'En espera', 'Finalizado'])->nullable();
-            $table->enum('tipo', ['Preventivo', 'Correctivo'])->nullable();
+            $table->unsignedBigInteger('vehiculo_id')->index()->nullable();
+            $table->foreign('vehiculo_id')->references('id')->on('vehiculos')
+                ->onDelete('set null')
+                ->onUpdate('cascade');
+            $table->string('path')->nullable();
             $table->timestamps();
         });
     }

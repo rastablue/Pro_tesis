@@ -6,6 +6,14 @@
     overflow-y: scroll;
 }
 
+#cardScroll {
+    height: 550px;
+    width: auto;
+    background: #fff;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
 #trab {
     height: 550px;
     width: auto;

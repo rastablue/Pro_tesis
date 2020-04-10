@@ -19,11 +19,12 @@ use Illuminate\Support\Str;
 
 $factory->define(User::class, function (Faker $faker) {
     return [
+        'cedula' => Str::random(10),
         'name' => $faker->name,
-        'apellido_mater' => $faker->sentence,
-        'apellido_pater' => $faker->sentence,
+        'apellido_pater' => $faker->lastName,
+        'apellido_mater' => $faker->lastName,
         'direc' => $faker->sentence,
-        'tlf' => $faker->randomDigit,
+        'tlf' => $faker->phoneNumber,
         'email' => $faker->unique()->safeEmail,
         'email_verified_at' => now(),
         'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password

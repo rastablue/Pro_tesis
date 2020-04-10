@@ -372,11 +372,11 @@ body {
     display: inline-block;
     width: 100%;
     padding-left: 0px;
-    padding-top: 20px;
+    padding-top: -10px;
 }
 
 .page-wrapper .page-content>div {
-    padding: 20px 40px;
+    padding: 10px 10px;
 }
 
 .page-wrapper .page-content {

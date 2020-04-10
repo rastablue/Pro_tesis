@@ -14,16 +14,15 @@
                 </div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('users.update', $user->id) }}">
+                    <form method="POST" action="{{ route('users.update', $user->id) }}" enctype="multipart/form-data">
                         @method('PUT')
                         @csrf
 
                         {{-- Cedula --}}
                             <div class="form-group row">
-                                <label for="cedula" class="col-md-4 col-form-label text-md-right">{{ __('Cedula') }}</label>
-
+                                <label for="codigo" class="col-md-4 col-form-label text-md-right">{{ __('Cedula') }}</label>
                                 <div class="col-md-6">
-                                    <input id="cedula" type="text" pattern="[0-9]{10}" placeholder="{{ $user->cedula }}" class="form-control @error('cedula') is-invalid @enderror" disabled name="cedula" value="{{ $user->cedula }}" required autocomplete="cedula" autofocus>
+                                    <input type="input" disabled value="{{ $user->cedula }}" class="form-control @error('cedula') is-invalid @enderror" placeholder="{{ $user->cedula }}" autocomplete="cedula" autofocus>
 
                                     @error('cedula')
                                         <span class="invalid-feedback" role="alert">
@@ -35,12 +34,11 @@
 
                         {{-- Nombre --}}
                             <div class="form-group row">
-                                <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Nombre') }}</label>
-
+                                <label for="codigo" class="col-md-4 col-form-label text-md-right">{{ __('Nombre') }}</label>
                                 <div class="col-md-6">
-                                    <input id="name" type="text" placeholder="{{ $user->name }}" pattern="[A-Za-z]{1,25}" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $user->name }}" required autocomplete="name" autofocus>
+                                    <input type="input" value="{{ $user->name }}" onkeyup="mayus(this);" class="form-control @error('nombre') is-invalid @enderror" placeholder="{{ $user->name }}" disabled autocomplete="nombre" autofocus>
 
-                                    @error('name')
+                                    @error('nombre')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -50,12 +48,11 @@
 
                         {{-- Apellido Paterno --}}
                             <div class="form-group row">
-                                <label for="apellido_pater" class="col-md-4 col-form-label text-md-right">{{ __('Apellido Paterno') }}</label>
-
+                                <label for="codigo" class="col-md-4 col-form-label text-md-right">{{ __('Apellido Paterno') }}</label>
                                 <div class="col-md-6">
-                                    <input id="apellido_pater" type="text" placeholder="{{ $user->apellido_pater }}" pattern="[A-Za-z]{1,25}" class="form-control @error('apellido_pater') is-invalid @enderror" name="apellido_pater" value="{{ $user->apellido_pater }}" required autocomplete="apellido_pater" autofocus>
+                                    <input type="input" value="{{ $user->apellido_pater }}" onkeyup="mayus(this);" class="form-control @error('apellido_paterno') is-invalid @enderror" placeholder="{{ $user->apellido_pater }}" disabled autocomplete="apellido_paterno" autofocus>
 
-                                    @error('apellido_pater')
+                                    @error('apellido_paterno')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -65,12 +62,11 @@
 
                         {{-- Apellido Materno --}}
                             <div class="form-group row">
-                                <label for="apellido_mater" class="col-md-4 col-form-label text-md-right">{{ __('Apellido Materno') }}</label>
-
+                                <label for="codigo" class="col-md-4 col-form-label text-md-right">{{ __('Apellido Materno') }}</label>
                                 <div class="col-md-6">
-                                    <input id="apellido_mater" type="text" placeholder="{{ $user->apellido_mater }}" pattern="[A-Za-z]{1,25}" class="form-control @error('apellido_mater') is-invalid @enderror" name="apellido_mater" value="{{ $user->apellido_mater }}" required autocomplete="apellido_mater" autofocus>
+                                    <input type="input" value="{{ $user->apellido_mater }}" onkeyup="mayus(this);" class="form-control @error('apellido_materno') is-invalid @enderror" placeholder="{{ $user->apellido_mater }}" disabled autocomplete="apellido_materno" autofocus>
 
-                                    @error('apellido_mater')
+                                    @error('apellido_materno')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -80,12 +76,11 @@
 
                         {{-- Direccion --}}
                             <div class="form-group row">
-                                <label for="direc" class="col-md-4 col-form-label text-md-right">{{ __('Direccion') }}</label>
-
+                                <label for="codigo" class="col-md-4 col-form-label text-md-right">{{ __('Direccion') }}</label>
                                 <div class="col-md-6">
-                                    <input id="direc" type="text" placeholder="{{ $user->direc }}" class="form-control @error('direc') is-invalid @enderror" name="direc" value="{{ $user->direc }}" required autocomplete="name" autofocus>
+                                    <input type="input" name="direccion" value="{{ $user->direc }}" class="form-control @error('direccion') is-invalid @enderror" placeholder="{{ $user->direc }}" autocomplete="direccion" autofocus>
 
-                                    @error('direc')
+                                    @error('direccion')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -95,12 +90,11 @@
 
                         {{-- Telefono --}}
                             <div class="form-group row">
-                                <label for="tlf" class="col-md-4 col-form-label text-md-right">{{ __('Telefono') }}</label>
-
+                                <label for="codigo" class="col-md-4 col-form-label text-md-right">{{ __('Telefono') }}</label>
                                 <div class="col-md-6">
-                                    <input id="tlf" type="text" pattern="[0-9]{7,10}" placeholder="{{ $user->tlf }}" class="form-control @error('tlf') is-invalid @enderror" name="tlf" value="{{ $user->tlf }}" required autocomplete="name" autofocus>
+                                    <input type="input" name="telefono" value="{{ $user->tlf }}" class="form-control @error('telefono') is-invalid @enderror" placeholder="{{ $user->tlf }}" autocomplete="telefono" autofocus>
 
-                                    @error('tlf')
+                                    @error('telefono')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -110,10 +104,9 @@
 
                         {{-- Email --}}
                             <div class="form-group row">
-                                <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
-
+                                <label for="codigo" class="col-md-4 col-form-label text-md-right">{{ __('Email') }}</label>
                                 <div class="col-md-6">
-                                    <input id="email" type="email" placeholder="{{ $user->email }}" class="form-control @error('email') is-invalid @enderror" disabled name="email" value="{{ $user->email }}" required autocomplete="email">
+                                    <input type="input" value="{{ $user->email }}" class="form-control @error('email') is-invalid @enderror" placeholder="{{ $user->email }}" disabled autocomplete="email" autofocus>
 
                                     @error('email')
                                         <span class="invalid-feedback" role="alert">
@@ -122,8 +115,6 @@
                                     @enderror
                                 </div>
                             </div>
-
-
 
                         {{-- Permisos --}}
                             <div class="form-group row">
@@ -145,12 +136,21 @@
                                 </div>
                             </div>
 
-                        {{-- btn--}}
-                            <div class="form-group row mb-0">
-                                <div class="col-md-6 offset-md-5">
-                                    <button type="submit" class="btn btn-primary">Actualizar</button>
+                            {{-- Foto de Perfil --}}
+                                <div class="form-group text-center">
+                                    <label for="file-upload" class="custom-file-upload">
+                                        <i class="fa fa-cloud-upload"></i> Cambiar foto de perfil
+                                    </label>
+                                    <span id="file-selected"></span>
+                                    <input id="file-upload" accept="image/jpeg,image/png" type="file" name="foto">
                                 </div>
-                            </div>
+
+                            {{-- btn--}}
+                                <div class="form-group row mb-0">
+                                    <div class="col-md-6 offset-md-5">
+                                        <button type="submit" class="btn btn-primary">Actualizar</button>
+                                    </div>
+                                </div>
                     </form>
 
                 </div>
@@ -158,4 +158,7 @@
         </div>
     </div>
 </div>
+<script>
+    $('#file-upload').bind('change', function() { var fileName = ''; fileName = $(this).val(); $('#file-selected').html(fileName); })
+</script>
 @endsection

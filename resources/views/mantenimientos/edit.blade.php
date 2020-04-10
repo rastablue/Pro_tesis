@@ -17,14 +17,15 @@
                         <form method="POST" action="{{ route('mantenimientos.update', $mantenimiento->id) }}" enctype="multipart/form-data">
                             @method('PUT')
                             @csrf
+
                             {{-- Ficha --}}
                                 <div class="form-group row">
                                     <label for="ficha" class="col-md-4 col-form-label text-md-right">{{ __('Numero de Ficha') }}</label>
 
                                     <div class="col-md-6">
-                                        <input id="ficha" type="text" placeholder="{{ $mantenimiento->nro_ficha }}" pattern="[0-9]{7}" class="form-control @error('ficha') is-invalid @enderror" name="ficha" value="{{ $mantenimiento->nro_ficha }}" required autocomplete="ficha" autofocus>
+                                        <input disabled type="text" placeholder="{{ $mantenimiento->nro_ficha }}" class="form-control @error('codigo') is-invalid @enderror" value="{{ $mantenimiento->nro_ficha }}" autocomplete="codigo" autofocus>
 
-                                        @error('ficha')
+                                        @error('codigo')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
@@ -35,16 +36,36 @@
                             {{-- Placa del Vehiculo --}}
                                 <div class="form-group row">
 
-                                    <label for="placa" class="col-md-4 col-form-label text-md-right">{{ __('Placa') }}</label>
+                                    <label for="placa" class="col-md-4 col-form-label text-md-right">{{ __('Placa Del Vehiculo') }}</label>
 
                                     <div class="col-md-6">
-                                        <input id="placa" type="text" placeholder="{{ $mantenimiento->vehiculos->placa }}" class="form-control @error('placa') is-invalid @enderror" name="placa" value="{{ $mantenimiento->vehiculos->placa }}" required autocomplete="placa" autofocus>
+                                        <input disabled type="text" placeholder="{{ $mantenimiento->vehiculos->placa }}" class="form-control @error('placa') is-invalid @enderror" value="{{ $mantenimiento->vehiculos->placa }}" autocomplete="placa" autofocus>
 
                                         @error('placa')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
+                                    </div>
+                                </div>
+
+                            {{-- Fecha de ingreso --}}
+                                <div class="form-group row">
+
+                                    <label for="placa" class="col-md-4 col-form-label text-md-right">{{ __('Fecha de Ingreso') }}</label>
+
+                                    <div class="col-md-6">
+                                        <input disabled type="text" placeholder="{{ $mantenimiento->fecha_ingreso }}" class="form-control @error('placa') is-invalid @enderror" value="{{ $mantenimiento->fecha_ingreso }}" autofocus>
+                                    </div>
+                                </div>
+
+                            {{-- Fecha de egreso--}}
+                                <div class="form-group row">
+
+                                    <label for="placa" class="col-md-4 col-form-label text-md-right">{{ __('Fecha de egreso') }}</label>
+
+                                    <div class="col-md-6">
+                                        <input disabled type="text" placeholder="{{ $mantenimiento->fecha_egreso }}" class="form-control @error('placa') is-invalid @enderror" value="{{ $mantenimiento->fecha_egreso }}" autofocus>
                                     </div>
                                 </div>
 
@@ -61,6 +82,11 @@
                                             @endforeach
                                         </select>
 
+                                        @error('estado')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                     </div>
                                 </div>
 
@@ -69,7 +95,7 @@
                                     <label for="observacion" class="col-md-4 col-form-label text-md-right">{{ __('Observacion') }}</label>
 
                                     <div class="col-md-6">
-                                        <textarea id="observacion" placeholder="{{ $mantenimiento->observacion }}" type="text" class="form-control @error('observacion') is-invalid @enderror" name="observacion" value="{{ old('observacion') }}" required autocomplete="observacion" autofocus>{{ $mantenimiento->observacion }}</textarea>
+                                        <textarea id="observacion" placeholder="{{ $mantenimiento->observacion }}" type="text" class="form-control @error('observacion') is-invalid @enderror" name="observacion" value="{{ old('observacion') }}" autocomplete="observacion" autofocus>{{ $mantenimiento->observacion }}</textarea>
 
                                         @error('observacion')
                                             <span class="invalid-feedback" role="alert">
@@ -84,7 +110,7 @@
                                     <label for="diagnostico" class="col-md-4 col-form-label text-md-right">{{ __('Diagnostico') }}</label>
 
                                     <div class="col-md-6">
-                                        <textarea id="diagnostico" placeholder="{{ $mantenimiento->diagnostico }}" type="text" class="form-control @error('diagnostico') is-invalid @enderror" name="diagnostico" value="{{ old('diagnostico') }}" required autocomplete="diagnostico" autofocus>{{ $mantenimiento->diagnostico }}</textarea>
+                                        <textarea id="diagnostico" placeholder="{{ $mantenimiento->diagnostico }}" type="text" class="form-control @error('diagnostico') is-invalid @enderror" name="diagnostico" value="{{ old('diagnostico') }}" autocomplete="diagnostico" autofocus>{{ $mantenimiento->diagnostico }}</textarea>
 
                                         @error('diagnostico')
                                             <span class="invalid-feedback" role="alert">
@@ -94,13 +120,19 @@
                                     </div>
                                 </div>
 
-                            {{-- Imagen de la Ficha --}}
-                                <div class="form-group row">
-                                    <label for="file" class="col-md-4 col-form-label text-md-right">{{ __('Cargar Imagen de la Ficha') }}</label>
+                            {{-- Foto de la Ficha --}}
+                                <div class="form-group text-center">
+                                    <label for="file-upload" class="custom-file-upload">
+                                        <i class="fa fa-cloud-upload"></i> Agregar imagen de la ficha
+                                    </label>
+                                    <span id="file-selected"></span>
+                                    <input id="file-upload" accept="image/jpeg,image/png" type="file" name="foto" class="form-control @error('foto') is-invalid @enderror" value="{{ old('foto') }}" autofocus>
 
-                                    <div class="col-md-6">
-                                        <input id="file" type="file" name="file">
-                                    </div>
+                                    @error('foto')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
 
                             {{-- btn --}}
@@ -117,5 +149,12 @@
             </div>
         </div>
     </div>
+
+<script>
+    function mayus(e) {
+        e.value = e.value.toUpperCase();
+    }
+    $('#file-upload').bind('change', function() { var fileName = ''; fileName = $(this).val(); $('#file-selected').html(fileName); })
+</script>
 
 @endsection

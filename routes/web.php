@@ -19,18 +19,6 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('users/search', 'UserController@search')->name('users.search');
-
-Route::get('roles/search', 'RoleController@search')->name('roles.search');
-
-Route::get('vehiculos/search', 'VehiculoController@search')->name('vehiculos.search');
-
-Route::get('mantenimientos/search', 'mantenimientoController@search')->name('mantenimientos.search');
-
-Route::get('empleados/search', 'empleadoController@search')->name('empleados.search');
-
-Route::get('clientes/search', 'clienteController@search')->name('clientes.search');
-
 Route::middleware(['auth'])->group(function(){
 
     //Roles
@@ -61,6 +49,9 @@ Route::middleware(['auth'])->group(function(){
 
     //Users
 
+        Route::get('descargar-users', 'UserController@reportes')->name('users.reportes')
+                    ->middleware('can:users.show');
+
         Route::post('users/store', 'UserController@store')->name('users.store')
                     ->middleware('can:users.create');
 
@@ -76,6 +67,8 @@ Route::middleware(['auth'])->group(function(){
         Route::put('users/{user}', 'UserController@update')->name('users.update')
                     ->middleware('can:users.edit');
 
+        Route::put('update/{user}', 'UserController@updatepass')->name('pass.update');
+
         Route::get('users/{user}', 'UserController@show')->name('users.show')
                     ->middleware('can:users.show');
 
@@ -88,7 +81,14 @@ Route::middleware(['auth'])->group(function(){
         Route::get('users/{user}/edita', 'UserController@edita')->name('users.edita')
                     ->middleware('can:users.edit');
 
+        Route::get('profile/{user}', 'UserController@updateProfile')->name('profile.edit');
+
     //Clientes
+
+        Route::get('descargar-clientes', 'ClienteController@reportes')->name('clientes.reportes')
+                    ->middleware('can:clientes.show');
+
+        Route::get('descargar-clientes/{cliente}', 'ClienteController@pdf')->name('clientes.pdf');
 
         Route::post('clientes/store', 'ClienteController@store')->name('clientes.store')
                     ->middleware('can:clientes.create');
@@ -142,7 +142,15 @@ Route::middleware(['auth'])->group(function(){
 
     //Mantenimientos
 
+        Route::get('descargar-mantenimientos', 'MantenimientoController@reportes')->name('mantenimientos.reportes')
+                    ->middleware('can:mantenimientos.show');
+
+        Route::get('descargar-mantenimientos/{mantenimiento}', 'MantenimientoController@pdf')->name('mantenimientos.pdf');
+
         Route::post('mantenimientos/store', 'MantenimientoController@store')->name('mantenimientos.store')
+                    ->middleware('can:mantenimientos.create');
+
+        Route::post('mantenimientos/storefromvehiculos', 'MantenimientoController@storeFromVehiculo')->name('mantenimientos.storefromvehiculos')
                     ->middleware('can:mantenimientos.create');
 
         Route::post('mantenimientos/store/direct', 'MantenimientoController@storeDirect')->name('mantenimientos.direct')
@@ -154,7 +162,10 @@ Route::middleware(['auth'])->group(function(){
         Route::get('get-mantenimientos', 'MantenimientoController@mantenimientoData')->name('datatables.mantenimientos')
                     ->middleware('can:mantenimientos.index');
 
-        Route::get('mantenimientos/create/{mantenimiento}', 'MantenimientoController@create')->name('mantenimientos.create')
+        Route::get('mantenimientos/create', 'MantenimientoController@create')->name('mantenimientos.create')
+                    ->middleware('can:mantenimientos.create');
+
+        Route::get('mantenimientos/createfromvehiculo/{vehiculo}', 'MantenimientoController@createFromVehiculo')->name('mantenimientos.createfromvehiculos')
                     ->middleware('can:mantenimientos.create');
 
         Route::put('mantenimientos/{mantenimiento}', 'MantenimientoController@update')->name('mantenimientos.update')
@@ -172,12 +183,25 @@ Route::middleware(['auth'])->group(function(){
         Route::get('mantenimientos/{mantenimiento}/edit', 'MantenimientoController@edit')->name('mantenimientos.edit')
                     ->middleware('can:mantenimientos.edit');
 
+        //Marca un mantenimiento como finalizado directamente
+        Route::put('mantenimientos/finalizar/{mantenimiento}', 'MantenimientoController@finalizar')->name('mantenimientos.finalizar')
+                    ->middleware('can:mantenimientos.edit');
+
+        //Marca un mantenimiento como finalizado directamente desde la vista show
+        Route::put('mantenimientos/finalizarfrom/{mantenimiento}', 'MantenimientoController@finalizarFrom')->name('mantenimientos.finalizarfrom')
+                    ->middleware('can:mantenimientos.edit');
+
     //Vehiculos
+
+        Route::get('descargar-vehiculos', 'VehiculoController@reportes')->name('vehiculos.reportes')
+                    ->middleware('can:vehiculos.show');
+
+        Route::get('descargar-vehiculos/{vehiculo}', 'VehiculoController@pdf')->name('vehiculos.pdf');
 
         Route::post('vehiculos/store', 'VehiculoController@store')->name('vehiculos.store')
                     ->middleware('can:vehiculos.create');
 
-        Route::post('vehiculos/store/direct', 'VehiculoController@storeDirect')->name('vehiculos.direct')
+        Route::post('vehiculos/storefromcliente', 'VehiculoController@storefromcliente')->name('vehiculos.storefromcliente')
                     ->middleware('can:vehiculos.create');
 
         Route::get('vehiculos', 'VehiculoController@index')->name('vehiculos.index')
@@ -186,7 +210,10 @@ Route::middleware(['auth'])->group(function(){
         Route::get('get-vehiculos', 'VehiculoController@vehiculoData')->name('datatables.vehiculo')
                     ->middleware('can:vehiculos.index');
 
-        Route::get('vehiculos/create/{vehiculo}', 'VehiculoController@create')->name('vehiculos.create')
+        Route::get('vehiculos/create', 'VehiculoController@create')->name('vehiculos.create')
+                    ->middleware('can:vehiculos.create');
+
+        Route::get('vehiculos/createfromcliente/{cliente}', 'VehiculoController@createfromcliente')->name('vehiculos.createfromcliente')
                     ->middleware('can:vehiculos.create');
 
         Route::put('vehiculos/{vehiculo}', 'VehiculoController@update')->name('vehiculos.update')
@@ -201,30 +228,36 @@ Route::middleware(['auth'])->group(function(){
         Route::get('vehiculos/{vehiculo}/edit', 'VehiculoController@edit')->name('vehiculos.edit')
                     ->middleware('can:vehiculos.edit');
 
-    //MarcaVehiculos
+    //Marcas
 
-        Route::post('marcas/store', 'MarcaVehiculoController@store')->name('marcas.store')
+        Route::post('marcas/store', 'MarcaController@store')->name('marcas.store')
                     ->middleware('can:marcas.create');
 
-        Route::get('marcas', 'MarcaVehiculoController@index')->name('marcas.index')
+        Route::get('marcas', 'MarcaController@index')->name('marcas.index')
                     ->middleware('can:marcas.index');
 
-        Route::get('marcas/create', 'MarcaVehiculoController@create')->name('marcas.create')
+        Route::get('get-marcas', 'MarcaController@marcaData')->name('datatables.marcas')
+                    ->middleware('can:marcas.index');
+
+        Route::get('marcas/create', 'MarcaController@create')->name('marcas.create')
                     ->middleware('can:marcas.create');
 
-        Route::put('marcas/{vehiculo}', 'MarcaVehiculoController@update')->name('marcas.update')
+        Route::put('marcas/{vehiculo}', 'MarcaController@update')->name('marcas.update')
                     ->middleware('can:marcas.edit');
 
         Route::get('marcas/{vehiculo}', 'VehiculoController@show')->name('marcas.show')
                     ->middleware('can:marcas.show');
 
-        Route::delete('marcas/{vehiculo}', 'MarcaVehiculoController@destroy')->name('marcas.destroy')
+        Route::delete('marcas/{vehiculo}', 'MarcaController@destroy')->name('marcas.destroy')
                     ->middleware('can:marcas.destroy');
 
-        Route::get('marcas/{vehiculo}/edit', 'MarcaVehiculoController@edit')->name('marcas.edit')
+        Route::get('marcas/{vehiculo}/edit', 'MarcaController@edit')->name('marcas.edit')
                     ->middleware('can:marcas.edit');
 
     //Trabajos
+
+        Route::get('descargar-trabajos', 'TrabajoController@reportes')->name('trabajos.reportes')
+                    ->middleware('can:trabajos.show');
 
         Route::post('trabajos/store', 'TrabajoController@store')->name('trabajos.store')
                     ->middleware('can:trabajos.create');
@@ -253,4 +286,11 @@ Route::middleware(['auth'])->group(function(){
         Route::get('trabajos/{trabajo}/edit', 'TrabajoController@edit')->name('trabajos.edit')
                     ->middleware('can:trabajos.edit');
 
+        //Marca un mantenimiento como finalizado directamente
+        Route::put('trabajos/finalizar/{trabajo}', 'TrabajoController@finalizar')->name('trabajos.finalizar')
+                    ->middleware('can:trabajos.edit');
+
+        //Marca un mantenimiento como finalizado directamente desde la vista show
+        Route::put('trabajos/finalizarfrom/{trabajo}', 'TrabajoController@finalizarFrom')->name('trabajos.finalizarfrom')
+                    ->middleware('can:trabajos.edit');
 });

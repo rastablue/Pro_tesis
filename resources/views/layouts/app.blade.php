@@ -18,8 +18,6 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" ></script>
     <script src="{{ asset('js/navBar.js') }}" defer></script>
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 
 
     <!-- Fonts -->
@@ -36,6 +34,7 @@
             padding-top: 40px;
         }
     </style>
+    <link href="{{ asset('css/fotos.css') }}" rel="stylesheet">
 </head>
 
 <body>
@@ -70,8 +69,16 @@
                             <li>
                                 <div class="sidebar-header">
                                     <div class="user-pic">
-                                        <img class="img-responsive img-rounded" src="{{ asset('images/profile.png') }}"
-                                        alt="User picture">
+                                        @if (Auth::user()->path)
+                                            <a href=" {{ route('profile.edit', Hashids::encode(Auth::user()->id)) }} ">
+                                                <img class="img-responsive img-rounded" src="{{ Auth::user()->url_path }}" alt="User picture">
+                                            </a>
+                                        @else
+                                            <a href=" {{ route('profile.edit', Hashids::encode(Auth::user()->id)) }} ">
+                                                <img class="img-responsive img-rounded" src="{{ asset('images/profile2.png') }}" alt="User picture">
+                                            </a>
+                                        @endif
+
                                     </div>
                                     <div class="user-info">
                                         <span class="user-name">
@@ -97,7 +104,7 @@
                                                     <li class="sidebar-dropdown">
                                                         <a href="{{ route('users.index') }}">
                                                             <img class="img-responsive img-rounded" src="{{ asset('images/usuario.png') }}">
-                                                            <span>Usuarios</span>
+                                                            <span>Empleados</span>
                                                         </a>
                                                     </li>
                                                 @endcan
@@ -109,28 +116,6 @@
                                                             <img class="img-responsive img-rounded" src="{{ asset('images/cliente.png') }}">
                                                             <span>Clientes</span>
                                                         </a>
-                                                    </li>
-                                                @endcan
-
-                                            <!-- Menu Empleados  -->
-                                                @can('empleados.index')
-                                                    <li class="sidebar-dropdown">
-                                                        <a href="#">
-                                                            <img class="img-responsive img-rounded" src="{{ asset('images/empleado.png') }}">
-                                                            <span>Empleados</span>
-                                                        </a>
-                                                        <div class="sidebar-submenu">
-                                                            <ul>
-                                                                <li>
-                                                                    <a href="{{ route('empleados.index') }}">Consultar Empleados</a>
-                                                                </li>
-                                                                @can('trabajos.show')
-                                                                    <li>
-                                                                        <a href="{{ route('trabajos.pendientes', Auth::user()->id) }}">Mis Trabajos</a>
-                                                                    </li>
-                                                                @endcan
-                                                            </ul>
-                                                        </div>
                                                     </li>
                                                 @endcan
 
@@ -197,7 +182,7 @@
             <!-- Botones Inferiores del Menu-->
                 <!-- Boton Configuracion -->
                     <div class="sidebar-footer">
-                        <a href="#">
+                        <a href=" {{ route('profile.edit', Hashids::encode(Auth::user()->id)) }}">
                             <img class="img-responsive img-rounded" src="{{ asset('images/engranaje.png') }}">
                         </a>
 
@@ -216,37 +201,38 @@
 
 
         <!-- Contenidos de la Pagina -->
-            <!-- Mensaje de session !info -->
+
             <main class="page-content">
-                <div class="container-fluid">
-                    @if(session('info'))
-                        <div class="msg" style="z-index: 99 !important">
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-md-12 col-md-offset-13">
-                                        <div class="alert alert-success">
-                                            {{ session('info') }}
+                <!-- Mensaje de session !info -->
+                    <div class="container-fluid">
+                        @if(session('info'))
+                            <div class="msg" style="z-index: 99 !important">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-md-12 col-md-offset-13">
+                                            <div class="alert alert-success">
+                                                {{ session('info') }}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    @endif
-                    @if(session('danger'))
-                        <div class="msg" style="z-index: 99 !important">
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-md-12 col-md-offset-13">
-                                        <div class="alert alert-danger">
-                                            {{ session('danger') }}
+                        @endif
+                        @if(session('danger'))
+                            <div class="msg" style="z-index: 99 !important">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-md-12 col-md-offset-13">
+                                            <div class="alert alert-danger">
+                                                {{ session('danger') }}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    @endif
-                    @yield('content')
-                </div>
+                        @endif
+                        @yield('content')
+                    </div>
 
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
                 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
@@ -260,11 +246,11 @@
                         }
                     });
                     //Borra gradual mente el mensaje de session !info
-                    $(document).ready(function() {
-                        setTimeout(function() {
-                            $(".msg").slideUp(2000);
-                            },3000);
-                    });
+                        $(document).ready(function() {
+                            setTimeout(function() {
+                                $(".msg").slideUp(2000);
+                                },3000);
+                        });
                 </script>
                 <!-- App scripts -->
                 @stack('scripts')

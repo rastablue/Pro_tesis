@@ -32,11 +32,6 @@ class RoleController extends Controller
                 ->addColumn('permissions', function($permissions){
                     return $permissions;
                 })
-                /*->addColumn('btn', function($vehiculos){
-                    return '<button type="button" class="btn btn-warning btn-sm" id="getEditProductData" data-id="'.$vehiculos->id.'">Edit</button>
-                    <button type="button" data-id="'.$vehiculos->id.'" data-toggle="modal" data-target="#DeleteProductModal" class="btn btn-danger btn-sm" id="getDeleteId">Delete</button>';
-
-                })*/
                 ->addColumn('btn', 'roles.actions')
                 ->rawColumns(['btn'])
                 ->make(true);

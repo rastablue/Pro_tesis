@@ -7,12 +7,21 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <span><h4><b>Lista de Usuarios</b></h4></span>
-                        @can('users.create')
-                            <button type="button" id="btnCrearUser" class="btn btn-success btn-sm">
-                                Nuevo Usuario
-                            </button>
-                        @endcan
+                        <span><h4><b>Empleados</b></h4></span>
+                        <div class="group">
+                            @can('users.show')
+                                <a href=" {{ route('users.reportes') }} " class="btn btn-sm btn-info">
+                                    <i class="fas fa-fw fa-file-alt"></i>
+                                    Reporte
+                                </a>
+                            @endcan
+                            @can('users.create')
+                                <a href=" {{ route('users.create') }} " class="btn btn-sm btn-success">
+                                    <i class="fas fa-fw fa-file-alt"></i>
+                                    Nuevo Empleado
+                                </a>
+                            @endcan
+                        </div>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -21,10 +30,9 @@
                                     <tr>
                                         <th width="75px">Cedula</th>
                                         <th>Nombre</th>
-                                        <th>Apellido</th>
                                         <th>Telefono</th>
                                         <th>E-mail</th>
-                                        <th width="160">&nbsp;</th>
+                                        <th>Acciones</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -218,12 +226,12 @@
             <div class="modal-content">
                 <!-- Modal Header -->
                     <div class="modal-header">
-                        <h5><b>Eliminar Usuario</b></h5>
+                        <h5><b>Eliminar Empleado</b></h5>
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
                 <!-- Modal body -->
                     <div class="modal-body">
-                        <h6 align="center">Eliminar este usuario tambien eliminara a todos los empleados vinculados. <br> ¿Desea continuar?</h6>
+                        <h6 align="center">Eliminar este empleado provocara que todos sus trabajos asignados se queden sin encargado. <br><br><b>¿Desea continuar?</b></h6>
                     </div>
                 <!-- Modal footer -->
                     <div class="modal-footer">
@@ -249,8 +257,7 @@
                     ajax: '{!! route('datatables.users') !!}',
                     columns: [
                         { data: 'cedula', name: 'cedula' },
-                        { data: 'name', name: 'name' },
-                        { data: 'apellido_pater', name: 'apellido_pater' },
+                        { data: 'apellido_pater', render: function(data, type, row, meta){return row.name + ' ' + row.apellido_pater}},
                         { data: 'tlf', name: 'tlf'  },
                         { data: 'email', name: 'email'  },
                         { data: 'btn', name: 'btn',orderable:false,serachable:false,sClass:'text-center' }
@@ -406,6 +413,7 @@
                         success: function(result) {
                             setImmediate(function(){
                                 $('#users-table').DataTable().ajax.reload();
+                                $('#DeleteProductModal').modal('hide');
                             });
                         }
                     });

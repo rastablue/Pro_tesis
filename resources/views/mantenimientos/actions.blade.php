@@ -1,12 +1,30 @@
+@can('trabajos.create')
+    @if ($estado != 'Finalizado')
+        <a href="{{ route('trabajos.show', Hashids::encode($id)) }}" class="btn btn-sm btn-success">
+            <i class="fas fa-fw fa-plus"></i>
+            Trabajo
+        </a>
+    @else
+        <button type="button" data-toggle="modal" data-target="#NoOptionModal" class="btn btn-success btn-sm">Trabajo</button>
+    @endif
+@endcan
 @can('mantenimientos.show')
     <a href="{{ route('mantenimientos.show', Hashids::encode($id)) }}" class="btn btn-sm btn-info">
         Ver
     </a>
 @endcan
 @can('mantenimientos.edit')
-    <a href="{{ route('mantenimientos.edit', Hashids::encode($id)) }}" class="btn btn-sm btn-warning">
-        Editar
-    </a>
+
+    @if ($estado != 'Finalizado')
+        <button type="button" data-id="{{ $id }}" data-toggle="modal" data-target="#FinalizaMantenimientoModal" class="btn btn-secondary btn-sm" id="getFinalizaId">Finalizar</button>
+        <a href="{{ route('mantenimientos.edit', Hashids::encode($id)) }}" class="btn btn-sm btn-warning">
+            Editar
+        </a>
+    @else
+        <button type="button" data-toggle="modal" data-target="#NoOptionModal" class="btn btn-secondary btn-sm">Finalizar</button>
+        <button type="button" data-toggle="modal" data-target="#NoOptionModal" class="btn btn-warning btn-sm" id="getFinalizaId">Editar</button>
+    @endif
+
 @endcan
 @can('mantenimientos.destroy')
 <button type="button" data-id="{{ $id }}" data-toggle="modal" data-target="#DeleteProductModal" class="btn btn-danger btn-sm" id="getDeleteId">Eliminar</button>

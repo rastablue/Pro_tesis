@@ -15,10 +15,21 @@ class CreateTrabajosTable extends Migration
     {
         Schema::create('trabajos', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->text('manobra');
-            $table->text('repuestos');
-            $table->float('costo_manobra');
+            $table->string('fake_id')->unique();
+            $table->text('manobra')->nullable();
+            $table->text('repuestos')->nullable();
+            $table->float('costo_manobra')->unsigned()->nullable();
+            $table->float('costo_repuestos')->unsigned()->nullable();
             $table->enum('estado', ['Activo', 'Inactivo', 'En espera', 'Finalizado'])->nullable();
+            $table->enum('tipo', ['Preventivo', 'Correctivo'])->nullable();
+            $table->unsignedBigInteger('mantenimiento_id')->index();
+            $table->foreign('mantenimiento_id')->references('id')->on('mantenimientos')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+            $table->unsignedBigInteger('user_id')->index()->nullable();
+            $table->foreign('user_id')->references('id')->on('users')
+                ->onDelete('set null')
+                ->onUpdate('cascade');
             $table->timestamps();
         });
     }
