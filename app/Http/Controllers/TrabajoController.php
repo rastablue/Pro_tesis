@@ -122,6 +122,7 @@ class TrabajoController extends Controller
 
             $mantenimiento->valor_total = $valorTotal;
 
+            //Si el estado del trabajo es 'Activo' el mantenimiento pasara a estar activo automaticamente
             if($request->estado == 'Activo'){
                 $mantenimiento->estado = 'Activo';
             }
@@ -195,7 +196,6 @@ class TrabajoController extends Controller
     {
         $trabajos = Trabajo::findOrFail($trabajo);
         $mantenimiento = Mantenimiento::findOrFail($request->id_mante);
-        $trabajos = Trabajo::findOrFail($trabajo);
         $id_users = User::where('cedula', $request->cedula)->first()->id;
 
         if ($mantenimiento->estado != 'Finalizado') {
@@ -220,7 +220,6 @@ class TrabajoController extends Controller
                 $trabajos->costo_manobra = $request->costo_mano_de_obra;
                 $trabajos->estado = $request->estado;
                 $trabajos->tipo = $request->tipo;
-                $trabajos->mantenimiento_id = $mantenimiento->id;
                 $trabajos->user_id = $id_users;
 
                 $trabajos->save();

@@ -65,6 +65,7 @@
                                                             @foreach(App\Marca::all() as $marcas)
                                                                 <option value="{{ $marcas->id }}">  {{ $marcas->marca }}  </option>
                                                             @endforeach
+
                                                             @error('marca')
                                                                 <span class="invalid-feedback" role="alert">
                                                                     <strong>{{ $message }}</strong>

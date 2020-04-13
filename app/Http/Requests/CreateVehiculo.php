@@ -25,7 +25,7 @@ class CreateVehiculo extends FormRequest
     {
         return [
             "placa" => "required|string|max:12|unique:vehiculos,placa",
-            "marca" => "required|string|max:30",
+            "marca" => "required|exists:marcas,id",
             "modelo" => "required|string|max:30",
             "color" => "string|max:50",
             "kilometraje" => "digits_between:0,7",

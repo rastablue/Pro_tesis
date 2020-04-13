@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Vinkla\Hashids\Facades\Hashids;
@@ -14,7 +12,6 @@ use App\Http\Requests\EditMantenimiento;
 use Barryvdh\DomPDF\Facade as PDF;
 use App\Mantenimiento;
 use App\Trabajo;
-use App\User;
 use App\Cliente;
 use App\Vehiculo;
 use Carbon\Carbon;
@@ -294,7 +291,14 @@ class MantenimientoController extends Controller
 
             if ($request->estado == 'Finalizado') {
                 $mantenimiento->fecha_egreso = $date;
+
+                foreach ($mantenimiento->trabajos->all() as $key) {
+                    $key->estado = 'Finalizado';
+
+                    $key->save();
+                }
             }
+
             if ($request->hasFile('foto')) {
                 $image = $request->foto->store('public');
                 $mantenimiento->path = $image;

@@ -26,7 +26,7 @@
                                 @csrf
 
                                 <div class="tab-content" id="v-pills-tabContent">
-                                    {{-- Empleado --}}
+                                    {{-- Cliente --}}
                                         <div class="tab-pane fade show active" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
 
                                             {{-- Cedula --}}
