@@ -10,7 +10,7 @@
                         <span><h4><b>Mantenimientos</b></h4></span>
                         <div class="group">
                             @can('mantenimientos.show')
-                                <a href=" {{ route('mantenimientos.reportes') }} " class="btn btn-sm btn-info">
+                                <a href=" {{ route('mantenimientos.reportes') }} " class="btn btn-sm btn-info" target="_blank">
                                     <i class="fas fa-fw fa-file-alt"></i>
                                     Reporte
                                 </a>
