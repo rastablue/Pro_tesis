@@ -37,10 +37,8 @@ class VehiculoController extends Controller
 
     public function vehiculoData()
     {
-        $vehiculos = Vehiculo::all();
-        /*$marcas = Vehiculo::join('marca_vehiculos', 'marca_vehiculos.id', '=', 'vehiculos.marca_vehiculo_id')
-                    ->select('vehiculos.id', 'marca_vehiculos.marca', 'vehiculos.modelo');*/
-        return Datatables()
+
+        /*return Datatables()
                 ->eloquent(Vehiculo::query())
                 ->addColumn('marca', function($vehiculos){
                     if ($vehiculos->marca_id) {
@@ -51,7 +49,17 @@ class VehiculoController extends Controller
                 })
                 ->addColumn('btn', 'vehiculos.actions')
                 ->rawColumns(['btn'])
-                ->make(true);
+                ->make(true);*/
+
+        $vehiculos = Vehiculo::join('marcas', 'marcas.id', '=', 'vehiculos.marca_id')
+                ->join('clientes', 'clientes.id', '=', 'vehiculos.cliente_id')
+                ->select('vehiculos.id', 'vehiculos.placa', 'marcas.marca', 'vehiculos.modelo',
+                        'vehiculos.color', 'clientes.name', 'clientes.apellido_pater');
+
+        return Datatables::of($vehiculos)
+            ->addColumn('btn', 'vehiculos.actions')
+            ->rawColumns(['btn'])
+            ->make(true);
     }
 
     public function reportes()

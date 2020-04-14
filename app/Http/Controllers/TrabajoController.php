@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\DB;
 use App\Trabajo;
 use App\Mantenimiento;
 use App\User;
-use App\Empleado;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateTrabajo;
 use App\Http\Requests\EditTrabajo;
@@ -15,6 +13,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Vinkla\Hashids\Facades\Hashids;
 use Barryvdh\DomPDF\Facade as PDF;
+use Yajra\Datatables\Datatables;
 
 class TrabajoController extends Controller
 {
@@ -31,9 +30,19 @@ class TrabajoController extends Controller
 
     public function trabajoData()
     {
-        $consultas = Trabajo::all();
+        $trabajos = Trabajo::join('mantenimientos', 'mantenimientos.id', '=', 'trabajos.mantenimiento_id')
+                            ->join('users', 'users.id', '=', 'trabajos.user_id')
+                            ->join('vehiculos', 'vehiculos.id', '=', 'mantenimientos.vehiculo_id')
+                            ->select('trabajos.id', 'trabajos.fake_id', 'mantenimientos.nro_ficha', 'vehiculos.placa',
+                                    'trabajos.tipo', 'trabajos.estado', 'users.name', 'users.apellido_pater',
+                                    'trabajos.mantenimiento_id');
 
-        return Datatables()
+        return Datatables::of($trabajos)
+            ->addColumn('btn', 'trabajos.actions')
+            ->rawColumns(['btn'])
+            ->make(true);
+
+        /*return Datatables()
                 ->eloquent(Trabajo::query())
                 ->addColumn('nro_ficha', function($consultas){
                     return $consultas->mantenimientos->nro_ficha;
@@ -54,15 +63,11 @@ class TrabajoController extends Controller
                 })
                 ->addColumn('btn', 'trabajos.actions')
                 ->rawColumns(['btn'])
-                ->make(true);
+                ->make(true);*/
     }
 
     public function reportes()
     {
-        /**
-         * toma en cuenta que para ver los mismos
-         * datos debemos hacer la misma consulta
-        **/
         $trabajo = Trabajo::all();
 
         $pdf = PDF::loadView('pdfs.reporte-trabajos', compact('trabajo'));

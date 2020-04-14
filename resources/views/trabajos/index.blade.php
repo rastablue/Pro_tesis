@@ -120,12 +120,12 @@
                     pageLength: 10,
                     ajax: '{!! route('datatables.trabajos') !!}',
                     columns: [
-                        { data: 'fake_id', name: 'fake_id' },
-                        { data: 'nro_ficha', name: 'nro_ficha' },
-                        { data: 'placa', name: 'placa' },
-                        { data: 'tipo', name: 'tipo' },
-                        { data: 'estado', name: 'estado' },
-                        { data: 'empleados', name: 'empleados'  },
+                        { data: 'fake_id', name: 'trabajos.fake_id' },
+                        { data: 'nro_ficha', name: 'mantenimientos.nro_ficha' },
+                        { data: 'placa', name: 'vehiculos.placa' },
+                        { data: 'tipo', name: 'trabajos.tipo' },
+                        { data: 'estado', name: 'trabajos.estado' },
+                        { data: 'name', name: 'users.name' },
                         { data: 'btn', name: 'btn',orderable:false,serachable:false,sClass:'text-center' }
                     ],
                     "language":{

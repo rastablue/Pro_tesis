@@ -31,6 +31,7 @@
                                         <th>Marca</th>
                                         <th>Modelo</th>
                                         <th>Color</th>
+                                        <th>Propietario</th>
                                         <th>Acciones</th>
                                     </tr>
                                 </thead>
@@ -162,10 +163,11 @@
                     ajax: '{!! route('datatables.vehiculo') !!}',
                     columns: [
                         //{ data: 'marca', name: 'marca_vehiculos.id' },
-                        { data: 'placa', name: 'placa' },
-                        { data: 'marca', name: 'marca'   },
-                        { data: 'modelo', name: 'modelo'  },
-                        { data: 'color', name: 'color'  },
+                        { data: 'placa', name: 'vehiculos.placa' },
+                        { data: 'marca', name: 'marcas.marca'   },
+                        { data: 'modelo', name: 'vehiculos.modelo'  },
+                        { data: 'color', name: 'vehiculos.color'  },
+                        { data: 'name', name: 'clientes.name'  },
                         { data: 'btn', name: 'btn',orderable:false,serachable:false,sClass:'text-center' }
                     ],
                     "language":{

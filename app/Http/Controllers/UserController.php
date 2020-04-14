@@ -74,6 +74,8 @@ class UserController extends Controller
     {
         if ($request->hasFile('foto')) {
             $image = $request->foto->store('public');
+        }else{
+            $image = null;
         }
 
         User::create([

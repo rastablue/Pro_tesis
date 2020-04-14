@@ -15,7 +15,7 @@ use App\Trabajo;
 use App\Cliente;
 use App\Vehiculo;
 use Carbon\Carbon;
-
+use yajra\Datatables\Datatables;
 class MantenimientoController extends Controller
 {
     /**
@@ -34,7 +34,7 @@ class MantenimientoController extends Controller
     {
         $mantenimiento = Mantenimiento::all();
 
-        return Datatables()
+        /*return Datatables()
                 ->eloquent(Mantenimiento::query())
                 ->addColumn('placa', function($mantenimiento){
                     if ($mantenimiento->vehiculo_id) {
@@ -45,7 +45,17 @@ class MantenimientoController extends Controller
                 })
                 ->addColumn('btn', 'mantenimientos.actions')
                 ->rawColumns(['btn'])
-                ->make(true);
+                ->make(true);*/
+
+        $mantenimientos = Mantenimiento::join('vehiculos', 'vehiculos.id', '=', 'mantenimientos.vehiculo_id')
+                            ->select('vehiculos.id', 'vehiculos.placa', 'mantenimientos.nro_ficha',
+                                    'mantenimientos.fecha_ingreso', 'mantenimientos.fecha_egreso',
+                                    'mantenimientos.estado', 'mantenimientos.valor_total');
+
+        return Datatables::of($mantenimientos)
+            ->addColumn('btn', 'mantenimientos.actions')
+            ->rawColumns(['btn'])
+            ->make(true);
     }
 
     //Crea un PDF de todos los mantenimientos

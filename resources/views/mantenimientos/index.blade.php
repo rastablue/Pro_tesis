@@ -193,12 +193,12 @@
                     pageLength: 10,
                     ajax: '{!! route('datatables.mantenimientos') !!}',
                     columns: [
-                        { data: 'nro_ficha', name: 'nro_ficha' },
-                        { data: 'placa', name: 'placa' },
-                        { data: 'fecha_ingreso', name: 'fecha_ingreso' },
-                        { data: 'fecha_egreso', name: 'fecha_egreso' },
-                        { data: 'estado', name: 'estado'  },
-                        { data: 'valor_total', name: 'valor_total'  },
+                        { data: 'nro_ficha', name: 'mantenimientos.nro_ficha' },
+                        { data: 'placa', name: 'vehiculos.placa' },
+                        { data: 'fecha_ingreso', name: 'mantenimientos.fecha_ingreso' },
+                        { data: 'fecha_egreso', name: 'mantenimientos.fecha_egreso' },
+                        { data: 'estado', name: 'mantenimientos.estado'  },
+                        { data: 'valor_total', name: 'mantenimientos.valor_total'  },
                         { data: 'btn', name: 'btn',orderable:false,serachable:false,sClass:'text-center' }
                     ],
                     "language":{
