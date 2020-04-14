@@ -2,26 +2,28 @@
 @section('content')
 
 <!-- Tabla -->
-    <div class="card shadow mb-4">
-        <div class="card-header d-flex justify-content-between align-items-center">
-            <span><h4><b>Marcas</b></h4></span>
-            @can('marcas.create')
-                <button type="button" id="btnCrearMarca" class="btn btn-success btn-sm">
-                    <i class="fas fa-plus"></i>
-                    Nueva Marca
-                </button>
-            @endcan
-        </div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-bordered" id="marcas-table" width="100%" cellspacing="0">
-                    <thead>
-                        <tr>
-                            <th width="255px">Marca</th>
-                            <th width="255px">Acciones</th>
-                        </tr>
-                    </thead>
-                </table>
+    <div class="container">
+        <div class="card shadow mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span><h4><b>Marcas</b></h4></span>
+                @can('marcas.create')
+                    <button type="button" id="btnCrearMarca" class="btn btn-success btn-sm">
+                        <i class="fas fa-plus"></i>
+                        Nueva Marca
+                    </button>
+                @endcan
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="marcas-table" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th width="255px">Marca</th>
+                                <th width="255px">Acciones</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

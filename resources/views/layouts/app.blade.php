@@ -101,9 +101,9 @@
 
                                             <!-- Menu Usuarios  -->
                                                 @can('users.index')
-                                                    <li class="sidebar-dropdown">
+                                                    <li class="sidebar">
                                                         <a href="{{ route('users.index') }}">
-                                                            <img class="img-responsive img-rounded" src="{{ asset('images/usuario.png') }}">
+                                                            <i class="fas fa-address-card"></i>
                                                             <span>Empleados</span>
                                                         </a>
                                                     </li>
@@ -111,9 +111,9 @@
 
                                             <!-- Menu Clientes  -->
                                                 @can('clientes.index')
-                                                    <li class="sidebar-dropdown">
+                                                    <li class="sidebar">
                                                         <a href="{{ route('clientes.index') }}">
-                                                            <img class="img-responsive img-rounded" src="{{ asset('images/cliente.png') }}">
+                                                            <i class="fas fa-address-book"></i>
                                                             <span>Clientes</span>
                                                         </a>
                                                     </li>
@@ -123,7 +123,7 @@
                                                 @can('vehiculos.index')
                                                     <li class="sidebar-dropdown">
                                                         <a href="#">
-                                                            <img class="img-responsive img-rounded" src="{{ asset('images/transporte.png') }}">
+                                                            <i class="fas fa-car-side"></i>
                                                             <span>Vehiculos</span>
                                                         </a>
                                                         <div class="sidebar-submenu">
@@ -144,7 +144,7 @@
                                                 @can('mantenimientos.index')
                                                     <li class="sidebar-dropdown">
                                                         <a href="#">
-                                                            <img class="img-responsive img-rounded" src="{{ asset('images/reparar.png') }}">
+                                                            <i class="fas fa-tools"></i>
                                                             <span>Mantenimientos</span>
                                                         </a>
                                                         <div class="sidebar-submenu">
@@ -164,9 +164,9 @@
 
                                             <!-- Menu Roles  -->
                                                 @can('roles.index')
-                                                    <li class="sidebar-dropdown">
+                                                    <li class="sidebar">
                                                         <a href="{{ route('roles.index') }}">
-                                                            <img class="img-responsive img-rounded" src="{{ asset('images/permisos.png') }}">
+                                                            <i class="fas fa-key"></i>
                                                             <span>Permisos</span>
                                                         </a>
                                                     </li>
@@ -183,14 +183,14 @@
                 <!-- Boton Configuracion -->
                     <div class="sidebar-footer">
                         <a href=" {{ route('profile.edit', Hashids::encode(Auth::user()->id)) }}">
-                            <img class="img-responsive img-rounded" src="{{ asset('images/engranaje.png') }}">
+                            <i class="fas fa-cogs"></i>
                         </a>
 
                 <!-- Boton Salir -->
                         <a href="{{ route('logout') }}"
                             onclick="event.preventDefault();
                                 document.getElementById('logout-form').submit();">
-                            <img class="img-responsive img-rounded" src="{{ asset('images/powerOff.png') }}"  title="Salir">
+                            <i class="fas fa-sign-out-alt"></i>
                         </a>
 
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

@@ -77,7 +77,7 @@
                                                 <div class="col-md-6 offset-md-6">
                                                     @can('clientes.show')
                                                         <a href="{{ route('clientes.pdf', Hashids::encode($cliente->id)) }}" class="btn btn-sm btn-info">
-                                                            <i class="fas fa-fw fa-pen"></i>
+                                                            <i class="far fa-file-pdf"></i>
                                                             PDF
                                                         </a>
                                                     @endcan
@@ -97,7 +97,7 @@
                                         @can('vehiculos.create')
                                             <div class="text-right mb-2">
                                                 <a href="{{ route('vehiculos.createfromcliente', Hashids::encode($cliente->id)) }}" class="btn btn-sm btn-success">
-                                                    <i class="fas fa-address-book"></i>
+                                                    <i class="fas fa-plus"></i>
                                                     Agregar Vehiculo
                                                 </a>
                                             </div>

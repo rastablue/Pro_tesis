@@ -11,13 +11,13 @@
                         <div class="group">
                             @can('users.show')
                                 <a href=" {{ route('users.reportes') }} " class="btn btn-sm btn-info" target="_blank">
-                                    <i class="fas fa-fw fa-file-alt"></i>
+                                    <i class="far fa-file-pdf"></i>
                                     Reporte
                                 </a>
                             @endcan
                             @can('users.create')
                                 <a href=" {{ route('users.create') }} " class="btn btn-sm btn-success">
-                                    <i class="fas fa-fw fa-file-alt"></i>
+                                    <i class="fas fa-fw fa-plus"></i>
                                     Nuevo Empleado
                                 </a>
                             @endcan
@@ -25,7 +25,7 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-bordered" id="users-table">
+                            <table class="table table-bordered" id="users-table" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
                                         <th width="75px">Cedula</th>

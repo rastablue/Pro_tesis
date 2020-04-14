@@ -182,37 +182,10 @@
                                                                         <div class="form-group row mb-0">
                                                                             @if ($item->mantenimientos->estado != 'Finalizado')
                                                                                 <div class="align-maquinarias-center col-md-6 offset-md-5">
-                                                                                    @can('mantenimientos.show')
-                                                                                        <button type="button" id="btnVerArchivo" class="btn btn-success btn-sm">
-                                                                                            <i class="fas fa-fw fa-image"></i>
-                                                                                            Archivo
-                                                                                        </button>
-                                                                                    @endcan
-                                                                                    @can('mantenimientos.edit')
-                                                                                        <a href="#" class="btn btn-sm btn-info">
-                                                                                            <i class="fas fa-fw fa-file-alt"></i>
-                                                                                            PDF
-                                                                                        </a>
-                                                                                    @endcan
                                                                                     @can('mantenimientos.edit')
                                                                                         <a href="{{ route('mantenimientos.edit', Hashids::encode($item->mantenimientos->id)) }}" class="btn btn-sm btn-warning">
                                                                                             <i class="fas fa-fw fa-pen"></i>
                                                                                             Editar
-                                                                                        </a>
-                                                                                    @endcan
-                                                                                </div>
-                                                                            @else
-                                                                                <div class="align-maquinarias-center col-md-6 offset-md-6">
-                                                                                    @can('mantenimientos.show')
-                                                                                        <button type="button" id="btnVerArchivo" class="btn btn-success btn-sm">
-                                                                                            <i class="fas fa-fw fa-image"></i>
-                                                                                            Archivo
-                                                                                        </button>
-                                                                                    @endcan
-                                                                                    @can('mantenimientos.edit')
-                                                                                        <a href="#" class="btn btn-sm btn-info">
-                                                                                            <i class="fas fa-fw fa-file-alt"></i>
-                                                                                            PDF
                                                                                         </a>
                                                                                     @endcan
                                                                                 </div>
@@ -326,14 +299,13 @@
             </div>
         </div>
     </div>
-
 @stop
 
 @push('scripts')
 <script>
     $(function() {
         $(document).ready(function(){
-            // modal crear
+            // modal ver archivo
                 $("#btnVerArchivo").click(function(e) {
                     e.preventDefault();
                     $("#alertModal").addClass("display-none").removeClass("alert-danger")

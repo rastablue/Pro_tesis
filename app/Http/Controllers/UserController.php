@@ -43,10 +43,6 @@ class UserController extends Controller
 
     public function reportes()
     {
-        /**
-         * toma en cuenta que para ver los mismos
-         * datos debemos hacer la misma consulta
-        **/
         $user = User::all();
 
         $pdf = PDF::loadView('pdfs.reporte-users', compact('user'));

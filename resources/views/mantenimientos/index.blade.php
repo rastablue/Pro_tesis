@@ -11,12 +11,13 @@
                         <div class="group">
                             @can('mantenimientos.show')
                                 <a href=" {{ route('mantenimientos.reportes') }} " class="btn btn-sm btn-info" target="_blank">
-                                    <i class="fas fa-fw fa-file-alt"></i>
+                                    <i class="far fa-file-pdf"></i>
                                     Reporte
                                 </a>
                             @endcan
                             @can('mantenimientos.create')
                                 <a href=" {{ route('mantenimientos.create') }} " class="btn btn-success btn-sm">
+                                    <i class="fas fa-plus"></i>
                                     Nuevo Mantenimiento
                                 </a>
                             @endcan
@@ -29,8 +30,7 @@
                                     <tr>
                                         <th>Nro. Ficha</th>
                                         <th>Placa</th>
-                                        <th width="100px">Fecha. Ingreso</th>
-                                        <th width="100px">Fecha. Egreso</th>
+                                        <th width="100px">Fecha Ingreso</th>
                                         <th>Estado</th>
                                         <th>Valor</th>
                                         <th>Acciones</th>
@@ -196,7 +196,6 @@
                         { data: 'nro_ficha', name: 'mantenimientos.nro_ficha' },
                         { data: 'placa', name: 'vehiculos.placa' },
                         { data: 'fecha_ingreso', name: 'mantenimientos.fecha_ingreso' },
-                        { data: 'fecha_egreso', name: 'mantenimientos.fecha_egreso' },
                         { data: 'estado', name: 'mantenimientos.estado'  },
                         { data: 'valor_total', name: 'mantenimientos.valor_total'  },
                         { data: 'btn', name: 'btn',orderable:false,serachable:false,sClass:'text-center' }

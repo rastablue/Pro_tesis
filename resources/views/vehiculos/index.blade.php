@@ -11,12 +11,13 @@
                         <div class="group">
                             @can('vehiculos.show')
                                 <a href="{{ route('vehiculos.reportes') }}" class="btn btn-sm btn-info" target="_blank">
-                                    <i class="fas fa-fw fa-file-alt"></i>
+                                    <i class="far fa-file-pdf"></i>
                                     Reporte
                                 </a>
                             @endcan
                             @can('vehiculos.create')
                                 <a href=" {{ route('vehiculos.create') }} " class="btn btn-success btn-sm">
+                                    <i class="fas fa-plus"></i>
                                     Nuevo Vehiculo
                                 </a>
                             @endcan
@@ -24,7 +25,7 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-bordered" id="vehiculos-table">
+                            <table class="table table-bordered" id="vehiculos-table" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
                                         <th>Placa</th>

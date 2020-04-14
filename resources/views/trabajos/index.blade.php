@@ -10,14 +10,14 @@
                         <span><h4><b>Trabajos</b></h4></span>
                         @can('trabajos.show')
                             <a href=" {{ route('trabajos.reportes') }} " class="btn btn-sm btn-info" target="_blank">
-                                <i class="fas fa-fw fa-file-alt"></i>
+                                <i class="far fa-file-pdf"></i>
                                 Reporte
                             </a>
                         @endcan
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-bordered" id="trabajos-table">
+                            <table class="table table-bordered" id="trabajos-table" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
                                         <th>Codigo</th>
