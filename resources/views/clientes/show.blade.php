@@ -76,7 +76,7 @@
                                             <div class="form-group row mb-0">
                                                 <div class="col-md-6 offset-md-6">
                                                     @can('clientes.show')
-                                                        <a href="{{ route('clientes.pdf', Hashids::encode($cliente->id)) }}" class="btn btn-sm btn-info">
+                                                        <a href="{{ route('clientes.pdf', Hashids::encode($cliente->id)) }}" class="btn btn-sm btn-primary text-white">
                                                             <i class="far fa-file-pdf"></i>
                                                             PDF
                                                         </a>

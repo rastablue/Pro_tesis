@@ -1,4 +1,4 @@
-<a href="{{ route('mantenimientos.show', Hashids::encode(App\Mantenimiento::where('id', $mantenimiento_id)->first()->id)) }}" class="btn btn-sm btn-info">
+<a href="{{ route('mantenimientos.show', Hashids::encode(App\Mantenimiento::where('id', $mantenimiento_id)->first()->id)) }}" class="btn btn-sm btn-primary text-white">
     <i class="fas fa-eye"></i>
     Ver
 </a>

@@ -85,8 +85,8 @@
                                                 <div class="form-group row mb-0">
                                                     <div class="align-items-center col-md-6 offset-md-6">
                                                         @can('vehiculos.sow')
-                                                            <a href="{{ route('vehiculos.pdf', Hashids::encode($vehiculo->id)) }}" class="btn btn-sm btn-info">
-                                                                <i class="fas fa-fw fa-pen"></i>
+                                                            <a href="{{ route('vehiculos.pdf', Hashids::encode($vehiculo->id)) }}" class="btn btn-sm btn-primary text-white">
+                                                                <i class="far fa-file-pdf"></i>
                                                                 PDF
                                                             </a>
                                                         @endcan
@@ -187,7 +187,7 @@
                                         @can('mantenimientos.create')
                                             <div class="text-right mb-2">
                                                 <a href="{{ route('mantenimientos.createfromvehiculos', Hashids::encode($vehiculo->id)) }}" class="btn btn-sm btn-success">
-                                                    <i class="fas fa-address-book"></i>
+                                                    <i class="fas fa-plus"></i>
                                                     Agregar Mantenimiento
                                                 </a>
                                             </div>

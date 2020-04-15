@@ -1,5 +1,5 @@
 @can('users.show')
-    <a href="{{ route('users.show', Hashids::encode($id)) }}" class="btn btn-sm btn-info">
+    <a href="{{ route('users.show', Hashids::encode($id)) }}" class="btn btn-sm btn-primary text-white">
         <i class="fas fa-eye"></i>
         Ver
     </a>

@@ -12,7 +12,7 @@
     @endif
 @endcan
 @can('mantenimientos.show')
-    <a href="{{ route('mantenimientos.show', Hashids::encode($id)) }}" class="btn btn-sm btn-info">
+    <a href="{{ route('mantenimientos.show', Hashids::encode($id)) }}" class="btn btn-sm btn-primary text-white">
         <i class="fas fa-eye"></i>
         Ver
     </a>

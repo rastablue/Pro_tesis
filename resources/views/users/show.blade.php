@@ -181,7 +181,7 @@
                                                                     {{-- btn --}}
                                                                         <div class="form-group row mb-0">
                                                                             @if ($item->mantenimientos->estado != 'Finalizado')
-                                                                                <div class="align-maquinarias-center col-md-6 offset-md-5">
+                                                                                <div class="align-maquinarias-center col-md-6 offset-md-6">
                                                                                     @can('mantenimientos.edit')
                                                                                         <a href="{{ route('mantenimientos.edit', Hashids::encode($item->mantenimientos->id)) }}" class="btn btn-sm btn-warning">
                                                                                             <i class="fas fa-fw fa-pen"></i>

@@ -89,7 +89,7 @@
                                             {{-- btn --}}
                                                 <div class="form-group row mb-0">
                                                     @if ($mantenimiento->estado != 'Finalizado')
-                                                        <div class="align-maquinarias-center col-md-6 offset-md-5">
+                                                        <div class="align-maquinarias-center col-md-6 offset-md-4">
                                                             @can('mantenimientos.show')
                                                                 <button type="button" id="btnVerArchivo" class="btn btn-success btn-sm">
                                                                     <i class="fas fa-fw fa-image"></i>
@@ -98,10 +98,11 @@
                                                             @endcan
                                                             @can('mantenimientos.edit')
                                                                 <button type="button" id="btnFinalizaMantenimientoModal" class="btn btn-secondary btn-sm">
+                                                                    <i class="fas fa-flag"></i>
                                                                     Finalizar
                                                                 </button>
-                                                                <a href=" {{ route('mantenimientos.pdf', Hashids::encode($mantenimiento->id)) }} " class="btn btn-sm btn-info">
-                                                                    <i class="fas fa-fw fa-file-alt"></i>
+                                                                <a href=" {{ route('mantenimientos.pdf', Hashids::encode($mantenimiento->id)) }} " class="btn btn-sm btn-primary text-white">
+                                                                    <i class="fas fa-fw fa-file-pdf"></i>
                                                                     PDF
                                                                 </a>
                                                                 <a href="{{ route('mantenimientos.edit', Hashids::encode($mantenimiento->id)) }}" class="btn btn-sm btn-warning">
@@ -118,8 +119,8 @@
                                                                     Archivo
                                                                 </button>
                                                             @endcan
-                                                            <a href=" {{ route('mantenimientos.pdf', Hashids::encode($mantenimiento->id)) }} " class="btn btn-sm btn-info">
-                                                                <i class="fas fa-fw fa-file-alt"></i>
+                                                            <a href=" {{ route('mantenimientos.pdf', Hashids::encode($mantenimiento->id)) }} " class="btn btn-sm btn-primary text-white">
+                                                                <i class="fas fa-fw fa-file-pdf"></i>
                                                                 PDF
                                                             </a>
                                                         </div>
@@ -233,7 +234,7 @@
                                                 @can('trabajos.create')
                                                     <div class="text-right mb-2">
                                                         <a href="{{ route('trabajos.show', Hashids::encode($mantenimiento->id)) }}" class="btn btn-sm btn-success">
-                                                            <i class="fas fa-address-book"></i>
+                                                            <i class="fas fa-plus"></i>
                                                             Agregar Trabajo
                                                         </a>
                                                     </div>
@@ -313,7 +314,7 @@
                                                                 {{-- btn--}}
                                                                     <div class="form-group row mb-0">
                                                                         @if ($item->estado != 'Finalizado')
-                                                                            <div class="col-md-6 offset-md-5">
+                                                                            <div class="col-md-6 offset-md-6">
                                                                                 @can('trabajos.edit')
                                                                                     <a href="{{ route('trabajos.edit', Hashids::encode($item->id)) }}" class="btn btn-sm btn-warning">
                                                                                         <i class="fas fa-fw fa-pen"></i>

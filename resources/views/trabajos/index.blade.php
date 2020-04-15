@@ -9,7 +9,7 @@
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <span><h4><b>Trabajos</b></h4></span>
                         @can('trabajos.show')
-                            <a href=" {{ route('trabajos.reportes') }} " class="btn btn-sm btn-info" target="_blank">
+                            <a href=" {{ route('trabajos.reportes') }} " class="btn btn-sm btn-primary text-white" target="_blank">
                                 <i class="far fa-file-pdf"></i>
                                 Reporte
                             </a>

@@ -10,7 +10,7 @@
                         <span><h4><b>Empleados</b></h4></span>
                         <div class="group">
                             @can('users.show')
-                                <a href=" {{ route('users.reportes') }} " class="btn btn-sm btn-info" target="_blank">
+                                <a href=" {{ route('users.reportes') }} " class="btn btn-sm btn-primary text-white" target="_blank">
                                     <i class="far fa-file-pdf"></i>
                                     Reporte
                                 </a>

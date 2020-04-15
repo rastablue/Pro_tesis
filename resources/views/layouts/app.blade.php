@@ -51,7 +51,7 @@
                         {{ config('app.name', 'Laravel') }}
                     </a>
                     <div id="close-sidebar">
-                        <i class="fas fa-times"></i>
+                        <i class="fas fa-arrow-circle-left"></i>
                     </div>
                 </div>
                 <div>
