@@ -66,7 +66,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <!-- Modal Header -->
-                    <div class="modal-header">
+                    <div class="modal-header bg-danger text-light">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
                 <!-- Modal body -->

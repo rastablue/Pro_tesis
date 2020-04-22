@@ -68,7 +68,7 @@
             <tr>
                 <br><br>
                 <th scope="col"><div class="text-center font-weight-bold text-info"><br>Observaciones:</th>
-                <td scope="col" colspan="3"><br>{{ $mantenimiento->vehiculos->observacion }}</td>
+                <td scope="col" colspan="4"><br>{{ $mantenimiento->vehiculos->observacion }}</td>
             </tr>
         </tbody>
     </table>

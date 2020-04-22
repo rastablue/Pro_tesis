@@ -91,9 +91,9 @@
                                                     <label for="email" class="col-md-4 col-form-label text-md-right">Nueva Contraseña</label>
 
                                                     <div class="col-md-6">
-                                                        <input id="password" type="password" class="form-control" name="nueva_contraseña" autocomplete="nueva_contraseña">
+                                                        <input id="password" type="password" class="form-control @error('confirmar_contraseña') is-invalid @enderror" name="nueva_contraseña" autocomplete="nueva_contraseña">
 
-                                                        @error('nueva_contraseña')
+                                                        @error('confirmar_contraseña')
                                                             <span class="invalid-feedback" role="alert">
                                                                 <strong>{{ $message }}</strong>
                                                             </span>

@@ -82,7 +82,7 @@
                                     </div>
                                     <div class="user-info">
                                         <span class="user-name">
-                                            {{ Auth::user()->name }} {{ Auth::user()->apellido_pater }}
+                                            {{ Auth::user()->name }} <br> {{ Auth::user()->apellido_pater }}
                                         </span>
                                         <span class="user-role">{{ @App\User::findOrFail(Auth::user()->id)->roles->first()->name }}</span>
                                         <span class="user-status">

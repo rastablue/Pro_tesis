@@ -128,8 +128,8 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <!-- Modal Header -->
-                    <div class="modal-header">
-                        <h5><b>Eliminar Vehiculo</b></h5>
+                    <div class="modal-header bg-danger text-light">
+                        <h5>Eliminar Vehiculo</h5>
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
                 <!-- Modal body -->

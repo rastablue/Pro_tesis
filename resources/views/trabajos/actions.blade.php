@@ -1,16 +1,21 @@
-<a href="{{ route('mantenimientos.show', Hashids::encode(App\Mantenimiento::where('id', $mantenimiento_id)->first()->id)) }}" class="btn btn-sm btn-primary text-white">
-    <i class="fas fa-eye"></i>
-    Ver
-</a>
+@can('trabajos.show')
+    <a href="{{ route('mantenimientos.show', Hashids::encode(App\Mantenimiento::where('id', $mantenimiento_id)->first()->id)) }}" class="btn btn-sm btn-primary text-white">
+        <i class="fas fa-eye"></i>
+        Ver
+    </a>
+@endcan
+
 @if ($estado == 'Finalizado')
-    <button type="button" data-toggle="modal" data-target="#NoOptionModal" class="btn btn-secondary btn-sm">
-        <i class="fas fa-flag"></i>
-        Finalizar
-    </button>
-    <button type="button" data-toggle="modal" data-target="#NoOptionModal" class="btn btn-warning btn-sm" id="getFinalizaId">
-        <i class="fas fa-pen"></i>
-        Editar
-    </button>
+    @can('trabajos.edit')
+        <button type="button" data-toggle="modal" data-target="#NoOptionModal" class="btn btn-secondary btn-sm">
+            <i class="fas fa-flag"></i>
+            Finalizar
+        </button>
+        <button type="button" data-toggle="modal" data-target="#NoOptionModal" class="btn btn-warning btn-sm" id="getFinalizaId">
+            <i class="fas fa-pen"></i>
+            Editar
+        </button>
+    @endcan
 @else
     @can('trabajos.edit')
         <button type="button" data-id="{{ $id }}" data-toggle="modal" data-target="#FinalizaTrabajoModal" class="btn btn-secondary btn-sm" id="getFinalizaId">

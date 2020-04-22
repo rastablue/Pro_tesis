@@ -30,7 +30,8 @@
                                     <tr>
                                         <th>Nro. Ficha</th>
                                         <th>Placa</th>
-                                        <th width="100px">Fecha Ingreso</th>
+                                        <th width="100">Fecha Ingreso</th>
+                                        <th width="100">Fecha Egreso</th>
                                         <th>Estado</th>
                                         <th>Valor</th>
                                         <th>Acciones</th>
@@ -115,8 +116,8 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <!-- Modal Header -->
-                    <div class="modal-header">
-                        <h5><b>Finalizar Mantenimiento</b></h5>
+                    <div class="modal-header bg-warning">
+                        <h5>Finalizar Mantenimiento</h5>
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
                 <!-- Modal body -->
@@ -139,8 +140,8 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <!-- Modal Header -->
-                    <div class="modal-header">
-                        <h5><b>Advertencia</b></h5>
+                    <div class="modal-header bg-warning">
+                        <h5>Advertencia</h5>
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
                 <!-- Modal body -->
@@ -162,8 +163,8 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <!-- Modal Header -->
-                    <div class="modal-header">
-                        <h5><b>Eliminar Mantenimiento</b></h5>
+                    <div class="modal-header bg-danger text-light">
+                        <h5>Eliminar Mantenimiento</h5>
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
                 <!-- Modal body -->
@@ -196,6 +197,7 @@
                         { data: 'nro_ficha', name: 'mantenimientos.nro_ficha' },
                         { data: 'placa', name: 'vehiculos.placa' },
                         { data: 'fecha_ingreso', name: 'mantenimientos.fecha_ingreso' },
+                        { data: 'fecha_egreso', name: 'mantenimientos.fecha_egreso' },
                         { data: 'estado', name: 'mantenimientos.estado'  },
                         { data: 'valor_total', name: 'mantenimientos.valor_total'  },
                         { data: 'btn', name: 'btn',orderable:false,serachable:false,sClass:'text-center' }
