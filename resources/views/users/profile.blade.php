@@ -24,7 +24,9 @@
                                         @if ($user->path)
                                             <div class="avatar text-center" style="background-image: url({{ $user->url_path }})"></div>
                                         @else
-                                            <div class="avatar text-center" style="background-image: url({{ asset('images/profile2.png') }})"></div>
+                                            <div class="avatar text-center"><div>
+                                                <i class="fas fa-user-tie fa-10x"></i>
+                                            </div></div>
                                         @endif
 
                                         <form class="user" method="POST" action="{{ route('pass.update', $user->id) }}" enctype="multipart/form-data">

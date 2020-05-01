@@ -74,9 +74,9 @@
                                                 <img class="img-responsive img-rounded" src="{{ Auth::user()->url_path }}" alt="User picture">
                                             </a>
                                         @else
-                                            <a href=" {{ route('profile.edit', Hashids::encode(Auth::user()->id)) }} ">
-                                                <img class="img-responsive img-rounded" src="{{ asset('images/profile2.png') }}" alt="User picture">
-                                            </a>
+                                            <div>
+                                                <i class="fas fa-user-tie fa-4x"></i>
+                                            </div>
                                         @endif
 
                                     </div>
