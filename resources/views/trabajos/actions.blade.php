@@ -5,27 +5,19 @@
     </a>
 @endcan
 
-@if ($estado == 'Finalizado')
+@if ($estado != 'Finalizado')
     @can('trabajos.edit')
-        <button type="button" data-toggle="modal" data-target="#NoOptionModal" class="btn btn-secondary btn-sm">
-            <i class="fas fa-flag"></i>
-            Finalizar
-        </button>
-        <button type="button" data-toggle="modal" data-target="#NoOptionModal" class="btn btn-warning btn-sm" id="getFinalizaId">
-            <i class="fas fa-pen"></i>
-            Editar
+        <button type="button" data-id="{{ $id }}" data-manobra="{{ $manobra }}" data-diagnostico="{{ $diagnostico }}" data-toggle="modal" data-target="#RevisaTareaModal" class="btn btn-warning btn-sm" id="getActualizaId">
+            <i class="fas fa-fw fa-check-circle"></i>
+            Revisar
         </button>
     @endcan
 @else
     @can('trabajos.edit')
-        <button type="button" data-id="{{ $id }}" data-toggle="modal" data-target="#FinalizaTrabajoModal" class="btn btn-secondary btn-sm" id="getFinalizaId">
-            <i class="fas fa-flag"></i>
-            Finalizar
+        <button type="button" data-toggle="modal" data-manobra="{{ $manobra }}" data-diagnostico="{{ $diagnostico }}" data-target="#NoOptionModal" class="btn btn-warning btn-sm">
+            <i class="fas fa-fw fa-check-circle"></i>
+            Revisar
         </button>
-        <a href="{{ route('trabajos.edit', Hashids::encode($id)) }}" class="btn btn-sm btn-warning">
-            <i class="fas fa-pen"></i>
-            Editar
-        </a>
     @endcan
 @endif
 

@@ -9,7 +9,7 @@
 
 <table class="table">
     <thead>
-        <tr class="table-secondary">
+        <tr class="table-secondary" style="font-size: 9">
             <th scope="col" width="70px"><div class="text-center font-weight-bold text-info">Codigo</th>
             <th scope="col" width="80px"><div class="text-center font-weight-bold text-info">Mantenimiento</th>
                 <th scope="col" width="70px"><div class="text-center font-weight-bold text-info">Placa</th>
@@ -20,7 +20,7 @@
     </thead>
     <tbody>
         @foreach ($trabajo as $trabajos)
-            <tr>
+            <tr style="font-size: 8">
                 <td><div class="text-center">{{ $trabajos->fake_id }}</td>
                 <td><div class="text-center">{{ $trabajos->mantenimientos->nro_ficha }}</td>
                 @if ($trabajos->mantenimientos->vehiculo_id)

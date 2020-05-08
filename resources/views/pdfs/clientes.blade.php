@@ -9,7 +9,7 @@
 
 <table class="table">
     <thead>
-        <tr class="table-secondary">
+        <tr class="table-secondary" style="font-size: 9">
             <th scope="col"><div class="text-center font-weight-bold text-info">Cedula</th>
             <th scope="col"><div class="text-center font-weight-bold text-info">Nombre</th>
             <th scope="col"><div class="text-center font-weight-bold text-info">Telefono</th>
@@ -17,7 +17,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
+        <tr style="font-size: 8">
             <td><div class="text-center">{{ $cliente->cedula }}</td>
             <td><div class="text-center">{{ $cliente->name }} {{ $cliente->apellido_pater }}</td>
             <td><div class="text-center">{{ $cliente->tlf }}</td>
@@ -41,14 +41,14 @@
             <tr>
                 <th width="150px"><div class="font-weight-bold text-info">Placa</th>
                     @foreach (@$cliente->vehiculos as $item)
-                        <td>{{ $item->placa }}</td>
+                        <td style="font-size: 8">{{ $item->placa }}</td>
                     @endforeach
             </tr>
             <tr>
                 <th width="150px"><div class="font-weight-bold text-info">Marca</th>
                     @foreach (@$cliente->vehiculos as $item)
                         @if ($item->marca_id)
-                            <td>{{ $item->marcas->marca }}</td>
+                            <td style="font-size: 8">{{ $item->marcas->marca }}</td>
                         @else
                             <td>N/A</td>
                         @endif
@@ -57,19 +57,19 @@
             <tr>
                 <th width="150px"><div class="font-weight-bold text-info">Modelo</th>
                     @foreach (@$cliente->vehiculos as $item)
-                        <td>{{ $item->modelo }}</td>
+                        <td style="font-size: 8">{{ $item->modelo }}</td>
                     @endforeach
             </tr>
             <tr>
                 <th width="150px"><div class="font-weight-bold text-info">Kilometraje</th>
                     @foreach (@$cliente->vehiculos as $item)
-                        <td>{{ $item->kilometraje }}</td>
+                        <td style="font-size: 8">{{ $item->kilometraje }}</td>
                     @endforeach
             </tr>
             <tr>
                 <th width="150px"><div class="font-weight-bold text-info">Observacion</th>
                     @foreach (@$cliente->vehiculos as $item)
-                        <td>{{ $item->observacion }}</td>
+                        <td style="font-size: 8">{{ $item->observacion }}</td>
                     @endforeach
             </tr>
         </tbody>

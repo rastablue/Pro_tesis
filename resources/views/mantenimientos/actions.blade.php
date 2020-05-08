@@ -5,7 +5,7 @@
             Trabajo
         </a>
     @else
-        <button type="button" data-toggle="modal" data-target="#NoOptionModal" class="btn btn-success btn-sm">
+        <button type="button" data-toggle="modal" data-observacion="{{ $observacion }}" data-diagnostico="{{ $diagnostico }}" data-target="#NoOptionModal" class="btn btn-success btn-sm">
             <i class="fas fa-plus"></i>
             Trabajo
         </button>
@@ -20,23 +20,15 @@
 @can('mantenimientos.edit')
 
     @if ($estado != 'Finalizado')
-        <button type="button" data-id="{{ $id }}" data-toggle="modal" data-target="#FinalizaMantenimientoModal" class="btn btn-warning btn-sm" id="getFinalizaId">
-            <i class="fas fa-flag"></i>
-            Finalizar
+        <button type="button" data-id="{{ $id }}" data-toggle="modal" data-observacion="{{ $observacion }}" data-diagnostico="{{ $diagnostico }}" data-target="#RevisaTareaModal" class="btn btn-warning btn-sm" id="getActualizaId">
+            <i class="fas fa-fw fa-check-circle"></i>
+            Revisar
         </button>
-        <!--<a href="{{ route('mantenimientos.edit', Hashids::encode($id)) }}" class="btn btn-sm btn-warning">
-            <i class="fas fa-pen"></i>
-            Editar
-        </a>-->
     @else
-        <button type="button" data-toggle="modal" data-target="#NoOptionModal" class="btn btn-warning btn-sm">
-            <i class="fas fa-flag"></i>
-            Finalizar
+        <button type="button" data-toggle="modal" data-observacion="{{ $observacion }}" data-diagnostico="{{ $diagnostico }}" data-target="#NoOptionModal" class="btn btn-warning btn-sm">
+            <i class="fas fa-fw fa-check-circle"></i>
+            Revisar
         </button>
-        <!--<button type="button" data-toggle="modal" data-target="#NoOptionModal" class="btn btn-warning btn-sm" id="getFinalizaId">
-            <i class="fas fa-pen"></i>
-            Editar
-        </button>-->
     @endif
 
 @endcan

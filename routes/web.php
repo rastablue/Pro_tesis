@@ -1,5 +1,8 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -141,19 +144,35 @@ Route::middleware(['auth'])->group(function(){
                     ->middleware('can:empleados.edit');
 
     //Mantenimientos
+        //PDFs
+            Route::get('descargar-mantenimientos', 'MantenimientoController@reportes')->name('mantenimientos.reportes')
+                        ->middleware('can:mantenimientos.show');
 
-        Route::get('descargar-mantenimientos', 'MantenimientoController@reportes')->name('mantenimientos.reportes')
-                    ->middleware('can:mantenimientos.show');
+            Route::get('descargar-mantenimientos/Espera', 'MantenimientoController@reportesEspera')->name('mantenimientos.reportesespera')
+                            ->middleware('can:mantenimientos.show');
 
-        Route::get('descargar-mantenimientos/{mantenimiento}', 'MantenimientoController@pdf')->name('mantenimientos.pdf');
+            Route::get('descargar-mantenimientos/inactivo', 'MantenimientoController@reportesInactivo')->name('mantenimientos.reportesinactivo')
+                            ->middleware('can:mantenimientos.show');
 
+            Route::get('descargar-mantenimientos/activo', 'MantenimientoController@reportesActivo')->name('mantenimientos.reportesactivo')
+                            ->middleware('can:mantenimientos.show');
+
+            Route::get('descargar-mantenimientos/finalizado', 'MantenimientoController@reportesFinalizado')->name('mantenimientos.reportesfinalizado')
+                            ->middleware('can:mantenimientos.show');
+
+            Route::get('seleccionar-mantenimientos', 'MantenimientoController@reportesSelect')->name('mantenimientos.reporteselect')
+                            ->middleware('can:mantenimientos.show');
+
+            Route::get('seleccionar-mantenimientos/apply', 'MantenimientoController@reportesSelectApply')->name('mantenimientos.reporteselectapply')
+                            ->middleware('can:mantenimientos.show');
+
+            Route::get('descargar-mantenimientos/{mantenimiento}', 'MantenimientoController@pdf')->name('mantenimientos.pdf');
+
+        //Fin PDFs seccion
         Route::post('mantenimientos/store', 'MantenimientoController@store')->name('mantenimientos.store')
                     ->middleware('can:mantenimientos.create');
 
         Route::post('mantenimientos/storefromvehiculos', 'MantenimientoController@storeFromVehiculo')->name('mantenimientos.storefromvehiculos')
-                    ->middleware('can:mantenimientos.create');
-
-        Route::post('mantenimientos/store/direct', 'MantenimientoController@storeDirect')->name('mantenimientos.direct')
                     ->middleware('can:mantenimientos.create');
 
         Route::get('mantenimientos', 'MantenimientoController@index')->name('mantenimientos.index')
@@ -183,13 +202,41 @@ Route::middleware(['auth'])->group(function(){
         Route::get('mantenimientos/{mantenimiento}/edit', 'MantenimientoController@edit')->name('mantenimientos.edit')
                     ->middleware('can:mantenimientos.edit');
 
-        //Marca un mantenimiento como finalizado directamente
+        ///Modificar estados de Mantenimientos
+        Route::put('mantenimientos/activo/{mantenimiento}', 'MantenimientoController@activo')->name('mantenimientos.activo')
+                    ->middleware('can:mantenimientos.edit');
+
+        Route::put('mantenimientos/espera/{mantenimiento}', 'MantenimientoController@espera')->name('mantenimientos.espera')
+                    ->middleware('can:mantenimientos.edit');
+
+        Route::put('mantenimientos/inactivo/{mantenimiento}', 'MantenimientoController@inactivo')->name('mantenimientos.inactivo')
+                    ->middleware('can:mantenimientos.edit');
+
         Route::put('mantenimientos/finalizar/{mantenimiento}', 'MantenimientoController@finalizar')->name('mantenimientos.finalizar')
                     ->middleware('can:mantenimientos.edit');
 
         //Marca un mantenimiento como finalizado directamente desde la vista show
         Route::put('mantenimientos/finalizarfrom/{mantenimiento}', 'MantenimientoController@finalizarFrom')->name('mantenimientos.finalizarfrom')
                     ->middleware('can:mantenimientos.edit');
+
+        //Agregados si no existen
+        Route::get('mantenimientos/confirmacliente/clienteconfirmado', 'MantenimientoController@confirmaCliente')->name('mantenimientos.confirmaCliente')
+                    ->middleware('can:mantenimientos.create');
+        
+        Route::post('mantenimientos/clientestore/almacenarcliente', 'MantenimientoController@clienteStore')->name('mantenimientos.clientestore')
+                    ->middleware('can:mantenimientos.create');
+
+        Route::get('mantenimientos/confirmavehiculo/vehiculoconfirmado', 'MantenimientoController@confirmaVehiculo')->name('mantenimientos.confirmaVehiculo')
+                    ->middleware('can:mantenimientos.create');
+        
+        Route::post('mantenimientos/vehiculostore/almacenarvehiculo', 'MantenimientoController@vehiculoStore')->name('mantenimientos.vehiculoStore')
+                    ->middleware('can:mantenimientos.create');
+
+        Route::get('mantenimientos/confirma-ambos/ambos-confirmado', 'MantenimientoController@confirmaAmbos')->name('mantenimientos.confirmaAmbos')
+                    ->middleware('can:mantenimientos.create');
+        
+        Route::post('mantenimientos/ambos-store/almacenar-ambos', 'MantenimientoController@amboStore')->name('mantenimientos.ambosStore')
+                    ->middleware('can:mantenimientos.create');
 
     //Vehiculos
 
@@ -227,6 +274,13 @@ Route::middleware(['auth'])->group(function(){
 
         Route::get('vehiculos/{vehiculo}/edit', 'VehiculoController@edit')->name('vehiculos.edit')
                     ->middleware('can:vehiculos.edit');
+
+        //Agregado si no existen
+        Route::get('vehiculos/confirmacliente/clienteconfirmado', 'VehiculoController@confirmaCliente')->name('vehiculos.confirmaCliente')
+                    ->middleware('can:vehiculos.create');
+        
+        Route::post('vehiculos/clientestore/almacenarcliente', 'VehiculoController@clienteStore')->name('vehiculos.clienteStore')
+                    ->middleware('can:vehiculos.create');
 
     //Marcas
 
@@ -292,5 +346,18 @@ Route::middleware(['auth'])->group(function(){
 
         //Marca un mantenimiento como finalizado directamente desde la vista show
         Route::put('trabajos/finalizarfrom/{trabajo}', 'TrabajoController@finalizarFrom')->name('trabajos.finalizarfrom')
+                    ->middleware('can:trabajos.edit');
+
+        ///Modificar estados de Trabajos
+        Route::put('trabajos/activo/{trabajo}', 'TrabajoController@activo')->name('trabajos.activo')
+                    ->middleware('can:trabajos.edit');
+
+        Route::put('trabajos/espera/{trabajo}', 'TrabajoController@espera')->name('trabajos.espera')
+                    ->middleware('can:trabajos.edit');
+
+        Route::put('trabajos/inactivo/{trabajo}', 'TrabajoController@inactivo')->name('trabajos.inactivo')
+                    ->middleware('can:trabajos.edit');
+
+        Route::put('trabajos/finalizar/{trabajo}', 'TrabajoController@finalizar')->name('trabajos.finalizar')
                     ->middleware('can:trabajos.edit');
 });

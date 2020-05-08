@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
 use Vinkla\Hashids\Facades\Hashids;
 use App\Http\Requests\CreateCliente;
 use App\Http\Requests\EditCliente;
 use Barryvdh\DomPDF\Facade as PDF;
 use App\Cliente;
-use Illuminate\Http\Request;
 
 class ClienteController extends Controller
 {

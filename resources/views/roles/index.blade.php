@@ -23,7 +23,7 @@
                                         <th>Nombre</th>
                                         <th>Slug</th>
                                         <th>Descripcion</th>
-                                        <th>&nbsp;</th>
+                                        <th width="210px">Acciones</th>
                                     </tr>
                                 </thead>
                             </table>

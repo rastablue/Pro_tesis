@@ -5,21 +5,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Support\Facades\Validator;
-use Caffeinated\Shinobi\Models\Role;
 use Yajra\Datatables\Datatables;
-use Illuminate\Support\Facades\Crypt;
 use Vinkla\Hashids\Facades\Hashids;
 use App\Http\Requests\CreateVehiculo;
 use App\Http\Requests\CreateVehiculoFromCliente;
+use App\Http\Requests\CreateClienteFromVehiculo;
 use App\Http\Requests\EditVehiculo;
 use Barryvdh\DomPDF\Facade as PDF;
 use App\Vehiculo;
-use App\User;
 use App\Cliente;
-use App\Marca;
 
 class VehiculoController extends Controller
 {
@@ -37,20 +31,6 @@ class VehiculoController extends Controller
 
     public function vehiculoData()
     {
-
-        /*return Datatables()
-                ->eloquent(Vehiculo::query())
-                ->addColumn('marca', function($vehiculos){
-                    if ($vehiculos->marca_id) {
-                        return $vehiculos->marcas->marca;
-                    } else {
-                        return 'N/A';
-                    }
-                })
-                ->addColumn('btn', 'vehiculos.actions')
-                ->rawColumns(['btn'])
-                ->make(true);*/
-
         $vehiculos = Vehiculo::join('marcas', 'marcas.id', '=', 'vehiculos.marca_id')
                 ->join('clientes', 'clientes.id', '=', 'vehiculos.cliente_id')
                 ->select('vehiculos.id', 'vehiculos.placa', 'marcas.marca', 'vehiculos.modelo',
@@ -99,6 +79,11 @@ class VehiculoController extends Controller
         return view('vehiculos.create');
     }
 
+    public function confirmaCliente(Request $request)
+    {
+        return view('vehiculos.confirmacion.createcliente', compact('request'));
+    }
+
     public function createfromcliente($cliente)
     {
         $id = Hashids::decode($cliente);
@@ -122,57 +107,6 @@ class VehiculoController extends Controller
             if (Cliente::where('cedula', $request->cedula)->first()) {
                 $cliente = Cliente::where('cedula', $request->cedula)->first();
 
-                $cliente->direc = $request->direccion;
-                $cliente->tlf = $request->telefono;
-                $cliente->email = $request->email;
-
-                $cliente->save();
-
-            } else {
-                $cliente = New Cliente();
-
-                $cliente->cedula = $request->cedula;
-                $cliente->name = $request->nombre;
-                $cliente->apellido_pater = $request->apellido_paterno;
-                $cliente->apellido_mater = $request->apellido_materno;
-                $cliente->direc = $request->direccion;
-                $cliente->tlf = $request->telefono;
-                $cliente->email = $request->email;
-
-                if (!$cliente->save()) {
-                    return back()->with('danger', 'Error, No se pudo agregar al cliente');
-                }
-
-                $cliente->save();
-            }
-
-        /*
-        ********Busca al vehiculo, si ya existe, se actualizan
-        ********determinados campos, caso contrario, el
-        ********vehiculo se crea
-        */
-            if (Vehiculo::where('placa', $request->placa)->first()) {
-                $vehiculo = Vehiculo::where('placa', $request->placa)->first();
-                $cliente = Cliente::where('cedula', $request->cedula)->first();
-
-                $vehiculo->color = $request->color;
-                $vehiculo->kilometraje = $request->kilometraje;
-                $vehiculo->tipo_vehiculo = $request->tipo;
-                $vehiculo->observacion = $request->observacion_vehiculo;
-                $vehiculo->cliente_id = $cliente->id;
-
-                if (!$vehiculo->save()) {
-                    return back()->with('danger', 'Error, No se pudo agregar el vehiculo');
-                }
-
-                $vehiculo->save();
-
-                return redirect()->route('vehiculos.show', Hashids::encode(vehiculo::where('placa', $request->placa)->first()->id))
-                        ->with('info', 'El vehiculo ya existia, pero se han actualizado algunos datos');
-
-            } else {
-                $cliente = Cliente::where('cedula', $request->cedula)->first();
-
                 $vehiculo = New Vehiculo();
 
                 $vehiculo->placa = $request->placa;
@@ -192,7 +126,51 @@ class VehiculoController extends Controller
 
                 return redirect()->route('vehiculos.show', Hashids::encode(vehiculo::where('placa', $request->placa)->first()->id))
                         ->with('info', 'Vehiculo agregado');
+
+            }else{
+
+                return view('vehiculos.confirmacion.confirmar', compact('request'));
+
             }
+
+    }
+
+    public function clienteStore(CreateClienteFromVehiculo $request)
+    {
+
+        $clientes = new Cliente();
+
+        $clientes->cedula = $request->cedula;
+        $clientes->name = $request->nombre;
+        $clientes->apellido_pater = $request->apellido_paterno;
+        $clientes->apellido_mater = $request->apellido_materno;
+        $clientes->direc = $request->direccion;
+        $clientes->tlf = $request->telefono;
+        $clientes->email = $request->email;
+
+        $clientes->save();
+
+        $cliente = Cliente::where('cedula', $request->cedula)->first();
+
+        $vehiculo = New Vehiculo();
+
+        $vehiculo->placa = $request->placa;
+        $vehiculo->modelo = $request->modelo;
+        $vehiculo->color = $request->color;
+        $vehiculo->kilometraje = $request->kilometraje;
+        $vehiculo->tipo_vehiculo = $request->tipo;
+        $vehiculo->observacion = $request->observacion_vehiculo;
+        $vehiculo->cliente_id = $cliente->id;
+        $vehiculo->marca_id = $request->marca;
+
+        if (!$vehiculo->save()) {
+            return back()->with('danger', 'Error, No se pudo agregar el vehiculo');
+        }
+
+        $vehiculo->save();
+
+        return redirect()->route('vehiculos.show', Hashids::encode(vehiculo::where('placa', $request->placa)->first()->id))
+                ->with('info', 'Vehiculo agregado');
 
     }
 

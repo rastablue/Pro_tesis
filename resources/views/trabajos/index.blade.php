@@ -37,37 +37,55 @@
         </div>
     </div>
 
-<!-- Finalizar Trabajo Modal -->
-    <div class="modal fade" id="FinalizaTrabajoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<!-- Revisar Tarea Modal -->
+    <div class="modal fade" id="RevisaTareaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <!-- Modal Header -->
                     <div class="modal-header bg-warning">
-                        <h5>Finalizar Trabajo</h5>
+                        <h5>Revision de estado del trabajo</h5>
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
                 <!-- Modal body -->
                     <div class="modal-body">
                         <h6 align="center">
-                            Finalizar este trabajo provocara que ya no se pueda editar.
-                            <br><br><b>¿Desea finalizar el trabajo?</b></h6>
-                    </div>
-                <!-- Modal footer -->
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-warning" id="SubmitFinalizarTrabajoForm">Finalizar</button>
+                            Finalizar este trabajo provocara que ya no se pueda editar. <br>
+                            <button type="button" class="btn btn-success my-3" id="SubmitActivoForm">
+                                <i class="fas fa-fw fa-check-circle"></i>
+                                Activo
+                            </button>
+                            <button type="button" class="btn btn-info" id="SubmitEsperaForm">
+                                <i class="fas fa-fw fa-spinner"></i>
+                                En espera
+                            </button>
+                            <button type="button" class="btn btn-warning" id="SubmitInactivoForm">
+                                <i class="fas fa-fw fa-times-circle"></i>
+                                Inactivo
+                            </button>
+                            <button type="button" class="btn btn-danger" id="SubmitFinalizarForm">
+                                <i class="fas fa-fw fa-flag"></i>
+                                Finalizar
+                            </button>
+                            <div class="text-md-left mt-2">
+                                <label for="Diagnostico">Diagnostico del mantenimiento:</label>
+                                <textarea name="" id="diagnostico" disabled class="form-control diagnostico"></textarea>
+                            </div>
+                            <div class="text-md-left mt-2">
+                                <label for="Manobra">Mano de obra:</label>
+                                <textarea name="" id="manobra" disabled class="form-control manobra"></textarea>
+                            </div>
                     </div>
             </div>
         </div>
     </div>
 
-<!-- Trabajo Finalizado Modal -->
+<!-- NoOptionModal -->
     <div class="modal fade" id="NoOptionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <!-- Modal Header -->
                     <div class="modal-header bg-warning">
-                        <h5><b>Advertencia</b></h5>
+                        <h5>Advertencia</h5>
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
                 <!-- Modal body -->
@@ -75,10 +93,18 @@
                         <h6 align="center">
                             Este trabajo ya ha finalizado por lo que no es posible editar su informacion.
                         </h6>
+                        <div class="text-md-left mt-2">
+                            <label for="Diagnostico">Diagnostico:</label>
+                            <textarea name="" id="diagnostico" disabled class="form-control diagnostico"></textarea>
+                        </div>
+                        <div class="text-md-left mt-2">
+                            <label for="Manobra">Manobra:</label>
+                            <textarea name="" id="manobra" disabled class="form-control manobra"></textarea>
+                        </div>
                     </div>
                 <!-- Modal footer -->
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Aceptar</button>
                     </div>
             </div>
         </div>
@@ -150,6 +176,140 @@
                         "infoFiltered": ""
                     }
                 });
+
+            //Enviar diagnostico y mano de obra al modal de revision
+                $('#RevisaTareaModal').on('show.bs.modal', function (event) {
+                    var button = $(event.relatedTarget) // Button that triggered the modal
+                    var diagnostico = button.data('diagnostico') // Extract info from data-* attributes
+                    var modal = $(this)
+                    modal.find('.modal-body #diagnostico').val(diagnostico)
+                    
+                    var button = $(event.relatedTarget) // Button that triggered the modal
+                    var manobra = button.data('manobra') // Extract info from data-* attributes
+                    var modal = $(this)
+                    modal.find('.modal-body #manobra').val(manobra)
+                })
+
+            //Enviar diagnostico y mano de obra al modal de NoOption
+                $('#NoOptionModal').on('show.bs.modal', function (event) {
+                    var button = $(event.relatedTarget) // Button that triggered the modal
+                    var diagnostico = button.data('diagnostico') // Extract info from data-* attributes
+                    var modal = $(this)
+                    modal.find('.modal-body #diagnostico').val(diagnostico)
+                    
+                    var button = $(event.relatedTarget) // Button that triggered the modal
+                    var manobra = button.data('manobra') // Extract info from data-* attributes
+                    var modal = $(this)
+                    modal.find('.modal-body #manobra').val(manobra)
+                })
+
+            // Activar Mantenimiento.
+                var activoID;
+                    $('body').on('click', '#getActualizaId', function(){
+                        activoID = $(this).data('id');
+                    })
+                    $('#SubmitActivoForm').click(function(e) {
+                        e.preventDefault();
+                        $("#alertModal").addClass("display-none").removeClass("alert-danger")
+                        $("#inputId").val(null)
+                        var id = activoID;
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+                        $.ajax({
+                            url: "trabajos/activo/"+id,
+                            method: 'PUT',
+                            success: function(result) {
+                                setImmediate(function(){
+                                    $('#trabajos-table').DataTable().ajax.reload();
+                                    $('#RevisaTareaModal').modal('hide');
+                                });
+                            }
+                        });
+                    });
+
+            // En Espera Mantenimiento.
+                var esperaID;
+                    $('body').on('click', '#getActualizaId', function(){
+                        esperaID = $(this).data('id');
+                    })
+                    $('#SubmitEsperaForm').click(function(e) {
+                        e.preventDefault();
+                        $("#alertModal").addClass("display-none").removeClass("alert-danger")
+                        $("#inputId").val(null)
+                        var id = esperaID;
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+                        $.ajax({
+                            url: "trabajos/espera/"+id,
+                            method: 'PUT',
+                            success: function(result) {
+                                setImmediate(function(){
+                                    $('#trabajos-table').DataTable().ajax.reload();
+                                    $('#RevisaTareaModal').modal('hide');
+                                });
+                            }
+                        });
+                    });
+
+            // Inactivo Mantenimiento.
+                var inactivoID;
+                    $('body').on('click', '#getActualizaId', function(){
+                        inactivoID = $(this).data('id');
+                    })
+                    $('#SubmitInactivoForm').click(function(e) {
+                        e.preventDefault();
+                        $("#alertModal").addClass("display-none").removeClass("alert-danger")
+                        $("#inputId").val(null)
+                        var id = inactivoID;
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+                        $.ajax({
+                            url: "trabajos/inactivo/"+id,
+                            method: 'PUT',
+                            success: function(result) {
+                                setImmediate(function(){
+                                    $('#trabajos-table').DataTable().ajax.reload();
+                                    $('#RevisaTareaModal').modal('hide');
+                                });
+                            }
+                        });
+                    });
+
+            // Finalizar Mantenimiento.
+                var finalizarID;
+                    $('body').on('click', '#getActualizaId', function(){
+                        finalizarID = $(this).data('id');
+                    })
+                    $('#SubmitFinalizarForm').click(function(e) {
+                        e.preventDefault();
+                        $("#alertModal").addClass("display-none").removeClass("alert-danger")
+                        $("#inputId").val(null)
+                        var id = finalizarID;
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+                        $.ajax({
+                            url: "trabajos/finalizar/"+id,
+                            method: 'PUT',
+                            success: function(result) {
+                                setImmediate(function(){
+                                    $('#trabajos-table').DataTable().ajax.reload();
+                                    $('#RevisaTareaModal').modal('hide');
+                                });
+                            }
+                        });
+                    });
 
             // Finalizar Trabajo
                 var finalizaID;

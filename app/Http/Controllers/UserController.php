@@ -2,12 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Foundation\Auth\RegistersUsers;
 use Vinkla\Hashids\Facades\Hashids;
-use Illuminate\Support\Facades\Validator;
 use Caffeinated\Shinobi\Models\Role;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\EditUser;
@@ -15,7 +11,6 @@ use App\Http\Requests\CreateUser;
 use App\Http\Requests\Profile;
 use Barryvdh\DomPDF\Facade as PDF;
 use App\User;
-use App\Cliente;
 
 class UserController extends Controller
 {

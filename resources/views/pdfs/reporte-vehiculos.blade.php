@@ -9,7 +9,7 @@
 
 <table class="table">
     <thead>
-        <tr class="table-secondary">
+        <tr class="table-secondary" style="font-size: 9">
             <th scope="col" width="60px"><div class="text-center font-weight-bold text-info">Placa</th>
             <th scope="col" width="70px"><div class="text-center font-weight-bold text-info">Tipo</th>
             <th scope="col" width="90px"><div class="text-center font-weight-bold text-info">Marca / Modelo</th>
@@ -19,7 +19,7 @@
     </thead>
     <tbody>
         @foreach ($vehiculo as $vehiculos)
-            <tr>
+            <tr style="font-size: 8">
                 <td><div class="text-center">{{ $vehiculos->placa }}</td>
                 <td><div class="text-center">{{ $vehiculos->tipo_vehiculo }}</td>
                     @if ($vehiculos->marca_id)

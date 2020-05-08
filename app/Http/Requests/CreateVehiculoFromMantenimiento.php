@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateVehiculo extends FormRequest
+class CreateVehiculoFromMantenimiento extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,15 +24,21 @@ class CreateVehiculo extends FormRequest
     public function rules()
     {
         return [
+            "codigo" => "required|digits:7|unique:mantenimientos,nro_ficha",
+            "fecha_ingreso" => "required|date_format:Y-m-d",
+            "diagnostico" => "required|string|max:500",
+            "observacion_mantenimiento" => "string|max:500",
+            "foto" => "image|mimes:jpg,jpeg,png|max:3000",
+
             "placa" => "required|string|max:12|unique:vehiculos,placa",
-            "marca" => "required|exists:marcas,id",
+            "marca" => "required|string|max:30|exists:marcas,id",
             "modelo" => "required|string|max:30",
             "color" => "string|max:50",
             "kilometraje" => "digits_between:0,7",
             "tipo" => "string|max:50",
             "observacion_vehiculo" => "string|max:500",
 
-            "cedula" => "required|digits:10",
+            "cedula" => "required|digits:10|exists:clientes,cedula",
         ];
     }
 }

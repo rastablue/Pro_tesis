@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateTrabajo extends FormRequest
+class FechaPdfMantenimiento extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,12 +24,9 @@ class CreateTrabajo extends FormRequest
     public function rules()
     {
         return [
-            "cedula" => "required|exists:users,cedula",
-            "mano_de_obra" => "required|string|max:500",
-            "repuestos" => "required|string|max:500",
-            "costo_mano_de_obra" => "required|between:0,9.99",
-            "costo_de_repuestos" => "required|between:0,9.99",
-            "tipo" => "required|in:Preventivo,Correctivo",
+            "fecha_inicio" => "required|date_format:Y-m-d",
+            "fecha_fin" => "required|date_format:Y-m-d",
+            "customRadio" => "required|in:1,2,3,4,5",
         ];
     }
 }

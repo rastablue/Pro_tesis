@@ -9,7 +9,7 @@
 
 <table class="table">
     <thead>
-        <tr class="table-secondary">
+        <tr class="table-secondary" style="font-size: 9">
             <th scope="col"><div class="text-center font-weight-bold text-info">Placa</div></th>
             <th scope="col"><div class="text-center font-weight-bold text-info">Marca</div></th>
             <th scope="col"><div class="text-center font-weight-bold text-info">Modelo</div></th>
@@ -18,7 +18,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
+        <tr style="font-size: 8">
             <td><div class="text-center">{{ $vehiculo->placa }}</div></td>
             @if ($vehiculo->marca_id)
                 <td><div class="text-center">{{ $vehiculo->marcas->marca }}</div></td>
@@ -47,37 +47,37 @@
             <tr>
                 <th width="150px"><div class="font-weight-bold text-info">Codigo</div></th>
                     @foreach (@$vehiculo->mantenimientos as $item)
-                        <td>{{ $item->nro_ficha }}</td>
+                        <td style="font-size: 8">{{ $item->nro_ficha }}</td>
                     @endforeach
             </tr>
             <tr>
                 <th width="150px"><div class="font-weight-bold text-info">Fecha de Ingreso</div></th>
                     @foreach (@$vehiculo->mantenimientos as $item)
-                        <td>{{ $item->fecha_ingreso }}</td>
+                        <td style="font-size: 8">{{ $item->fecha_ingreso }}</td>
                     @endforeach
             </tr>
             <tr>
                 <th width="150px"><div class="font-weight-bold text-info">Fecha de Egreso</div></th>
                     @foreach (@$vehiculo->mantenimientos as $item)
-                        <td>{{ $item->fecha_egreso }}</td>
+                        <td style="font-size: 8">{{ $item->fecha_egreso }}</td>
                     @endforeach
             </tr>
             <tr>
                 <th width="150px"><div class="font-weight-bold text-info">Estado</div></th>
                     @foreach (@$vehiculo->mantenimientos as $item)
-                        <td>{{ $item->estado }}</td>
+                        <td style="font-size: 8">{{ $item->estado }}</td>
                     @endforeach
             </tr>
             <tr>
                 <th width="150px"><div class="font-weight-bold text-info">Valor Total</div></th>
                     @foreach (@$vehiculo->mantenimientos as $item)
-                        <td>{{ $item->valor_total }}</td>
+                        <td style="font-size: 8">{{ $item->valor_total }}</td>
                     @endforeach
             </tr>
             <tr>
                 <th width="150px"><div class="font-weight-bold text-info">Diagnostico</div></th>
                     @foreach (@$vehiculo->mantenimientos as $item)
-                        <td>{{ $item->diagnostico }}</td>
+                        <td style="font-size: 8">{{ $item->diagnostico }}</td>
                     @endforeach
             </tr>
         </tbody>

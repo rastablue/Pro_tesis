@@ -11,9 +11,28 @@
                         <div class="col-3">
 
                             <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                                <a class="nav-link active" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="true">Nuevo Empleado</i></a>
 
-                                <br><br><button type="submit" form="formUser" id="submitBtn" class="btn btn-success mt-4">Agregar</button>
+                                <a class="nav-link active" id="v-pills-cliente-tab" data-toggle="pill" href="#v-pills-cliente" role="tab" aria-controls="v-pills-cliente" aria-selected="true">Cliente</a>
+
+                                <a class="nav-link @error('placa') is-invalid @enderror or @error('marca') is-invalid @enderror or @error('modelo') is-invalid @enderror
+                                or @error('color') is-invalid @enderror or @error('kilometraje') is-invalid @enderror or @error('tipo') is-invalid @enderror
+                                or @error('observacion') is-invalid @enderror"
+                                id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Vehiculo</i></a>
+                                {{-- Muestra errores de ingreso de vehiculo --}}
+                                    @if($errors->has('placa') || $errors->has('marca') || $errors->has('modelo') ||
+                                        $errors->has('color') || $errors->has('kilometraje') || $errors->has('tipo') ||
+                                        $errors->has('observacion'))
+
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>Es posible que hallan errores en el formulario vehiculo</strong>
+                                        </span>
+
+                                    @endif
+                                
+                                <div class="mt-5">
+                                    <a href="javascript:history.back()" class="btn btn-secondary">Volver</a>
+                                    <button type="submit" form="formAgregarCliente" id="submitBtn" class="btn btn-primary">Agregar</button>
+                                </div>
                             </div>
 
 
@@ -22,18 +41,18 @@
                     {{-- Container de opciones --}}
                         <div class="card-body col-9">
 
-                            <form id="formUser" method="POST" action="{{ route('users.store') }}" enctype="multipart/form-data">
+                            <form id="formAgregarCliente" method="POST" action="{{ route('vehiculos.clienteStore') }}">
                                 @csrf
 
                                 <div class="tab-content" id="v-pills-tabContent">
-                                    {{-- Empleado --}}
-                                        <div class="tab-pane fade show active" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                                    {{-- Cliente --}}
+                                        <div class="tab-pane fade show active" id="v-pills-cliente" role="tabpanel" aria-labelledby="v-pills-cliente-tab">
 
                                             {{-- Cedula --}}
                                                 <div class="form-group row">
-                                                    <label for="cedula" class="col-md-4 col-form-label text-md-right">{{ __('Cedula') }}</label>
+                                                    <label for="codigo" class="col-md-4 col-form-label text-md-right">{{ __('Cedula') }}</label>
                                                     <div class="col-md-6">
-                                                        <input type="input" name="cedula" value="{{ old('cedula') }}" class="form-control @error('cedula') is-invalid @enderror" autocomplete="cedula" autofocus>
+                                                        <input type="input" disabled value="{{ $request->cedula }}" class="form-control @error('cedula') is-invalid @enderror" autocomplete="cedula" autofocus>
 
                                                         @error('cedula')
                                                             <span class="invalid-feedback" role="alert">
@@ -41,6 +60,7 @@
                                                             </span>
                                                         @enderror
                                                     </div>
+                                                    <input type="hidden" name="cedula" value="{{ $request->cedula }}">
                                                 </div>
 
                                             {{-- Nombre --}}
@@ -113,34 +133,6 @@
                                                     </div>
                                                 </div>
 
-                                            {{-- Contraseña --}}
-                                                <div class="form-group row">
-                                                    <label for="codigo" class="col-md-4 col-form-label text-md-right">{{ __('Contraseña') }}</label>
-                                                    <div class="col-md-6">
-                                                        <input type="password" name="contraseña" value="{{ old('contraseña') }}" class="form-control @error('confirmar_contraseña') is-invalid @enderror" autocomplete="contraseña" autofocus>
-
-                                                        @error('confirmar_contraseña')
-                                                            <span class="invalid-feedback" role="alert">
-                                                                <strong>{{ $message }}</strong>
-                                                            </span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-
-                                            {{-- Confirmar Contraseña --}}
-                                                <div class="form-group row">
-                                                    <label for="codigo" class="col-md-4 col-form-label text-md-right">{{ __('Confirmar Contraseña') }}</label>
-                                                    <div class="col-md-6">
-                                                        <input type="password" name="confirmar_contraseña" value="{{ old('confirmar_contraseña') }}" class="form-control @error('confirmar_contraseña') is-invalid @enderror" autocomplete="confirmar_contraseña" autofocus>
-
-                                                        @error('confirmar_contraseña')
-                                                            <span class="invalid-feedback" role="alert">
-                                                                <strong>{{ $message }}</strong>
-                                                            </span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-
                                             {{-- Email --}}
                                                 <div class="form-group row">
                                                     <label for="codigo" class="col-md-4 col-form-label text-md-right">{{ __('Email') }}</label>
@@ -154,19 +146,104 @@
                                                         @enderror
                                                     </div>
                                                 </div>
+                                        </div>
 
-                                            {{-- Foto de Perfil --}}
-                                                <div class="form-group row mb-2">
-                                                    <div class="col-md-6" style="margin-left: 350px;">
-                                                        <label for="file-upload" class="custom-file-upload">
-                                                            <i class="fa fa-cloud-upload"></i> Agregar foto de perfil
-                                                        </label>
-                                                        <span id="file-selected"></span>
-                                                        <input id="file-upload" accept="image/jpeg,image/png" type="file" name="foto">
+                                    {{-- Vehiculo --}}
+                                        <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+
+                                            {{-- Placa --}}
+                                                <div class="form-group row">
+                                                    <label for="codigo" class="col-md-4 col-form-label text-md-right">{{ __('Placa') }}</label>
+                                                    <div class="col-md-6">
+                                                        <input type="input" disabled value="{{ $request->placa }}" onkeyup="mayus(this);" class="form-control @error('placa') is-invalid @enderror" autocomplete="Placa" autofocus>
+
+                                                        @error('placa')
+                                                            <span class="invalid-feedback" role="alert">
+                                                                <strong>{{ $message }}</strong>
+                                                            </span>
+                                                        @enderror
                                                     </div>
+                                                    <input type="hidden" name="placa" value="{{ $request->placa }}">
+                                                    <input type="hidden" name="marca" value="{{ $request->marca }}">
+                                                </div>
+
+                                            {{-- Modelo --}}
+                                                <div class="form-group row">
+                                                    <label for="codigo" class="col-md-4 col-form-label text-md-right">{{ __('Modelo') }}</label>
+                                                    <div class="col-md-6">
+                                                        <input type="input" disabled value="{{ $request->modelo }}" class="form-control @error('modelo') is-invalid @enderror" autocomplete="Fecha fin" autofocus>
+
+                                                        @error('modelo')
+                                                            <span class="invalid-feedback" role="alert">
+                                                                <strong>{{ $message }}</strong>
+                                                            </span>
+                                                        @enderror
+                                                    </div>
+                                                    <input type="hidden" name="modelo" value="{{ $request->modelo }}">
+                                                </div>
+
+                                            {{-- Color --}}
+                                                <div class="form-group row">
+                                                    <label for="codigo" class="col-md-4 col-form-label text-md-right">{{ __('Color') }}</label>
+                                                    <div class="col-md-6">
+                                                        <input type="input" disabled value="{{ $request->color }}" class="form-control @error('color') is-invalid @enderror" autocomplete="Color" autofocus>
+
+                                                        @error('color')
+                                                            <span class="invalid-feedback" role="alert">
+                                                                <strong>{{ $message }}</strong>
+                                                            </span>
+                                                        @enderror
+                                                    </div>
+                                                    <input type="hidden" name="color" value="{{ $request->color }}">
+                                                </div>
+
+                                            {{-- Kilometraje --}}
+                                                <div class="form-group row">
+                                                    <label for="codigo" class="col-md-4 col-form-label text-md-right">{{ __('Kilometraje') }}</label>
+                                                    <div class="col-md-6">
+                                                        <input type="input" disabled value="{{ $request->kilometraje }}" class="form-control @error('kilometraje') is-invalid @enderror" autocomplete="Kilometraje" autofocus>
+
+                                                        @error('kilometraje')
+                                                            <span class="invalid-feedback" role="alert">
+                                                                <strong>{{ $message }}</strong>
+                                                            </span>
+                                                        @enderror
+                                                    </div>
+                                                    <input type="hidden" name="kilometraje" value="{{ $request->kilometraje }}">
+                                                </div>
+
+                                            {{-- Tipo --}}
+                                                <div class="form-group row">
+                                                    <label for="codigo" class="col-md-4 col-form-label text-md-right">{{ __('Tipo Vehiculo') }}</label>
+                                                    <div class="col-md-6">
+                                                        <input type="input" disabled value="{{ $request->tipo }}" class="form-control @error('tipo') is-invalid @enderror" autocomplete="tipo" autofocus>
+
+                                                        @error('tipo')
+                                                            <span class="invalid-feedback" role="alert">
+                                                                <strong>{{ $message }}</strong>
+                                                            </span>
+                                                        @enderror
+                                                    </div>
+                                                    <input type="hidden" name="tipo" value="{{ $request->tipo }}">
+                                                </div>
+
+                                            {{-- Observacion --}}
+                                                <div class="form-group row">
+                                                    <label for="detalle" class="col-md-4 col-form-label text-md-right">{{ __('Observacion') }}</label>
+                                                    <div class="col-md-6">
+                                                        <textarea type="text" disabled class="form-control @error('observacion_vehiculo') is-invalid @enderror" autocomplete="Observacion_vehiculo" autofocus>{{ $request->observacion_vehiculo }}</textarea>
+
+                                                        @error('observacion_vehiculo')
+                                                            <span class="invalid-feedback" role="alert">
+                                                                <strong>{{ $message }}</strong>
+                                                            </span>
+                                                        @enderror
+                                                    </div>
+                                                    <input type="hidden" name="observacion_vehiculo" value="{{ $request->observacion_vehiculo }}">
                                                 </div>
 
                                         </div>
+
                                 </div>
                             </form>
                         </div>

@@ -10,10 +10,10 @@
                         <span><h4><b>Mantenimientos</b></h4></span>
                         <div class="group">
                             @can('mantenimientos.show')
-                                <a href=" {{ route('mantenimientos.reportes') }} " class="btn btn-sm btn-primary text-white" target="_blank">
+                                <button type="button" id="btnCrearSolicitud" class="btn btn-sm btn-primary text-white" target="_blank">
                                     <i class="far fa-file-pdf"></i>
                                     Reporte
-                                </a>
+                                </button>
                             @endcan
                             @can('mantenimientos.create')
                                 <a href=" {{ route('mantenimientos.create') }} " class="btn btn-success btn-sm">
@@ -33,7 +33,6 @@
                                         <th width="100">Fecha Ingreso</th>
                                         <th width="100">Fecha Egreso</th>
                                         <th>Estado</th>
-                                        <th>Valor</th>
                                         <th>Acciones</th>
                                     </tr>
                                 </thead>
@@ -45,97 +44,95 @@
         </div>
     </div>
 
-<!-- Modal Crear -->
-    <div class="modal fade" id="creaMantenimientoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
+<!-- Modal Reportes-->
+    <div class="modal fade" id="creaSolicitudModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
             <div class="modal-content">
                 <!-- Modal Header -->
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Agregar Mantenimiento</h5>
+                        <h5 class="modal-title" id="exampleModalLongTitle">Reporte de Mantenimientos</h5>
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
                 <!-- Modal body -->
-                    <div class="modal-body">
-                        <form id="formMantenimiento" method="POST" action="{{ route('mantenimientos.store') }}" enctype="multipart/form-data">
-                            @csrf
-                            {{-- Ficha --}}
-                                <div class="form-group row">
-                                    <label for="ficha" class="col-md-3 text-md-right">Numero de Ficha</label>
-                                    <div class="col-md-8">
-                                        <input id="ficha" type="text" pattern="[0-9]{7}" class="form-control" name="ficha" required autocomplete="ficha" autofocus>
-                                    </div>
-                                </div>
+                    <div class="modal-body text-center">
+                            
+                        <a href="{{ route('mantenimientos.reportesactivo') }}" class="btn btn-success mt-3" target="_blank">
+                            Mantenimientos Activos
+                        </a>
+                        <br>
+                        <a href="{{ route('mantenimientos.reportesespera') }}" class="btn btn-info mt-3" target="_blank">
+                            Mantenimientos En espera
+                        </a>
+                        <br>
+                        <a href="{{ route('mantenimientos.reportesinactivo') }}" class="btn btn-warning mt-3 text-dark" target="_blank">
+                            Mantenimientos Inactivos
+                        </a>
+                        <br>
+                        <a href="{{ route('mantenimientos.reportesfinalizado') }}" class="btn btn-danger mt-3" target="_blank">
+                            Mantenimientos Finalizados
+                        </a>
+                        <br>
+                        <a href="{{ route('mantenimientos.reporteselect') }}" class="btn btn-primary mt-3" target="_blank">
+                            Desde - Hasta
+                        </a>
+                        <br>
+                        <a href="{{ route('mantenimientos.reportes') }}" class="btn btn-primary mt-3" target="_blank">
+                            Todos los Registros
+                        </a>
 
-                            {{-- Placa del Vehiculo --}}
-                                <div class="form-group row">
-
-                                    <label for="placa" class="col-md-3 text-md-right">Placa del Vehiculo</label>
-
-                                    <div class="col-md-8">
-                                        <input id="placa" type="text" class="form-control" name="placa" required autocomplete="placa" autofocus>
-                                    </div>
-                                </div>
-
-                            {{-- Observacion --}}
-                                <div class="form-group row">
-                                    <label for="observacion" class="col-md-3 text-md-right">Observacion</label>
-                                    <div class="col-md-8">
-                                        <textarea id="observacion" type="text" class="form-control" name="observacion" required autocomplete="observacion" autofocus></textarea>
-                                    </div>
-                                </div>
-
-                            {{-- Diagnostico --}}
-                                <div class="form-group row">
-                                    <label for="diagnostico" class="col-md-3 text-md-right">Diagnostico</label>
-
-                                    <div class="col-md-8">
-                                        <textarea id="diagnostico" type="text" class="form-control" name="diagnostico" required autocomplete="diagnostico" autofocus></textarea>
-                                    </div>
-                                </div>
-
-                            {{-- Imagen de la Ficha --}}
-                                <div class="form-group row">
-                                    <label for="file" class="col-md-3 text-md-right">Cargar Imagen de la Ficha</label>
-                                    <div class="col-md-8">
-                                        <input id="file" type="file" name="file">
-                                    </div>
-                                </div>
-                        </form>
                     </div>
                 <!-- Modal footer -->
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                        <button type="submit" form="formMantenimiento" id="submitBtn" class="btn btn-primary">Agregar</button>
                     </div>
             </div>
         </div>
     </div>
 
-<!-- Finalizar Mantenimiento Modal -->
-    <div class="modal fade" id="FinalizaMantenimientoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<!-- Revisar Tarea Modal -->
+    <div class="modal fade" id="RevisaTareaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <!-- Modal Header -->
                     <div class="modal-header bg-warning">
-                        <h5>Finalizar Mantenimiento</h5>
+                        <h5>Revision de estado del mantenimiento</h5>
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
                 <!-- Modal body -->
                     <div class="modal-body">
                         <h6 align="center">
-                            Finalizar este mantenimiento tambien finalizara todos los trabajos vinculados y ya no se podran editar sus datos.
-                            <br><br><b>¿Desea finalizar el mantenimiento?</b></h6>
-                    </div>
-                <!-- Modal footer -->
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-warning" id="SubmitFinalizarMantenimientoForm">Finalizar</button>
+                            Finalizar este mantenimiento tambien finalizara todos los trabajos vinculados y ya no se podran editar sus datos. <br>
+                            
+                            <button type="button" class="btn btn-success my-3" id="SubmitActivoForm">
+                                <i class="fas fa-fw fa-check-circle"></i>
+                                Activo
+                            </button>
+                            <button type="button" class="btn btn-info" id="SubmitEsperaForm">
+                                <i class="fas fa-fw fa-spinner"></i>
+                                En espera
+                            </button>
+                            <button type="button" class="btn btn-warning" id="SubmitInactivoForm">
+                                <i class="fas fa-fw fa-times-circle"></i>
+                                Inactivo
+                            </button>
+                            <button type="button" class="btn btn-danger" id="SubmitFinalizarForm">
+                                <i class="fas fa-fw fa-flag"></i>
+                                Finalizar
+                            </button>
+                            <div class="text-md-left mt-2">
+                                <label for="Diagnostico">Diagnostico:</label>
+                                <textarea name="" id="diagnostico" disabled class="form-control diagnostico"></textarea>
+                            </div>
+                            <div class="text-md-left mt-2">
+                                <label for="Observacion">Observacion:</label>
+                                <textarea name="" id="observacion" disabled class="form-control observacion"></textarea>
+                            </div>
                     </div>
             </div>
         </div>
     </div>
 
-<!-- Mantenimiento Finalizado Modal -->
+<!-- NoOptionModal -->
     <div class="modal fade" id="NoOptionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -149,10 +146,18 @@
                         <h6 align="center">
                             Este mantenimiento ya ha finalizado por lo que no es posible editar su informacion.
                         </h6>
+                        <div class="text-md-left mt-2">
+                            <label for="Diagnostico">Diagnostico:</label>
+                            <textarea name="" id="diagnostico" disabled class="form-control diagnostico"></textarea>
+                        </div>
+                        <div class="text-md-left mt-2">
+                            <label for="Observacion">Observacion:</label>
+                            <textarea name="" id="observacion" disabled class="form-control observacion"></textarea>
+                        </div>
                     </div>
                 <!-- Modal footer -->
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Aceptar</button>
                     </div>
             </div>
         </div>
@@ -199,7 +204,6 @@
                         { data: 'fecha_ingreso', name: 'mantenimientos.fecha_ingreso' },
                         { data: 'fecha_egreso', name: 'mantenimientos.fecha_egreso' },
                         { data: 'estado', name: 'mantenimientos.estado'  },
-                        { data: 'valor_total', name: 'mantenimientos.valor_total'  },
                         { data: 'btn', name: 'btn',orderable:false,serachable:false,sClass:'text-center' }
                     ],
                     "language":{
@@ -225,13 +229,147 @@
                     }
                 });
 
-            // modal crear
-                $("#btnCrearMantenimiento").click(function(e) {
+            // modal reportes
+                $("#btnCrearSolicitud").click(function(e) {
                     e.preventDefault();
                     $("#alertModal").addClass("display-none").removeClass("alert-danger")
                     $("#inputId").val(null)
-                    $("#creaMantenimientoModal").modal("show");
+                    $("#creaSolicitudModal").modal("show");
                 });
+
+            // Enviar diagnostico y observacion al modal de revision
+                $('#RevisaTareaModal').on('show.bs.modal', function (event) {
+                    var button = $(event.relatedTarget) // Button that triggered the modal
+                    var diagnostico = button.data('diagnostico') // Extract info from data-* attributes
+                    var modal = $(this)
+                    modal.find('.modal-body #diagnostico').val(diagnostico)
+                    
+                    var button = $(event.relatedTarget) // Button that triggered the modal
+                    var observacion = button.data('observacion') // Extract info from data-* attributes
+                    var modal = $(this)
+                    modal.find('.modal-body #observacion').val(observacion)
+                })
+
+            // Enviar diagnostico y observacion al modal de NoOption
+                $('#NoOptionModal').on('show.bs.modal', function (event) {
+                    var button = $(event.relatedTarget) // Button that triggered the modal
+                    var diagnostico = button.data('diagnostico') // Extract info from data-* attributes
+                    var modal = $(this)
+                    modal.find('.modal-body #diagnostico').val(diagnostico)
+                    
+                    var button = $(event.relatedTarget) // Button that triggered the modal
+                    var observacion = button.data('observacion') // Extract info from data-* attributes
+                    var modal = $(this)
+                    modal.find('.modal-body #observacion').val(observacion)
+                })
+
+            // Activar Mantenimiento.
+                var activoID;
+                    $('body').on('click', '#getActualizaId', function(){
+                        activoID = $(this).data('id');
+                    })
+                    $('#SubmitActivoForm').click(function(e) {
+                        e.preventDefault();
+                        $("#alertModal").addClass("display-none").removeClass("alert-danger")
+                        $("#inputId").val(null)
+                        var id = activoID;
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+                        $.ajax({
+                            url: "mantenimientos/activo/"+id,
+                            method: 'PUT',
+                            success: function(result) {
+                                setImmediate(function(){
+                                    $('#mantenimientos-table').DataTable().ajax.reload();
+                                    $('#RevisaTareaModal').modal('hide');
+                                });
+                            }
+                        });
+                    });
+
+            // En Espera Mantenimiento.
+                var esperaID;
+                    $('body').on('click', '#getActualizaId', function(){
+                        esperaID = $(this).data('id');
+                    })
+                    $('#SubmitEsperaForm').click(function(e) {
+                        e.preventDefault();
+                        $("#alertModal").addClass("display-none").removeClass("alert-danger")
+                        $("#inputId").val(null)
+                        var id = esperaID;
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+                        $.ajax({
+                            url: "mantenimientos/espera/"+id,
+                            method: 'PUT',
+                            success: function(result) {
+                                setImmediate(function(){
+                                    $('#mantenimientos-table').DataTable().ajax.reload();
+                                    $('#RevisaTareaModal').modal('hide');
+                                });
+                            }
+                        });
+                    });
+
+            // Inactivo Mantenimiento.
+                var inactivoID;
+                    $('body').on('click', '#getActualizaId', function(){
+                        inactivoID = $(this).data('id');
+                    })
+                    $('#SubmitInactivoForm').click(function(e) {
+                        e.preventDefault();
+                        $("#alertModal").addClass("display-none").removeClass("alert-danger")
+                        $("#inputId").val(null)
+                        var id = inactivoID;
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+                        $.ajax({
+                            url: "mantenimientos/inactivo/"+id,
+                            method: 'PUT',
+                            success: function(result) {
+                                setImmediate(function(){
+                                    $('#mantenimientos-table').DataTable().ajax.reload();
+                                    $('#RevisaTareaModal').modal('hide');
+                                });
+                            }
+                        });
+                    });
+
+            // Finalizar Mantenimiento.
+                var finalizarID;
+                    $('body').on('click', '#getActualizaId', function(){
+                        finalizarID = $(this).data('id');
+                    })
+                    $('#SubmitFinalizarForm').click(function(e) {
+                        e.preventDefault();
+                        $("#alertModal").addClass("display-none").removeClass("alert-danger")
+                        $("#inputId").val(null)
+                        var id = finalizarID;
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+                        $.ajax({
+                            url: "mantenimientos/finalizar/"+id,
+                            method: 'PUT',
+                            success: function(result) {
+                                setImmediate(function(){
+                                    $('#mantenimientos-table').DataTable().ajax.reload();
+                                    $('#RevisaTareaModal').modal('hide');
+                                });
+                            }
+                        });
+                    });
 
             // Resetear modal crear una vez que se cierra
                 $('#creaMantenimientoModal').on('hidden.bs.modal', function() {

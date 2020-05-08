@@ -12,23 +12,8 @@
 
                             <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                                 <a class="nav-link active" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="true">Nuevo Vehiculo</i></a>
-                                <a class="nav-link @error('cedula') is-invalid @enderror or @error('nombre') is-invalid @enderror or @error('apellido_paterno') is-invalid @enderror
-                                or @error('apellido_materno') is-invalid @enderror or @error('direccion') is-invalid @enderror or @error('telefono') is-invalid @enderror
-                                or @error('email') is-invalid @enderror"
-                                id="v-pills-cliente-tab" data-toggle="pill" href="#v-pills-cliente" role="tab" aria-controls="v-pills-cliente" aria-selected="true">Cliente</a>
-                                {{-- Muestra errores de ingreso de cliente --}}
-                                    @if($errors->has('cedula') || $errors->has('nombre') || $errors->has('apellido_paterno') ||
-                                        $errors->has('apellido_materno') || $errors->has('direccion') || $errors->has('telefono') ||
-                                        $errors->has('email'))
-
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>Es posible que hayan errores en el formulario cliente</strong>
-                                        </span>
-
-                                    @endif
-                                <br><br><button type="submit" form="formMantenimiento" id="submitBtn" class="btn btn-success">Agregar</button>
+                                <br><br><button type="submit" form="formMantenimiento" id="submitBtn" class="btn btn-success mt-4">Agregar</button>
                             </div>
-
 
                         </div>
 
@@ -41,7 +26,19 @@
                                 <div class="tab-content" id="v-pills-tabContent">
                                     {{-- Vehiculo --}}
                                         <div class="tab-pane fade show active" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                                            {{-- Cedula --}}
+                                                <div class="form-group row">
+                                                    <label for="codigo" class="col-md-4 col-form-label text-md-right">{{ __('Cedula del Cliente') }}</label>
+                                                    <div class="col-md-6">
+                                                        <input type="input" name="cedula" value="{{ old('cedula') }}" class="form-control @error('cedula') is-invalid @enderror" autocomplete="cedula" autofocus>
 
+                                                        @error('cedula')
+                                                            <span class="invalid-feedback" role="alert">
+                                                                <strong>{{ $message }}</strong>
+                                                            </span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
                                             {{-- Placa --}}
                                                 <div class="form-group row">
                                                     <label for="codigo" class="col-md-4 col-form-label text-md-right">{{ __('Placa') }}</label>
@@ -147,108 +144,6 @@
 
                                         </div>
 
-                                    {{-- Cliente --}}
-                                        <div class="tab-pane fade" id="v-pills-cliente" role="tabpanel" aria-labelledby="v-pills-cliente-tab">
-
-                                            {{-- Cedula --}}
-                                                <div class="form-group row">
-                                                    <label for="codigo" class="col-md-4 col-form-label text-md-right">{{ __('Cedula') }}</label>
-                                                    <div class="col-md-6">
-                                                        <input type="input" name="cedula" value="{{ old('cedula') }}" class="form-control @error('cedula') is-invalid @enderror" autocomplete="cedula" autofocus>
-
-                                                        @error('cedula')
-                                                            <span class="invalid-feedback" role="alert">
-                                                                <strong>{{ $message }}</strong>
-                                                            </span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-
-                                            {{-- Nombre --}}
-                                                <div class="form-group row">
-                                                    <label for="codigo" class="col-md-4 col-form-label text-md-right">{{ __('Nombre') }}</label>
-                                                    <div class="col-md-6">
-                                                        <input type="input" name="nombre" value="{{ old('nombre') }}" onkeyup="mayus(this);" class="form-control @error('nombre') is-invalid @enderror" autocomplete="nombre" autofocus>
-
-                                                        @error('nombre')
-                                                            <span class="invalid-feedback" role="alert">
-                                                                <strong>{{ $message }}</strong>
-                                                            </span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-
-                                            {{-- Apellido Paterno --}}
-                                                <div class="form-group row">
-                                                    <label for="codigo" class="col-md-4 col-form-label text-md-right">{{ __('Apellido Paterno') }}</label>
-                                                    <div class="col-md-6">
-                                                        <input type="input" name="apellido_paterno" value="{{ old('apellido_paterno') }}" onkeyup="mayus(this);" class="form-control @error('apellido_paterno') is-invalid @enderror" autocomplete="apellido_paterno" autofocus>
-
-                                                        @error('apellido_paterno')
-                                                            <span class="invalid-feedback" role="alert">
-                                                                <strong>{{ $message }}</strong>
-                                                            </span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-
-                                            {{-- Apellido Materno --}}
-                                                <div class="form-group row">
-                                                    <label for="codigo" class="col-md-4 col-form-label text-md-right">{{ __('Apellido Materno') }}</label>
-                                                    <div class="col-md-6">
-                                                        <input type="input" name="apellido_materno" value="{{ old('apellido_materno') }}" onkeyup="mayus(this);" class="form-control @error('apellido_materno') is-invalid @enderror" autocomplete="apellido_materno" autofocus>
-
-                                                        @error('apellido_materno')
-                                                            <span class="invalid-feedback" role="alert">
-                                                                <strong>{{ $message }}</strong>
-                                                            </span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-
-                                            {{-- Direccion --}}
-                                                <div class="form-group row">
-                                                    <label for="codigo" class="col-md-4 col-form-label text-md-right">{{ __('Direccion') }}</label>
-                                                    <div class="col-md-6">
-                                                        <input type="input" name="direccion" value="{{ old('direccion') }}" class="form-control @error('direccion') is-invalid @enderror" autocomplete="direccion" autofocus>
-
-                                                        @error('direccion')
-                                                            <span class="invalid-feedback" role="alert">
-                                                                <strong>{{ $message }}</strong>
-                                                            </span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-
-                                            {{-- Telefono --}}
-                                                <div class="form-group row">
-                                                    <label for="codigo" class="col-md-4 col-form-label text-md-right">{{ __('Telefono') }}</label>
-                                                    <div class="col-md-6">
-                                                        <input type="input" name="telefono" value="{{ old('telefono') }}" class="form-control @error('telefono') is-invalid @enderror" autocomplete="telefono" autofocus>
-
-                                                        @error('telefono')
-                                                            <span class="invalid-feedback" role="alert">
-                                                                <strong>{{ $message }}</strong>
-                                                            </span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-
-                                            {{-- Email --}}
-                                                <div class="form-group row">
-                                                    <label for="codigo" class="col-md-4 col-form-label text-md-right">{{ __('Email') }}</label>
-                                                    <div class="col-md-6">
-                                                        <input type="input" name="email" value="{{ old('email') }}" class="form-control @error('email') is-invalid @enderror" autocomplete="email" autofocus>
-
-                                                        @error('email')
-                                                            <span class="invalid-feedback" role="alert">
-                                                                <strong>{{ $message }}</strong>
-                                                            </span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-
-                                        </div>
                                 </div>
                             </form>
                         </div>

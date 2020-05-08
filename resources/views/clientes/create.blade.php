@@ -13,7 +13,7 @@
                             <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                                 <a class="nav-link active" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="true">Nuevo Cliente</i></a>
 
-                                <br><br><button type="submit" form="formUser" id="submitBtn" class="btn btn-success">Agregar</button>
+                                <br><br><button type="submit" form="formUser" id="submitBtn" class="btn btn-success mt-4">Agregar</button>
                             </div>
 
 

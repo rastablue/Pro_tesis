@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateMantenimiento extends FormRequest
+class CreateClienteFromMantenimiento extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,11 +28,16 @@ class CreateMantenimiento extends FormRequest
             "fecha_ingreso" => "required|date_format:Y-m-d",
             "diagnostico" => "required|string|max:500",
             "observacion_mantenimiento" => "string|max:500",
-            "foto" => "image|mimes:jpg,jpeg,png|max:3000",
 
-            "placa" => "required|string|max:12",
+            "placa" => "required|string|max:12|exists:vehiculos,placa",
 
-            "cedula" => "required|digits:10",
+            "cedula" => "required|digits:10|unique:clientes,cedula",
+            "nombre" => "required|string|max:25",
+            "apellido_paterno" => "required|string|max:25",
+            "apellido_materno" => "required|string|max:25",
+            "direccion" => "required|string|max:250",
+            "telefono" => "digits_between:7,10",
+            "email" => "email"
         ];
     }
 }

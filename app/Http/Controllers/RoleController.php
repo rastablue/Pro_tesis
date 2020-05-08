@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 
 use Illuminate\Http\Request;
-use App\Providers\RouteServiceProvider;
 use Caffeinated\Shinobi\Models\Role;
 use Caffeinated\Shinobi\Models\Permission;
 use Vinkla\Hashids\Facades\Hashids;

@@ -35,7 +35,7 @@ class TrabajoController extends Controller
                             ->join('vehiculos', 'vehiculos.id', '=', 'mantenimientos.vehiculo_id')
                             ->select('trabajos.id', 'trabajos.fake_id', 'mantenimientos.nro_ficha', 'vehiculos.placa',
                                     'trabajos.tipo', 'trabajos.estado', 'users.name', 'users.apellido_pater',
-                                    'trabajos.mantenimiento_id');
+                                    'trabajos.mantenimiento_id', 'trabajos.manobra', 'mantenimientos.diagnostico');
 
         return Datatables::of($trabajos)
             ->addColumn('btn', 'trabajos.actions')
@@ -116,7 +116,7 @@ class TrabajoController extends Controller
             $trabajo->repuestos = $request->repuestos;
             $trabajo->costo_repuestos = $request->costo_de_repuestos;
             $trabajo->costo_manobra = $request->costo_mano_de_obra;
-            $trabajo->estado = $request->estado;
+            $trabajo->estado = 'En espera';
             $trabajo->tipo = $request->tipo;
             $trabajo->mantenimiento_id = $request->id_mantenimiento;
             $trabajo->user_id = $user->id;
@@ -245,7 +245,63 @@ class TrabajoController extends Controller
 
     }
 
+    public function activo(request $request, $id)
+    {
+
+        $trabajo = Trabajo::findOrFail($id);
+
+        if ($trabajo->estado != 'Activo') {
+
+            $trabajo->estado = 'Activo';
+
+            $trabajo->save();
+
+        }
+    }
+
+    public function espera(request $request, $id)
+    {
+
+        $trabajo = Trabajo::findOrFail($id);
+
+        if ($trabajo->estado != 'En espera') {
+
+            $trabajo->estado = 'En espera';
+
+            $trabajo->save();
+
+        }
+    }
+
+    public function inactivo(request $request, $id)
+    {
+
+        $trabajo = Trabajo::findOrFail($id);
+
+        if ($trabajo->estado != 'Inactivo') {
+
+            $trabajo->estado = 'Inactivo';
+
+            $trabajo->save();
+
+        }
+    }
+
     public function finalizar(request $request, $id)
+    {
+
+        $trabajo = Trabajo::findOrFail($id);
+
+        if ($trabajo->estado != 'Finalizado') {
+
+            $trabajo->estado = 'Finalizado';
+
+            $trabajo->save();
+
+        }
+    }
+
+    public function finalizarT(request $request, $id)
     {
         $trabajo = Trabajo::findOrFail($id);
 

@@ -14,7 +14,7 @@
                                 <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Trabajo</a>
                                 <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Mantenimiento</i></a>
 
-                                <br><br><button type="submit" form="formMantenimiento" id="submitBtn" class="btn btn-success">Agregar</button>
+                                <br><br><button type="submit" form="formMantenimiento" id="submitBtn" class="btn btn-success mt-4">Agregar</button>
                             </div>
 
 
@@ -30,11 +30,17 @@
                                     {{-- Trabajos --}}
                                         <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
 
-                                            {{-- Cedula --}}
+                                            {{-- Encargado --}}
                                                 <div class="form-group row">
-                                                    <label for="codigo" class="col-md-4 col-form-label text-md-right">{{ __('Cedula Del Encargado') }}</label>
+                                                    <label for="codigo" class="col-md-4 col-form-label text-md-right">{{ __('Encargado') }}</label>
                                                     <div class="col-md-6">
-                                                        <input type="input" name="cedula" value="{{ old('cedula') }}" class="form-control @error('cedula') is-invalid @enderror" autocomplete="cedula" autofocus>
+
+                                                        <select id="cedula" class="form-control @error('cedula') is-invalid @enderror" name="cedula">
+                                                            <option disabled selected='true'>Seleccione un Encargado</option>
+                                                            @foreach(@App\User::all() as $item)
+                                                                <option value="{{ $item->cedula }}">{{ $item->name }} {{ $item->apellido_pater }} {{ $item->apellido_mater }}</option>
+                                                            @endforeach
+                                                        </select>
 
                                                         @error('cedula')
                                                             <span class="invalid-feedback" role="alert">
@@ -99,28 +105,6 @@
                                                             </span>
                                                         @enderror
                                                     </div>
-                                                </div>
-
-                                            {{-- Estado --}}
-                                                <div class="form-group row">
-                                                    <label for="estado" class="col-md-4 col-form-label text-md-right">{{ __('Estado') }}</label>
-
-                                                    <div class="col-md-6">
-
-                                                        <select id="estado" class="form-control @error('estado') is-invalid @enderror" name="estado">
-                                                            <option value="{{ old('estado') }}" selected>{{ old('estado') }}</option>
-                                                            @foreach(App\Trabajo::getEnumValues('trabajos', 'estado') as $estado)
-                                                                <option value="{{ $estado }}">  {{ $estado }}  </option>
-                                                            @endforeach
-                                                        </select>
-
-                                                        @error('estado')
-                                                            <span class="invalid-feedback" role="alert">
-                                                                <strong>{{ $message }}</strong>
-                                                            </span>
-                                                        @enderror
-                                                    </div>
-
                                                 </div>
 
                                             {{-- Tipo --}}
