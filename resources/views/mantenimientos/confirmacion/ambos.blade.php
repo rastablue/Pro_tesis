@@ -55,22 +55,6 @@
                                         <input type="hidden" name="cedula" value="{{ $request->cedula }}">
                                         <input type="hidden" name="placa" value="{{ $request->placa }}">
                                     </div>
-                                
-                                {{-- fecha_ingreso --}}
-                                    <div class="form-group row">
-                                        <label for="fecha_ingreso" class="col-md-3 col-form-label text-md-right">Fecha Ingreso</label>
-                                        <div class="col-md-6">
-                                            <input type="text" disabled class="form-control @error('fecha_ingreso') is-invalid @enderror" value="{{ $request->fecha_ingreso }}" autofocus>
-                                        
-                                            @error('fecha_ingreso')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-
-                                        <input type="hidden" name="fecha_ingreso" value="{{ $request->fecha_ingreso }}">
-                                    </div>
 
                                 {{-- Observacion --}}
                                     <div class="form-group row">

@@ -85,7 +85,7 @@
                                                 <div class="form-group row mb-0">
                                                     <div class="align-items-center col-md-6 offset-md-6">
                                                         @can('vehiculos.sow')
-                                                            <a href="{{ route('vehiculos.pdf', Hashids::encode($vehiculo->id)) }}" class="btn btn-sm btn-primary text-white">
+                                                            <a href="{{ route('vehiculos.pdf', Hashids::encode($vehiculo->id)) }}" class="btn btn-sm btn-primary text-white" target="_blank">
                                                                 <i class="far fa-file-pdf"></i>
                                                                 PDF
                                                             </a>
@@ -150,7 +150,7 @@
 
                                             {{-- Link al clientes.show --}}
                                                 @can('mantenimientos.show')
-                                                    <div  class="text-center"><a href="{{ route('clientes.show', Hashids::encode($vehiculo->clientes->id)) }}">Este cliente posee {{ $vehiculo->clientes->vehiculos->count() }} vehiculo(s)</a></div>
+                                                    <div  style="margin-left: 320px"><a href="{{ route('clientes.show', Hashids::encode($vehiculo->clientes->id)) }}">Este cliente posee {{ $vehiculo->clientes->vehiculos->count() }} vehiculo(s)</a></div>
                                                 @endcan
 
                                             {{-- btn--}}

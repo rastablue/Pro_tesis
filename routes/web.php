@@ -215,8 +215,11 @@ Route::middleware(['auth'])->group(function(){
         Route::put('mantenimientos/finalizar/{mantenimiento}', 'MantenimientoController@finalizar')->name('mantenimientos.finalizar')
                     ->middleware('can:mantenimientos.edit');
 
-        //Marca un mantenimiento como finalizado directamente desde la vista show
+        //Marca un mantenimiento como finalizado y/o agregar imagen directamente desde la vista show
         Route::put('mantenimientos/finalizarfrom/{mantenimiento}', 'MantenimientoController@finalizarFrom')->name('mantenimientos.finalizarfrom')
+                    ->middleware('can:mantenimientos.edit');
+
+        Route::put('mantenimientos/update-foto/{mantenimiento}', 'MantenimientoController@updateFoto')->name('mantenimientos.updateFoto')
                     ->middleware('can:mantenimientos.edit');
 
         //Agregados si no existen

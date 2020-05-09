@@ -10,6 +10,7 @@ use App\Http\Requests\CreateMantenimientoFromVehiculo;
 use App\Http\Requests\CreateClienteFromMantenimiento;
 use App\Http\Requests\CreateVehiculoFromMantenimiento;
 use App\Http\Requests\CreateAmbosFromMantenimiento;
+use App\Http\Requests\UpdateFotoMantenimiento;
 use App\Http\Requests\EditMantenimiento;
 use App\Http\Requests\FechaPdfMantenimiento;
 use Barryvdh\DomPDF\Facade as PDF;
@@ -139,7 +140,7 @@ class MantenimientoController extends Controller
 
             $pdf = PDF::loadView('pdfs.mantenimientos', compact('mantenimiento'));
 
-            return $pdf->download('mantenimiento-'.$mantenimiento->codigo.'.pdf');
+            return $pdf->download('mantenimiento-'.$mantenimiento->nro_ficha.'.pdf');
         }
 
     /**
@@ -206,7 +207,7 @@ class MantenimientoController extends Controller
                     $mantenimiento = New Mantenimiento();
 
                     $mantenimiento->nro_ficha = $request->codigo;
-                    $mantenimiento->fecha_ingreso = $request->fecha_ingreso;
+                    $mantenimiento->fecha_ingreso = $date;
                     $mantenimiento->observacion = $request->observacion_mantenimiento;
                     $mantenimiento->diagnostico = $request->diagnostico;
                     $mantenimiento->estado = 'En espera';
@@ -253,6 +254,7 @@ class MantenimientoController extends Controller
 
     public function clienteStore(CreateClienteFromMantenimiento $request)
     {
+        $date = Carbon::now();
 
         $clientes = new Cliente();
 
@@ -282,7 +284,7 @@ class MantenimientoController extends Controller
             $mantenimiento = New Mantenimiento();
 
             $mantenimiento->nro_ficha = $request->codigo;
-            $mantenimiento->fecha_ingreso = $request->fecha_ingreso;
+            $mantenimiento->fecha_ingreso = $date;
             $mantenimiento->observacion = $request->observacion_mantenimiento;
             $mantenimiento->diagnostico = $request->diagnostico;
             $mantenimiento->estado = 'En espera';
@@ -308,6 +310,8 @@ class MantenimientoController extends Controller
             return redirect()->route('mantenimientos.index')->with('danger', 'Error, la ficha con este codigo ya existe');
 
         } else {
+
+            $date = Carbon::now();
             $cliente = Cliente::where('cedula', $request->cedula)->first();
 
             $vehiculo = New Vehiculo();
@@ -330,7 +334,7 @@ class MantenimientoController extends Controller
             $mantenimiento = New Mantenimiento();
 
             $mantenimiento->nro_ficha = $request->codigo;
-            $mantenimiento->fecha_ingreso = $request->fecha_ingreso;
+            $mantenimiento->fecha_ingreso = $date;
             $mantenimiento->observacion = $request->observacion_mantenimiento;
             $mantenimiento->diagnostico = $request->diagnostico;
             $mantenimiento->estado = 'En espera';
@@ -356,6 +360,8 @@ class MantenimientoController extends Controller
             return redirect()->route('mantenimientos.index')->with('danger', 'Error, la ficha con este codigo ya existe');
 
         } else {
+
+            $date = Carbon::now();
 
             $clientes = new Cliente();
 
@@ -387,7 +393,7 @@ class MantenimientoController extends Controller
             $mantenimiento = New Mantenimiento();
 
             $mantenimiento->nro_ficha = $request->codigo;
-            $mantenimiento->fecha_ingreso = $request->fecha_ingreso;
+            $mantenimiento->fecha_ingreso = $date;
             $mantenimiento->observacion = $request->observacion_mantenimiento;
             $mantenimiento->diagnostico = $request->diagnostico;
             $mantenimiento->estado = 'En espera';
@@ -419,7 +425,7 @@ class MantenimientoController extends Controller
             $mantenimiento = New Mantenimiento();
 
             $mantenimiento->nro_ficha = $request->codigo;
-            $mantenimiento->fecha_ingreso = $request->fecha_ingreso;
+            $mantenimiento->fecha_ingreso = $date;
             $mantenimiento->observacion = $request->observacion_mantenimiento;
             $mantenimiento->diagnostico = $request->diagnostico;
             $mantenimiento->estado = 'En espera';
@@ -451,12 +457,23 @@ class MantenimientoController extends Controller
         return view('mantenimientos.show', compact('mantenimiento'));
     }
 
-    public function ficha($mantenimiento)
+    public function updateFoto(UpdateFotoMantenimiento $request, $id)
     {
-        $id = Hashids::decode($mantenimiento);
+        $id = Hashids::decode($id);
         $mantenimiento = Mantenimiento::findOrFail($id)->first();
 
-        return view('mantenimientos.ficha', compact('mantenimiento'));
+        if ($request->hasFile('foto')) {
+            $image = $request->foto->store('public');
+            $mantenimiento->path = $image;
+
+            $mantenimiento->save();
+
+            return redirect()->route('mantenimientos.show', Hashids::encode($mantenimiento->id))
+                    ->with('info', 'Archivo de la ficha agregado');
+        }
+
+        return redirect()->route('mantenimientos.show', Hashids::encode($mantenimiento->id))
+                    ->with('danger', 'No se pudo agregar el archivo de la ficha');
     }
 
     /**
@@ -574,12 +591,14 @@ class MantenimientoController extends Controller
 
     public function finalizar(request $request, $id)
     {
+        $date = Carbon::now();
 
         $mantenimiento = Mantenimiento::findOrFail($id);
 
         if ($mantenimiento->estado != 'Finalizado') {
 
             $mantenimiento->estado = 'Finalizado';
+            $mantenimiento->fecha_egreso = $date;
 
             $mantenimiento->save();
 

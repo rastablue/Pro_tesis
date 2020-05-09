@@ -43,20 +43,6 @@
                                                     </div>
                                                 </div>
 
-                                            {{-- Fecha Ingreso --}}
-                                                <div class="form-group row">
-                                                    <label for="codigo" class="col-md-4 col-form-label text-md-right">{{ __('Fecha Ingreso') }}</label>
-                                                    <div class="col-md-6">
-                                                        <input type="date" name="fecha_ingreso" value="{{ old('fecha_ingreso') }}" class="form-control @error('fecha_ingreso') is-invalid @enderror" autocomplete="Fecha inicio" autofocus>
-
-                                                        @error('fecha_ingreso')
-                                                            <span class="invalid-feedback" role="alert">
-                                                                <strong>{{ $message }}</strong>
-                                                            </span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-
                                             {{-- Observacion --}}
                                                 <div class="form-group row">
                                                     <label for="detalle" class="col-md-4 col-form-label text-md-right">{{ __('Observacion') }}</label>
@@ -88,10 +74,13 @@
                                             {{-- Foto de la Ficha --}}
                                                 <div class="form-group" style="margin-left: 350px;">
                                                     <label for="file-upload" class="custom-file-upload">
-                                                        <i class="fa fa-cloud-upload"></i> Agregar imagen de la ficha
+                                                        <i class="fas fa-cloud-upload-alt"></i> Agregar imagen de la ficha
                                                     </label>
-                                                    <span id="file-selected"></span>
-                                                    <input id="file-upload" accept="image/jpeg,image/png" type="file" name="foto" class="form-control @error('foto') is-invalid @enderror" value="{{ old('foto') }}" autofocus>
+                                                    <br>
+                                                    <div class="text-center" style="margin-left: -180px;">
+                                                        <span id="file-selected"></span>
+                                                        <input id="file-upload" accept="image/jpeg,image/png" type="file" name="foto" class="form-control @error('foto') is-invalid @enderror" value="{{ old('foto') }}" autofocus>
+                                                    </div>
 
                                                     @error('foto')
                                                         <span class="invalid-feedback" role="alert">

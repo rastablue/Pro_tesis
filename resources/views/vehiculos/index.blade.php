@@ -31,8 +31,8 @@
                                         <th>Placa</th>
                                         <th>Marca</th>
                                         <th>Modelo</th>
-                                        <th>Color</th>
-                                        <th>Propietario</th>
+                                        <th>Propietario Nombre</th>
+                                        <th>Propietario Apellido</th>
                                         <th>Acciones</th>
                                     </tr>
                                 </thead>
@@ -150,10 +150,10 @@
     </div>
 @stop
 @push('scripts')
- <!-- DataTables -->
- <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
- <!-- Bootstrap JavaScript -->
- <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+<!-- DataTables -->
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<!-- Bootstrap JavaScript -->
+    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
 <script>
     $(function() {
         $(document).ready(function(){
@@ -167,8 +167,8 @@
                         { data: 'placa', name: 'vehiculos.placa' },
                         { data: 'marca', name: 'marcas.marca'   },
                         { data: 'modelo', name: 'vehiculos.modelo'  },
-                        { data: 'color', name: 'vehiculos.color'  },
                         { data: 'name', name: 'clientes.name'  },
+                        { data: 'apellido_pater', name: 'clientes.apellido_pater'  },
                         { data: 'btn', name: 'btn',orderable:false,serachable:false,sClass:'text-center' }
                     ],
                     "language":{

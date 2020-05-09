@@ -193,6 +193,12 @@ class PermissionsTableSeeder extends Seeder
             ]);
 
             Permission::create([
+                'name'  =>  'Revisar mantenimientos',
+                'slug'  =>  'mantenimientos.revisar',
+                'description'   =>  'Permite cambiar el estado del mantenimiento',
+            ]);
+
+            Permission::create([
                 'name'  =>  'Eliminar mantenimientos',
                 'slug'  =>  'mantenimientos.destroy',
                 'description'   =>  'Eliminar mantenimientos del sistema',
@@ -221,6 +227,12 @@ class PermissionsTableSeeder extends Seeder
                 'name'  =>  'Editar trabajos',
                 'slug'  =>  'trabajos.edit',
                 'description'   =>  'Edita trabajos del sistema',
+            ]);
+
+            Permission::create([
+                'name'  =>  'Revisar trabajos',
+                'slug'  =>  'trabajos.revisar',
+                'description'   =>  'Permite cambiar el estado del trabajo',
             ]);
 
             Permission::create([

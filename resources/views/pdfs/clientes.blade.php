@@ -13,6 +13,7 @@
             <th scope="col"><div class="text-center font-weight-bold text-info">Cedula</th>
             <th scope="col"><div class="text-center font-weight-bold text-info">Nombre</th>
             <th scope="col"><div class="text-center font-weight-bold text-info">Telefono</th>
+            <th scope="col"><div class="text-center font-weight-bold text-info">Direccion</th>
             <th scope="col"><div class="text-center font-weight-bold text-info">E-Mail</th>
         </tr>
     </thead>
@@ -21,6 +22,7 @@
             <td><div class="text-center">{{ $cliente->cedula }}</td>
             <td><div class="text-center">{{ $cliente->name }} {{ $cliente->apellido_pater }}</td>
             <td><div class="text-center">{{ $cliente->tlf }}</td>
+            <td><div class="text-center">{{ $cliente->direc }}</td>
             <td><div class="text-center">{{ $cliente->email }}</td>
         </tr>
     </tbody>

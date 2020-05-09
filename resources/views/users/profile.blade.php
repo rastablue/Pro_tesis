@@ -122,16 +122,19 @@
                                                 <div class="form-group row mb-2">
                                                     <div class="col-md-6" style="margin-left: 400px;">
                                                         <label for="file-upload" class="custom-file-upload">
-                                                            <i class="fa fa-cloud-upload"></i> Cambiar foto de perfil
+                                                            <i class="fas fa-cloud-upload-alt"></i> Cambiar foto de perfil
                                                         </label>
-                                                        <span id="file-selected"></span>
-                                                        <input id="file-upload" accept="image/jpeg,image/png" type="file" name="foto">
+                                                        <br>
+                                                        <div class="text-center" style="margin-left: -220px;">
+                                                            <span id="file-selected"></span>
+                                                            <input id="file-upload" accept="image/jpeg,image/png" type="file" name="foto">
+                                                        </div>
                                                     </div>
                                                 </div>
 
                                             {{-- btn--}}
                                                 <div class="form-group row mb-0">
-                                                    <div class="col-md-6 offset-md-6">
+                                                    <div class="col-md-6 offset-md-6" style="margin-left: 460px;">
                                                         <button type="submit" class="btn btn-primary btn-user btn-sm text-center">
                                                             Actualizar
                                                         </button>

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateMantenimiento extends FormRequest
+class UpdateFotoMantenimiento extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,14 +24,7 @@ class CreateMantenimiento extends FormRequest
     public function rules()
     {
         return [
-            "codigo" => "required|digits:7|unique:mantenimientos,nro_ficha",
-            "diagnostico" => "required|string|max:500",
-            "observacion_mantenimiento" => "string|max:500",
             "foto" => "image|mimes:jpg,jpeg,png|max:3000",
-
-            "placa" => "required|string|max:12",
-
-            "cedula" => "required|digits:10",
         ];
     }
 }

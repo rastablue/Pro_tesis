@@ -27,7 +27,11 @@
                                 {{-- Pestaña Cliente --}}
                                     <div class="tab-pane fade show active" id="user" role="tabpanel" aria-labelledby="home-tab">
 
-                                        <div class="avatar text-center" style="background-image: url({{ asset('images/profile2.png') }})"></div>
+                                        {{--<div class="avatar text-center" style="background-image: url({{ asset('images/profile2.png') }})"></div>--}}
+
+                                        <div class="avatar text-center mt-10 rounded-circle">
+                                            <i class="fas fa-user fa-10x"></i>
+                                        </div>
 
                                         {{-- Cedula --}}
                                             <div class="form-group row">
@@ -76,7 +80,7 @@
                                             <div class="form-group row mb-0">
                                                 <div class="col-md-6 offset-md-6">
                                                     @can('clientes.show')
-                                                        <a href="{{ route('clientes.pdf', Hashids::encode($cliente->id)) }}" class="btn btn-sm btn-primary text-white">
+                                                        <a href="{{ route('clientes.pdf', Hashids::encode($cliente->id)) }}" class="btn btn-sm btn-primary text-white" target="_blank">
                                                             <i class="far fa-file-pdf"></i>
                                                             PDF
                                                         </a>

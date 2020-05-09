@@ -17,7 +17,7 @@
         Ver
     </a>
 @endcan
-@can('mantenimientos.edit')
+@can('mantenimientos.revisar')
 
     @if ($estado != 'Finalizado')
         <button type="button" data-id="{{ $id }}" data-toggle="modal" data-observacion="{{ $observacion }}" data-diagnostico="{{ $diagnostico }}" data-target="#RevisaTareaModal" class="btn btn-warning btn-sm" id="getActualizaId">

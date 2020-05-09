@@ -138,17 +138,20 @@
 
                         {{-- Foto de Perfil --}}
                             <div class="form-group text-center">
-                                <label for="file-upload" class="custom-file-upload">
-                                    <i class="fa fa-cloud-upload"></i> Cambiar foto de perfil
+                                <label for="file-upload" class="custom-file-upload" style="margin-left: 120px">
+                                    <i class="fas fa-cloud-upload-alt"></i> Cambiar foto de perfil
                                 </label>
-                                <span id="file-selected"></span>
-                                <input id="file-upload" accept="image/jpeg,image/png" type="file" name="foto">
+                                <br>
+                                <div class="text-center" style="margin-left: 120px;">
+                                    <span id="file-selected"></span>
+                                    <input id="file-upload" accept="image/jpeg,image/png" type="file" name="foto">
+                                </div>
                             </div>
 
                         {{-- btn--}}
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-5">
-                                    <button type="submit" class="btn btn-primary">Actualizar</button>
+                                    <button type="submit" class="btn btn-primary" style="margin-left: 77px">Actualizar</button>
                                 </div>
                             </div>
                     </form>

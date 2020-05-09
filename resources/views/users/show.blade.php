@@ -34,7 +34,10 @@
                                         @if ($user->path)
                                             <div class="avatar text-center" style="background-image: url({{ $user->url_path }})"></div>
                                         @else
-                                            <div class="avatar text-center" style="background-image: url({{ asset('images/profile2.png') }})"></div>
+                                            {{--<div class="avatar text-center" style="background-image: url({{ asset('images/profile2.png') }})"></div>--}}
+                                            <div class="avatar text-center mt-10 rounded-circle">
+                                                <i class="fas fa-user-tie fa-10x"></i>
+                                            </div>
                                         @endif
 
                                         {{-- Cedula --}}

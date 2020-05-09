@@ -12,28 +12,30 @@
 <h4 class="font-weight-bold text-success"><b> Mantenimiento</b></h4>
 <table class="table">
     <thead>
-        <tr class="table-secondary">
-            <th scope="col" width="80px"><div class="text-center font-weight-bold text-info">Codigo</th>
-            <th scope="col" width="130px"><div class="text-center font-weight-bold text-info">Fecha de Ingreso</th>
-            <th scope="col" width="120px"><div class="text-center font-weight-bold text-info">Fecha de Egreso</th>
-            <th scope="col" width="120px"><div class="text-center font-weight-bold text-info">Monto Total</th>
+        <tr class="table-secondary" style="font-size: 9">
+            <th scope="col"><div class="text-center font-weight-bold text-info">Codigo</th>
+            <th scope="col"><div class="text-center font-weight-bold text-info">Fecha de Ingreso</th>
+            <th scope="col"><div class="text-center font-weight-bold text-info">Fecha de Egreso</th>
+            <th scope="col"><div class="text-center font-weight-bold text-info">Monto Total</th>
+            <th scope="col"><div class="text-center font-weight-bold text-info">Estado</th>
         </tr>
     </thead>
     <tbody>
-        <tr>
+        <tr style="font-size: 8">
             <td><div class="text-center">{{ $mantenimiento->nro_ficha }}</td>
             <td><div class="text-center">{{ $mantenimiento->fecha_ingreso }}</td>
             <td><div class="text-center">{{ $mantenimiento->fecha_egreso }}</td>
             <td><div class="text-center">{{ $mantenimiento->valor_total }}</td>
+            <td><div class="text-center">{{ $mantenimiento->estado }}</td>
         </tr>
         <tr>
             <br><br>
-            <th scope="col"><div class="text-center font-weight-bold text-info"><br>Observaciones:</th>
-            <td scope="col" colspan="3"> <br>{{ $mantenimiento->observacion }} <br><br></td>
+            <th scope="col" style="font-size: 9"><div class="text-center font-weight-bold text-info"><br>Observaciones:</th>
+            <td scope="col" colspan="4" style="font-size: 8"> <br>{{ $mantenimiento->observacion }} <br><br></td>
         </tr>
         <tr>
-            <th scope="col"><div class="text-center font-weight-bold text-info">Diagnostico:</th>
-            <td scope="col" colspan="3"> {{ $mantenimiento->diagnostico }} <br><br></td>
+            <th scope="col" style="font-size: 9"><div class="text-center font-weight-bold text-info">Diagnostico:</th>
+            <td scope="col" colspan="4" style="font-size: 8"> {{ $mantenimiento->diagnostico }} <br><br></td>
         </tr>
     </tbody>
 </table>
@@ -67,8 +69,8 @@
             </tr>
             <tr>
                 <br><br>
-                <th scope="col"><div class="text-center font-weight-bold text-info"><br>Observaciones:</th>
-                <td scope="col" colspan="4"><br>{{ $mantenimiento->vehiculos->observacion }}</td>
+                <th scope="col" style="font-size: 9"><div class="text-center font-weight-bold text-info"><br>Observaciones:</th>
+                <td scope="col" colspan="4" style="font-size: 8"><br>{{ $mantenimiento->vehiculos->observacion }}</td>
             </tr>
         </tbody>
     </table>

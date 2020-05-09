@@ -4,23 +4,19 @@
         Ver
     </a>
 @endcan
-
-@if ($estado != 'Finalizado')
-    @can('trabajos.edit')
+@can('trabajos.revisar')
+    @if ($estado != 'Finalizado')
         <button type="button" data-id="{{ $id }}" data-manobra="{{ $manobra }}" data-diagnostico="{{ $diagnostico }}" data-toggle="modal" data-target="#RevisaTareaModal" class="btn btn-warning btn-sm" id="getActualizaId">
             <i class="fas fa-fw fa-check-circle"></i>
             Revisar
         </button>
-    @endcan
-@else
-    @can('trabajos.edit')
+    @else
         <button type="button" data-toggle="modal" data-manobra="{{ $manobra }}" data-diagnostico="{{ $diagnostico }}" data-target="#NoOptionModal" class="btn btn-warning btn-sm">
             <i class="fas fa-fw fa-check-circle"></i>
             Revisar
         </button>
-    @endcan
-@endif
-
+    @endif
+@endcan
 @can('trabajos.destroy')
     <button type="button" data-id="{{ $id }}" data-toggle="modal" data-target="#DeleteProductModal" class="btn btn-danger btn-sm" id="getDeleteId">
         <i class="fas fa-trash"></i>

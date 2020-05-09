@@ -125,6 +125,7 @@
                                     <label for="file-upload" class="custom-file-upload">
                                         <i class="fa fa-cloud-upload"></i> Agregar imagen de la ficha
                                     </label>
+                                    <br>
                                     <span id="file-selected"></span>
                                     <input id="file-upload" accept="image/jpeg,image/png" type="file" name="foto" class="form-control @error('foto') is-invalid @enderror" value="{{ old('foto') }}" autofocus>
 

@@ -179,21 +179,6 @@
                                                     <input type="hidden" name="codigo" value="{{ $request->codigo }}">
                                                 </div>
 
-                                            {{-- Fecha Ingreso --}}
-                                                <div class="form-group row">
-                                                    <label for="codigo" class="col-md-4 col-form-label text-md-right">{{ __('Fecha Ingreso') }}</label>
-                                                    <div class="col-md-6">
-                                                        <input type="date" disabled value="{{ $request->fecha_ingreso }}" class="form-control @error('fecha_ingreso') is-invalid @enderror" autocomplete="Fecha inicio" autofocus>
-
-                                                        @error('fecha_ingreso')
-                                                            <span class="invalid-feedback" role="alert">
-                                                                <strong>{{ $message }}</strong>
-                                                            </span>
-                                                        @enderror
-                                                    </div>
-                                                    <input type="hidden" name="fecha_ingreso" value="{{ $request->fecha_ingreso }}">
-                                                </div>
-
                                             {{-- Observacion --}}
                                                 <div class="form-group row">
                                                     <label for="detalle" class="col-md-4 col-form-label text-md-right">{{ __('Observacion') }}</label>
