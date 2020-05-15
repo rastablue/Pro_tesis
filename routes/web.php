@@ -15,12 +15,13 @@ use Illuminate\Support\Facades\Auth;
 */
 
 Route::get('/', function () {
-    return view('auth.login');
+    return view('welcome');
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::post('consultas', 'LogoutController@consulta')->name('consultas');
 
 Route::middleware(['auth'])->group(function(){
 

@@ -102,7 +102,7 @@
                                             {{-- Foto de la Ficha --}}
                                                 <div class="form-group" style="margin-left: 350px;">
                                                     <label for="file-upload" class="custom-file-upload">
-                                                        <i class="fa fa-cloud-upload"></i> Agregar imagen de la ficha
+                                                        <i class="fas fa-cloud-upload-alt"></i> Agregar imagen de la ficha
                                                     </label>
                                                     <br>
                                                     <div class="text-center" style="margin-left: -190px;">

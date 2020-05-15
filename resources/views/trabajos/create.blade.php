@@ -231,9 +231,38 @@
                 @else
                     <div class="card-body">
                         <h5>No se ha encontrado el archivo!</h5>
-                        @can('mantenimientos.edit')
-                            <h5><a href="{{ route('mantenimientos.edit', Hashids::encode($mantenimiento->id)) }}">cargar...</a></h5>
-                        @endcan
+
+                        @if ($mantenimiento->estado != 'Finalizado')
+                            <form id="formFoto" method="POST" action="{{ route('mantenimientos.updateFoto', Hashids::encode($mantenimiento->id)) }}" enctype="multipart/form-data">
+                                @method('PUT')
+                                @csrf
+
+                                    @can('mantenimientos.edit')
+                                        <div class="form-group text-center">
+                                            <label for="file-upload" class="custom-file-upload mt-4">
+                                                <i class="fas fa-cloud-upload-alt"></i> Agregar imagen de la ficha
+                                            </label>
+                                            <br>
+                                            <span id="file-selected"></span>
+                                            <input id="file-upload" accept="image/jpeg,image/png" type="file" name="foto" class="form-control @error('foto') is-invalid @enderror" value="{{ old('foto') }}" autofocus>
+
+                                            @error('foto')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+
+                                            <div>
+                                                <button type="submit" id="AgregarFoto" class="btn btn-primary">
+                                                    {{ __('Agregar') }}
+                                                </button>
+                                            </div>
+                                        </div>
+                                    @endcan
+
+                            </form>
+                        @endif
+                        
                     </div>
                 @endif
 
@@ -245,7 +274,25 @@
     function mayus(e) {
         e.value = e.value.toUpperCase();
     }
-    $('#file-upload').bind('change', function() { var fileName = ''; fileName = $(this).val(); $('#file-selected').html(fileName); })
+    
+    $(function() {
+        $(document).ready(function(){
+            $('#AgregarFoto').hide()
+        });
+    });
+    $('#file-upload').bind('change', function() { 
+        var fileName = '';
+        fileName = $(this).val();
+        $('#file-selected').html(fileName);
+        $('#AgregarFoto').show()
+    })
+    // Resetear modal una vez que se cierra
+    $('#verArchivoModal').on('hidden.bs.modal', function() {
+        $('#formFoto')[0].reset();
+        $('#file-selected').html('');
+        $('#AgregarFoto').hide()
+    });
+
 </script>
 @stop
 
